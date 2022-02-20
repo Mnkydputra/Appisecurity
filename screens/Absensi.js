@@ -1,50 +1,154 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Text, View, StyleSheet, Button ,Dimensions  } from 'react-native';
+import { Text, View, StyleSheet, Button , Dimensions , TextInput } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import Constants from 'expo-constants';
+import * as Location from 'expo-location';
+import { getDistance, getPreciseDistance } from 'geolib';;
 
-const { width } = Dimensions.get('window');
-const qrSize = width * 0.9;
+export default function Absensi({navigation,route}) {
+  
+  const [hasPermission, setHasPermission  ] = useState(null);
+  const [info ,setInfo] = useState({longBarcode : '' , latiBarcode :'',  });
+  const [lokasi, setLokasi] = useState({latiUser : '' , longiUser : ''});
+  const [hasil, setHasil] = useState("");
+  const [hasilKorlap, setHasilKorlap] = useState(null);
+  const [barcode ,setBarcode] = useState("");
+  const [scanned, setScanned ] = useState(false);
+  const [user , setUser] = useState({npk : route.params.npk , id_absen : route.params.id_akun , wilayah: route.params.wilayah , areaKerja : route.params.area_kerja , jabatan: route.params.jabatan  })
 
-export default function App({navigation,route}) {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
-
+  const [location, setLocation] = useState(null);
+  const [locationPermission , hasPermissionLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
+
+      //ambil posisi user 
+      let { statusLokasi } = await Location.requestForegroundPermissionsAsync();
+      
+      //ijinkan mengakses lokasi user
+      hasPermissionLocation(statusLokasi === 'granted');
+
+      let position = await Location.getCurrentPositionAsync({});
+      //get longitude dan latitude user
+      setLokasi({latiUser : position.coords.latitude , longiUser : position.coords.longitude});
+      // end of posisi user  
+
+      setUser({npk : route.params.npk , id_absen : route.params.id_akun , wilayah: route.params.wilayah , areaKerja : route.params.area_kerja , jabatan: route.params.jabatan  })
+      console.log(user);
     })();
   }, []);
 
+
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    const txt = data.split("," , 2) ;
+    const la = txt[0];
+    const lo = txt[1];
+      //jika jabatan korlap gunakan kode ini 
+      if(user.jabatan === 'KORLAP'){
+        var urlAksi = 'http://192.168.8.197:8090/api/barcodeKorlap?wilayah='+user.wilayah+'&latitude=' + la;
+        fetch(urlAksi)
+        .then((response)=> response.json())
+        .then((json) => {
+            console.log("response : " + json.message);
+            setHasilKorlap(json.message);
+                if(json.message == 1){
+                       var linkAbsen = 'http://192.168.8.197:8090/api/input_absen' ;
+                        fetch(linkAbsen,{
+                            method : 'POST'  ,
+                            headers : {
+                              'Content-Type' : 'application/x-www-form-urlencoded'  ,
+                              // 'keys-isecurity' : 'isecurity' ,
+                            } ,
+                            body : "npk=" + user.npk +"&area_kerja=" + user.areaKerja +"&wilayah=" + user.wilayah +"&id_absen=" + user.id_absen  
+                        })
+                        .then((response) => response.json())
+                        .then((json) => {
+                            alert(json.message);
+                        })
+                }else {
+                  alert("absen antar wilayah di tolak");
+                }
+        })
+        .catch((error)=> {
+            console.log(error)
+        }) 
+      }else {
+        var barcodeAgt = 'http://192.168.8.197:8090/api/barcodeAnggota?area_kerja='+user.areaKerja+'&latitude=' + la;
+        fetch(barcodeAgt)
+        .then((response)=> response.json())
+        .then((json) => {
+            console.log("response : " + json.message);
+                if(json.message == 1){
+                        // hitung jarak antar user dan titik barcode      
+                      var distance = getPreciseDistance(
+                        { latitude: la, longitude: lo }, //lokasi barcode
+                        { latitude: lokasi.latiUser, longitude: lokasi.longiUser } // lokasi user
+                      );
+                      console.log(`Jarak ${distance} Meter`);
+                      const jarak =  distance ;
+                      if(jarak > 2000){
+                        alert("jarak dengan  " + user.areaKerja + " sejauh " + jarak + " meter");
+                      }else {
+                        var urlAksi = 'http://192.168.8.197:8090/api/input_absen' ;
+                        fetch(urlAksi,{
+                            method : 'POST'  ,
+                            headers : {
+                              'Content-Type' : 'application/x-www-form-urlencoded'  ,
+                              // 'keys-isecurity' : 'isecurity' ,
+                            } ,
+                            body : "npk=" + user.npk +"&area_kerja=" + user.areaKerja +"&wilayah=" + user.wilayah +"&id_absen=" + user.id_absen  
+                        })
+                        .then((response) => response.json())
+                        .then((json) => {
+                            alert(json.message);
+                        })
+                      }
+                }else {
+                  alert("barcode tidak sesuai area kerja");
+                }
+        })
+        .catch((error)=> {
+            console.log(error)
+        })
+      }
   };
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <Text>Requesting for camera permission</Text>
   }
 
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>
+  }
+
+  let posisiUser = 'Waiting..';
+  if (errorMsg) {
+    posisiUser = errorMsg;
+  } else if (lokasi) {
+    posisiUser = JSON.stringify(lokasi);
+  }
+
+  
+
+  
+// useState({npk : '' , id_absen : '' , wilayah: '' , areaKerja : '' , jabatan:'ANGGOTA'  })
   return (
-    <View style={styles.container}>
+    
+    <View style={styles.container} >
+      <Text style={styles.info} >Absen Security Guard ADM</Text>
+      <View style={styles.barcodebox}>
       <BarCodeScanner
-        onBarCodeRead={handleBarCodeScanned}
-        style={[StyleSheet.absoluteFill, styles.container]}>
-        <Text style={styles.description}>Arahkan Camera ke QR CODE</Text>
-        <Image
-          style={styles.qr}
-          source={require('../img/frame(1).png')}
-        />
-        <Text
-          onPress={() => navigation.goBack()}
-          style={styles.cancel}>
-          Cancel
-        </Text>
-      </BarCodeScanner>
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        style={{height : 850 , width : 800}} 
+      />
+      </View>
+      {scanned && <Button style={{color:'tomato'}} title={'SCAN BARCODE'} onPress={() => setScanned(false)} />}
+
+      <View>
+        <Text>{ "user :  " + lokasi.latiUser + "," + lokasi.longiUser }</Text>
+      </View>
     </View>
   );
 }
@@ -52,26 +156,25 @@ export default function App({navigation,route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#aaccaa',
     alignItems: 'center',
-    backgroundColor : 'red'
+    justifyContent: 'center',
   },
-  qr: {
-    marginTop: '10%',
-    marginBottom: '20%',
-    width: qrSize,
-    height: qrSize,
-  },
-  description: {
-    fontSize: width * 0.09,
-    marginTop: '10%',
-    textAlign: 'center',
-    width: '80%',
-    color: 'white',
-  },
-  cancel: {
-    fontSize: width * 0.05,
-    textAlign: 'center',
-    width: '70%',
-    color: 'white',
-  },
-});
+  textInput : {
+    backgroundColor : '#AdA3AA' ,
+    color : '#fff' ,
+    borderRadius:3 ,
+    marginBottom : 4 ,
+    height : 40 ,
+    width : 400
+} ,
+  barcodebox : {
+    backgroundColor : '#fff' ,
+    alignItems : 'center' ,
+    justifyContent : 'center' ,
+    width : 420 ,
+    height : 400 ,
+    overflow : 'hidden' 
+    // borderRadius : 30 ,
+  }
+})

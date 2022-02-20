@@ -21,7 +21,8 @@ export default class Home extends Component {
               npk : '228572' ,
               id_akun : 'AGT-228572' ,
               wilayah : 'WIL2' ,
-              area_kerja : 'VLC'
+              area_kerja : 'VLC' ,
+              jabatan : 'ANGGOTA'
             })}>
                 <View style={styles.linkAbsen}>
                   <Image style={styles.scanIMG} source={require("../img/scan.png")}></Image>
