@@ -4,7 +4,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import Constants from 'expo-constants';
 
 const { width } = Dimensions.get('window');
-const qrSize = width * 0.7;
+const qrSize = width * 0.9;
 
 export default function App({navigation,route}) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -30,25 +30,18 @@ export default function App({navigation,route}) {
   }
 
   return (
-
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-      }}>
-        <View>
-          <Text>Dasep</Text>
-      </View>
-      
-      {scanned && (
-        <Button title={'Klik Disini Untuk Scan Ulang'} onPress={() => setScanned(false)} />
-      )}
+    <View style={styles.container}>
       <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={[StyleSheet.absoluteFillObject, styles.container]}>
-        <Text style={styles.description}>Scan your QR code  {route.params.nama}</Text>
-        <Text onPress={() => navigation.goBack()} style={styles.cancel}>
+        onBarCodeRead={handleBarCodeScanned}
+        style={[StyleSheet.absoluteFill, styles.container]}>
+        <Text style={styles.description}>Arahkan Camera ke QR CODE</Text>
+        <Image
+          style={styles.qr}
+          source={require('../img/frame(1).png')}
+        />
+        <Text
+          onPress={() => navigation.goBack()}
+          style={styles.cancel}>
           Cancel
         </Text>
       </BarCodeScanner>
@@ -59,24 +52,21 @@ export default function App({navigation,route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
-    padding: 8,
+    backgroundColor : 'red'
   },
   qr: {
-    marginTop: '20%',
+    marginTop: '10%',
     marginBottom: '20%',
     width: qrSize,
     height: qrSize,
   },
   description: {
     fontSize: width * 0.09,
-    marginTop: '-100%',
+    marginTop: '10%',
     textAlign: 'center',
-    width: '70%',
-    color: '#000',
+    width: '80%',
+    color: 'white',
   },
   cancel: {
     fontSize: width * 0.05,
