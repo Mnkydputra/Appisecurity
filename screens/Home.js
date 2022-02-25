@@ -66,7 +66,7 @@ export default function  Home ({navigation,route}) {
             <TouchableOpacity onPress={()=> navigation.navigate('Absensi', {
               nama : user.nama  ,
               npk : user.npk ,
-              id_akun : route.params.id_user ,
+              id_akun : user.id_biodata,
               wilayah : user.wilayah ,
               area_kerja : user.areaKerja ,
               jabatan : user.jabatan
@@ -79,8 +79,6 @@ export default function  Home ({navigation,route}) {
             </TouchableOpacity>
         </View>
 
-
-      
 
         <View style={styles.menuBox1}>
           <Image style={styles.icon} source={require("../img/policeman.png")}/>

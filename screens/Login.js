@@ -13,9 +13,7 @@ export default function Login({navigation,route}) {
   const [loading , setLoading ] = useState(false)
 
   useEffect(() => {
-    (async () => {
-      setLoading(false)
-    })
+    
   })
   //jika di tekan tombol login  maka jalankan fungsi ini
   const onLoginPress = async () => {
