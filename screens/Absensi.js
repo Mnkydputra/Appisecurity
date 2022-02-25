@@ -35,7 +35,7 @@ export default function Absensi({navigation,route}) {
       // end of posisi user  
 
       setUser({npk : route.params.npk , id_absen : route.params.id_akun , wilayah: route.params.wilayah , areaKerja : route.params.area_kerja , jabatan: route.params.jabatan  })
-      console.log(user);
+      //console.log(user);
     })();
   }, []);
 
