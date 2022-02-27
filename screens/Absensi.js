@@ -13,15 +13,14 @@ export default function Absensi({navigation,route}) {
   const [hasilKorlap, setHasilKorlap] = useState(null);
   const [barcode ,setBarcode] = useState("");
   const [scanned, setScanned ] = useState(false);
-  const [informasi , setInformasi] = useState('');
-  const [user , setUser] = useState({npk : route.params.npk , id_absen : route.params.id_akun , wilayah: route.params.wilayah , areaKerja : route.params.area_kerja , jabatan: route.params.jabatan  })
+  const [informasi , setInformasi] = useState({gambar :'' , statusAbsensi: '' , keterangan : ''});
+  const [user , setUser] = useState({npk : route.params.npk , id_absen : route.params.id_akun , wilayah: route.params.wilayah , areaKerja : route.params.area_kerja , jabatan: route.params.jabatan  , nama : route.params.nama })
   const [loading , setLoading ] = useState(false)
 
   const [location, setLocation] = useState(null);
   const [locationPermission , hasPermissionLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [imageInfo , setImageInfo] = useState('');
   useEffect(() => {
     
 
@@ -136,8 +135,7 @@ export default function Absensi({navigation,route}) {
                   // alert("barcode tidak sesuai area kerja");
                   setLoading(false);
                   setModalVisible(true);
-                  setInformasi("Bercode tidak sesuai area kerja");
-                  setImageInfo("../img/success.png");
+                  setInformasi({keterangan : "Bercode tidak sesuai area kerja"});
                   // navigation.navigate('Home')
                 }
         })
@@ -180,14 +178,21 @@ export default function Absensi({navigation,route}) {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText2}>Perhatian</Text>
-            <Image source={require(ImageInfo)} style={{width: 150, height: 150}}></Image>
-            <Text style={styles.modalText}>{informasi}</Text>
+            <Text style={styles.modalText2}>GAGAL</Text>
+            <Image source={require("../img/cancel.png")} style={{width: 80, height: 80 , marginBottom:12}}></Image>
+            <View style={{flex : 1}}>
+              <Text>Nama             : {user.nama} </Text>
+              
+              <Text>NPK                : {user.npk} </Text>
+              <Text>Status            : Absen Masuk </Text>
+              <Text>Waktu            : 2020-02-27 17:00:00</Text>
+              <Text >Keterangan    : {informasi.keterangan} </Text>
+            </View>
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}
             >
-              <Text style={styles.textStyle}>Hide Modal</Text>
+              <Text style={styles.textStyle}>Tutup</Text>
             </Pressable>
           </View>
         </View>
@@ -211,10 +216,10 @@ export default function Absensi({navigation,route}) {
       <View style={styles.barcodebox}>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={{height : 850 , width : 800}} 
+        style={{height : 850 , width : 800 }} 
       />
       </View>
-      {scanned && <Button style={{color:'tomato'}} title={'SCAN BARCODE'} onPress={() => setScanned(false)} />}
+      {scanned && <Button style={{color:'tomato' }} title={'ULANGI SCAN'} onPress={() => setScanned(false)} />}
 
       <View>
         <Text>{ "titik user :  " + lokasi.latiUser + "," + lokasi.longiUser }</Text>
@@ -248,19 +253,20 @@ const styles = StyleSheet.create({
     justifyContent : 'center' ,
     width : 420 ,
     height : 400 ,
-    overflow : 'hidden' 
+    overflow : 'hidden' ,
+    marginBottom:6
     // borderRadius : 30 ,
   },
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22 ,
+    marginTop: 20 ,
    
   },
   modalView: {
     margin: 40,
-    height : 400 ,
+    height :450 ,
     width : 350 ,
     backgroundColor: "white",
     borderRadius: 10,
@@ -276,7 +282,7 @@ const styles = StyleSheet.create({
     elevation: 10
   },
   button: {
-    borderRadius: 20,
+    borderRadius: 15,
     padding: 10,
     elevation: 2
   },
@@ -285,6 +291,7 @@ const styles = StyleSheet.create({
   },
   buttonClose: {
     backgroundColor: "#2196F3",
+    width : 100
   },
   textStyle: {
     color: "white",

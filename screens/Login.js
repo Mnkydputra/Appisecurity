@@ -6,8 +6,8 @@ import { Alert, Image, Keyboard, KeyboardAvoidingView, Text, TextInput, Touchabl
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 
 export default function Login({navigation,route}) {
-  const [npk , setNPK] = useState(null)
-  const [password , setPassword] = useState(null)
+  const [npk , setNPK] = useState('')
+  const [password , setPassword] = useState('')
   const [id_akun , setIdAkun] = useState("")
   const [loading , setLoading ] = useState(false)
 
@@ -49,8 +49,9 @@ export default function Login({navigation,route}) {
   //jika di tekan tombol login  maka jalankan fungsi ini
   const onLoginPress = async () => {
     setLoading(true)
-    if(npk == '' || password == ''){
-      alert('isi npk dan password')
+    if(npk === '' || password === ''){
+      alert('isi npk dan password');
+      setLoading(false)
     }else {
       var urlAksi = 'https://isecuritydaihatsu.com/api/cekAkun' ;
       fetch(urlAksi,{
@@ -100,8 +101,8 @@ export default function Login({navigation,route}) {
         <View style={styles.loginScreenContainer}>
           <View style={styles.loginFormView}>
             <Text style={styles.logoText}>ISECURITY</Text>
-            <TextInput onChangeText={(value) => setNPK(value)} placeholder="Username" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
-            <TextInput onChangeText={(value) => setPassword(value)} placeholder="Password" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true} />
+            <TextInput onChangeText={(value) => setNPK(value)} placeholder="NPK" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
+            <TextInput onChangeText={(value) => setPassword(value)} placeholder="PASSWORD" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true} />
             <Button buttonStyle={styles.loginButton} onPress={onLoginPress} title="Login" />
             <ActivityIndicator
                 animating={loading}
