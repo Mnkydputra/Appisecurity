@@ -5,31 +5,48 @@ const windowWidth = Dimensions.get('window').width;
 const  windowHeight = Dimensions.get('window').height;
 export default function  Home ({navigation,route}) {
   const [user , setUser] = useState({npk : '' , id_absen : '' , wilayah: '' , areaKerja : '' , jabatan: ''  , nama : ''})
-
   const [id_ , setId] = useState(null)
-  
+
+  const backAction = () => {
+    Alert.alert("Hold on!", "Are you sure you want to go back?", [
+      {
+        text: "Cancel",
+        onPress: () => null,
+        style: "cancel"
+      },
+      { text: "YES", onPress: () => BackHandler.exitApp() }
+    ]);
+    return true;
+  };
 
   useEffect(() => {
-    // const backAction = () => {
-    //   Alert.alert("Hold on!", "Are you sure you want to go back?", [
-    //     {
-    //       text: "Cancel",
-    //       onPress: () => null,
-    //       style: "cancel"
-    //     },
-    //     { text: "YES", onPress: () => BackHandler.exitApp() }
-    //   ]);
-    //   return true;
-    // };
 
-    // const backHandler = BackHandler.addEventListener(
-    //   "hardwareBackPress",
-    //   backAction
-    // );
+  //ambil data diri anggota untuk akses absensi 
+    const getParamsAbsensi = async () => {
+      const  status = await  AsyncStorage.getItem('id_akun');
+        setId(status);
+        var urlAksi = 'https://isecuritydaihatsu.com/api/datadiriAbsensi?id=' + status ;
+          fetch(urlAksi,{
+              headers : {
+                  'keys-isecurity' : 'isecurity' ,
+              } ,
+          })
+          .then((response) => response.json())
+          .then((json) => {
+            const hasil =  json.result ;
+            // console.log(hasil.id_biodata)
+            setUser({npk :  hasil.npk , id_absen : hasil.id_biodata , wilayah: hasil.wilayah , areaKerja : hasil.area_kerja , jabatan: hasil.jabatan , nama : hasil.nama })
+          })
+    }
+    getParamsAbsensi();
+  // end of ambil data diri 
 
-    // return () => backHandler.remove();
+   
+    BackHandler.addEventListener("hardwareBackPress", backAction);
 
-
+    return () =>
+      BackHandler.removeEventListener("hardwareBackPress", backAction)
+  
   }, []);
   
   const  logout = async() => {
@@ -38,25 +55,6 @@ export default function  Home ({navigation,route}) {
   }
 
 
-  //ambil data diri anggota untuk akses absensi 
-  const getParamsAbsensi = async () => {
-    const  status = await  AsyncStorage.getItem('id_akun');
-    setId(status);
-    var urlAksi = 'https://isecuritydaihatsu.com/api/datadiriAbsensi?id=' + status ;
-      fetch(urlAksi,{
-          headers : {
-              'keys-isecurity' : 'isecurity' ,
-          } ,
-      })
-      .then((response) => response.json())
-      .then((json) => {
-        const hasil =  json.result ;
-        // console.log(hasil.id_biodata)
-        setUser({npk :  hasil.npk , id_absen : hasil.id_biodata , wilayah: hasil.wilayah , areaKerja : hasil.area_kerja , jabatan: hasil.jabatan , nama : hasil.nama })
-      })
-  }
-  getParamsAbsensi();
-  // end of ambil data diri 
   
   
     return (
@@ -79,11 +77,14 @@ export default function  Home ({navigation,route}) {
             </TouchableOpacity>
         </View>
 
-
+        <TouchableOpacity onPress={()=> navigation.navigate('Profile', {
+              nama : 'dasep'
+            })}>
         <View style={styles.menuBox1}>
           <Image style={styles.icon} source={require("../img/policeman.png")}/>
           <Text style={styles.info}>Profile</Text>
         </View>
+        </TouchableOpacity>
 
         <TouchableOpacity>
         <View style={styles.menuBox} >

@@ -1,10 +1,9 @@
 import React, { useState , useEffect } from "react";
 
 // import styles from "./style";
-import { Alert, Image, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableWithoutFeedback, Pressable, View, StyleSheet , Button , ActivityIndicator} from "react-native";
+import { Alert, Image, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableWithoutFeedback, Pressable, View, StyleSheet , Button , ActivityIndicator , BackHandler} from "react-native";
 
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
-
 
 export default function Login({navigation,route}) {
   const [npk , setNPK] = useState(null)
@@ -12,19 +11,50 @@ export default function Login({navigation,route}) {
   const [id_akun , setIdAkun] = useState("")
   const [loading , setLoading ] = useState(false)
 
-  useEffect(() => {
-    
-  })
+
+  const backAction = () => {
+    Alert.alert("Hold on!", "Are you sure you want to go back?", [
+      {
+        text: "Cancel",
+        onPress: () => null,
+        style: "cancel"
+      },
+      { text: "YES", onPress: () => BackHandler.exitApp() }
+    ]);
+    return true;
+  };
+
+  useEffect(() => {  
+    //jika token login ada isinya maka program redirect ke Home 
+      const tokenLogin = async () => {
+        const value = await AsyncStorage.getItem('token');
+        const id = await AsyncStorage.getItem('id_akun');
+          if(value !== null){
+              navigation.navigate('Home',{
+                  id_user : id ,
+              })
+          }
+      } 
+
+      tokenLogin();
+      //end 
+
+      BackHandler.addEventListener("hardwareBackPress", backAction);
+
+      return () =>
+        BackHandler.removeEventListener("hardwareBackPress", backAction)
+  }, []);
+
+
   //jika di tekan tombol login  maka jalankan fungsi ini
   const onLoginPress = async () => {
-    
     setLoading(true)
     if(npk == '' || password == ''){
       alert('isi npk dan password')
     }else {
       var urlAksi = 'https://isecuritydaihatsu.com/api/cekAkun' ;
       fetch(urlAksi,{
-          method : 'POST'  ,
+          method : 'POST' ,
           headers : {
               'Content-Type' : 'application/x-www-form-urlencoded'  ,
               'keys-isecurity' : 'isecurity' ,
@@ -56,23 +86,13 @@ export default function Login({navigation,route}) {
               }
           }
       })
-    }
-
-    
+    }  
   };
 
+  //end login
 
-  const tokenLogin = async () => {
-      const value = await AsyncStorage.getItem('token');
-      const id = await AsyncStorage.getItem('id_akun');
-      if(value !== null){
-          navigation.navigate('Home',{
-              id_user : id ,
-          })
-      }
-  }
 
-  tokenLogin();
+
 
   return (
     <KeyboardAvoidingView style={styles.containerView} behavior="padding">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button , Dimensions , TextInput , ActivityIndicator} from 'react-native';
+import { Text, View, StyleSheet, Button , Dimensions , TextInput , ActivityIndicator, BackHandler , Modal , Alert , Pressable , Image } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import * as Location from 'expo-location';
 import { getDistance, getPreciseDistance } from 'geolib';;
@@ -13,20 +13,25 @@ export default function Absensi({navigation,route}) {
   const [hasilKorlap, setHasilKorlap] = useState(null);
   const [barcode ,setBarcode] = useState("");
   const [scanned, setScanned ] = useState(false);
+  const [informasi , setInformasi] = useState('');
   const [user , setUser] = useState({npk : route.params.npk , id_absen : route.params.id_akun , wilayah: route.params.wilayah , areaKerja : route.params.area_kerja , jabatan: route.params.jabatan  })
   const [loading , setLoading ] = useState(false)
 
   const [location, setLocation] = useState(null);
   const [locationPermission , hasPermissionLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [imageInfo , setImageInfo] = useState('');
   useEffect(() => {
+    
+
+    
     (async () => {
       let { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
 
       //ambil posisi user 
       let { statusLokasi } = await Location.requestForegroundPermissionsAsync();
-      
       //ijinkan mengakses lokasi user
       hasPermissionLocation(statusLokasi === 'granted');
 
@@ -35,6 +40,15 @@ export default function Absensi({navigation,route}) {
       setLokasi({latiUser : position.coords.latitude , longiUser : position.coords.longitude});
       // end of posisi user 
     })();
+
+
+    const handleBackPress = () => {
+      navigation.navigate('Home');
+      return true;
+    };
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+    return () =>
+    BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
   }, []);
 
 
@@ -119,10 +133,12 @@ export default function Absensi({navigation,route}) {
                         })
                       }
                 }else {
-                  alert("barcode tidak sesuai area kerja");
-                  console.log("barcode error")
+                  // alert("barcode tidak sesuai area kerja");
                   setLoading(false);
-                  navigation.navigate('Home')
+                  setModalVisible(true);
+                  setInformasi("Bercode tidak sesuai area kerja");
+                  setImageInfo("../img/success.png");
+                  // navigation.navigate('Home')
                 }
         })
         .catch((error)=> {
@@ -153,6 +169,37 @@ export default function Absensi({navigation,route}) {
   return (
     
     <View style={styles.container} >
+    <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText2}>Perhatian</Text>
+            <Image source={require(ImageInfo)} style={{width: 150, height: 150}}></Image>
+            <Text style={styles.modalText}>{informasi}</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles.textStyle}>Hide Modal</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+
+      <Pressable
+        style={[styles.button, styles.buttonOpen]}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={styles.textStyle}>Show Modal</Text>
+      </Pressable>
+
       <Text style={styles.info} >Absen Security Guard ADM</Text>
       <View>
       <ActivityIndicator
@@ -203,5 +250,54 @@ const styles = StyleSheet.create({
     height : 400 ,
     overflow : 'hidden' 
     // borderRadius : 30 ,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22 ,
+   
+  },
+  modalView: {
+    margin: 40,
+    height : 400 ,
+    width : 350 ,
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 40,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 14
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 10
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  },
+  modalText2: {
+    marginBottom: 15,
+    textAlign: "center" ,
+    fontSize : 30
   }
 })
