@@ -1,5 +1,6 @@
 import React, { useState ,Component  , useEffect  } from 'react';
-import { View, Text , TouchableOpacity , StyleSheet , Image , Dimensions , Button , BackHandler ,  Alert} from 'react-native';
+import { View, Text , TouchableOpacity , Image , Dimensions , Button , BackHandler ,  Alert} from 'react-native';
+import styles from '../src/component/styles.js';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 const windowWidth = Dimensions.get('window').width;
 const  windowHeight = Dimensions.get('window').height;
@@ -53,139 +54,82 @@ export default function  Home ({navigation,route}) {
     await AsyncStorage.removeItem('token');
     navigation.navigate('Login')
   }
-
-
-  
   
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text>ABSENSI KERJA ?</Text>
-            <TouchableOpacity onPress={()=> navigation.navigate('Absensi', {
-              nama : user.nama  ,
-              npk : user.npk ,
-              id_akun : user.id_biodata,
-              wilayah : user.wilayah ,
-              area_kerja : user.areaKerja ,
-              jabatan : user.jabatan
-            })}>
-                <View style={styles.linkAbsen}>
-                  <Image style={styles.scanIMG} source={require("../img/scan.png")}></Image>
-                  <Text  style={{ fontSize:18 }}>
-                    Scan QR Code</Text>
-                </View>
-            </TouchableOpacity>
-        </View>
-
-        <TouchableOpacity onPress={()=> navigation.navigate('Profile', {
-              nama : 'dasep'
-            })}>
-        <View style={styles.menuBox1}>
-          <Image style={styles.icon} source={require("../img/policeman.png")}/>
-          <Text style={styles.info}>Profile</Text>
-        </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-        <View style={styles.menuBox} >
-          <Image   style={styles.icon} source={require("../img/absensi.png")}/>
-          <Text style={styles.info}>Absensi</Text>
-        </View>
-      </TouchableOpacity>
-
-      <View style={styles.menuBox}>
-          <Image style={styles.icon} source={require("../img/inbox.png")}/>
-          <Text style={styles.info}>Inbox</Text>
-        </View>
-
-        <View style={styles.menuBox}>
-          <Image style={styles.icon} source={require("../img/courses.png")}/>
-          <Text style={styles.info}>Course</Text>
-        </View>
-
-        
-
-        <View style={styles.menuBox}>
-          <Image style={styles.icon} source={require("../img/courses.png")}/>
-          <Text style={styles.info}>Ijin</Text>
-        </View>
-
-        <View style={styles.menuBox}>
-          <Image style={styles.icon} source={require("../img/courses.png")}/>
-          <Text style={styles.info}>Patrol</Text>
-        </View>
-
-        <View>
-          <Text>{ id_ }</Text>
-          <TouchableOpacity>
-            <Button title='LOGOUT' onPress={logout} ></Button>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("Absensi", {
+                nama: user.nama,
+                npk: user.npk,
+                id_akun: user.id_biodata,
+                wilayah: user.wilayah,
+                area_kerja: user.areaKerja,
+                jabatan: user.jabatan,
+              })
+            }
+          >
+            <View style={styles.linkAbsen}>
+              <Image style={styles.scanIMG} source={require("../src/img/scan.png")}></Image>
+              <Text style={{ fontSize: 20 }}>Scaning QR Code</Text>
+            </View>
           </TouchableOpacity>
         </View>
 
+        <View style={styles.row}>
+          <TouchableOpacity>
+            <View style={[styles.menuBox, { backgroundColor: "#a6f081" }]}>
+              <Image style={styles.icon} source={require("../src/img/absensi.png")} />
+              <Text style={styles.info}>Absensi</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <View style={[styles.menuBox, { backgroundColor: "#f09981" }]}>
+              <Image style={styles.icon} source={require("../src/img/inbox.png")} />
+              <Text style={styles.info}>Inbox</Text>
+            </View>
+          </TouchableOpacity>
+
+          {/* <TouchableOpacity>
+            <View style={[styles.menuBox, { backgroundColor: "#a481f0" }]}>
+              <Image style={styles.icon} source={require("../img/absensi.png")} />
+              <Text style={styles.info}>Absensi</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <View style={[styles.menuBox, { backgroundColor: "#e781f0" }]}>
+              <Image style={styles.icon} source={require("../img/absensi.png")} />
+              <Text style={styles.info}>Absensi</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <View style={[styles.menuBox, { backgroundColor: "#f081a0" }]}>
+              <Image style={styles.icon} source={require("../img/absensi.png")} />
+              <Text style={styles.info}>Absensi</Text>
+            </View>
+          </TouchableOpacity> */}
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("Profile", {
+                nama: "dasep",
+              })
+            }
+          >
+            <View style={[styles.menuBox, { backgroundColor: "#f0db81" }]}>
+              <Image style={styles.icon} source={require("../src/img/policeman.png")} />
+              <Text style={styles.info}>Profile</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity>
+            <Button title="LOGOUT" onPress={logout}></Button>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
-
-
-const styles = StyleSheet.create({
-  container:{
-    flex: 10,
-    // marginTop : 10,
-    // marginLeft:10 ,
-    width : windowWidth ,
-    flexDirection: 'row',
-    flexWrap: 'wrap' ,
-    backgroundColor : '#fff'
-  },
-  menuBox:{
-    backgroundColor: "#F08080",
-    width:100,
-    height:100,
-    borderRadius:30 ,
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin:18
-  },
-  menuBox1:{
-    backgroundColor: "#ccc",
-    width:100,
-    height:100,
-    borderRadius:30 ,
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin:18
-  },
-  header:{
-    backgroundColor: "#87CEFA",
-    width:400,
-    height:100,
-    marginLeft:4 ,
-    borderRadius:20 ,
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin:12
-  },
-  linkAbsen : {
-    backgroundColor: "#fff",
-    width:180,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius:20 ,
-    height:50, 
-    flexDirection: 'row',
-    flexWrap: 'wrap' ,
-  },
-  icon: {
-    width:60,
-    height:60,
-  },
-  scanIMG : {
-    width:30,
-    marginTop:20,
-    height:30,
-  },
-  info:{
-    fontSize:14,
-    color: "#fff",
-  }
-});

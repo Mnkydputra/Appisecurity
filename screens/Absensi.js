@@ -179,7 +179,7 @@ export default function Absensi({navigation,route}) {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText2}>GAGAL</Text>
-            <Image source={require("../img/cancel.png")} style={{width: 80, height: 80 , marginBottom:12}}></Image>
+            <Image source={require("../src/img/cancel.png")} style={{width: 80, height: 80 , marginBottom:12}}></Image>
             <View style={{flex : 1}}>
               <Text>Nama             : {user.nama} </Text>
               

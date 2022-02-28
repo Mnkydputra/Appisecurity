@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { TouchableOpacity, StyleSheet, View, BackHandler } from "react-native";
-// import { Alert, Image, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableWithoutFeedback, Pressable, StyleSheet, Button, ActivityIndicator, BackHandler } from "react-native";
-import { Text } from "react-native-paper";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import Background from "../src/component/Background";
-import Logo from "../src/component/Logo";
-import Header from "../src/component/Header";
-import Button from "../src/component/Button";
-import TextInput from "../src/component/TextInput";
-import BackButton from "../src/component/BackButton";
-import { theme } from "../src/core/theme";
 
+
+import { Alert, Image, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableWithoutFeedback, Pressable, View, StyleSheet, Button, ActivityIndicator, BackHandler } from "react-native";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login({ navigation }) {
   const [npk, setNPK] = useState("");
@@ -97,35 +90,62 @@ export default function Login({ navigation }) {
   //end login
 
   return (
-    <Background>
-      <BackButton goBack={navigation.goBack} />
-      <Logo />
-      <Header>Welcome back.</Header>
-      <TextInput label="NPK" onChangeText={(value) => setNPK(value)} placeholder="NPK" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
-      <TextInput label="Password" onChangeText={(value) => setPassword(value)} placeholder="PASSWORD" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true} />
-      <Button mode="contained" onPress={onLoginPress}>
-        Login
-      </Button>
-    </Background>
+    <KeyboardAvoidingView style={styles.containerView} behavior="padding">
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.loginScreenContainer}>
+          <View style={styles.loginFormView}>
+            <Text style={styles.logoText}>ISECURITY</Text>
+            <TextInput onChangeText={(value) => setNPK(value)} placeholder="NPK" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
+            <TextInput onChangeText={(value) => setPassword(value)} placeholder="PASSWORD" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true} />
+            <Button buttonStyle={styles.loginButton} onPress={onLoginPress} title="Login" />
+            <ActivityIndicator animating={loading} color="red" size="large"></ActivityIndicator>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  forgotPassword: {
-    width: "100%",
-    alignItems: "flex-end",
-    marginBottom: 24,
+  containerView: {
+    flex: 1,
+    alignItems: "center",
   },
-  row: {
-    flexDirection: "row",
-    marginTop: 4,
+  loginScreenContainer: {
+    flex: 1,
   },
-  forgot: {
-    fontSize: 13,
-    color: theme.colors.secondary,
+  logoText: {
+    fontSize: 40,
+    fontWeight: "800",
+    marginTop: 150,
+    marginBottom: 30,
+    textAlign: "center",
   },
-  link: {
-    fontWeight: "bold",
-    color: theme.colors.primary,
+  loginFormView: {
+    flex: 1,
+  },
+  loginFormTextInput: {
+    height: 43,
+    fontSize: 14,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#eaeaea",
+    backgroundColor: "#fafafa",
+    paddingLeft: 10,
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  loginButton: {
+    backgroundColor: "#3897f1",
+    borderRadius: 5,
+    height: 45,
+    marginTop: 10,
+    width: 350,
+    alignItems: "center",
+  },
+  fbLoginButton: {
+    height: 45,
+    marginTop: 10,
+    backgroundColor: "transparent",
   },
 });
