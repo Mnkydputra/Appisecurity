@@ -10,6 +10,8 @@ import Login from './screens/Login';
 import Profile from './screens/Profile';
 import Status from './screens/Status';
 import Start from './screens/StartScreen';
+import LaporanAbsen from './screens/LaporanAbsen' ;
+import ViewAbsen from './screens/ViewAbsen' ;
 const Stack = createStackNavigator();
 
 
@@ -29,6 +31,8 @@ export default function App() {
       <Stack.Screen name='Profile'  component={Profile}></Stack.Screen>
       <Stack.Screen name='Status' component={Status}></Stack.Screen>
       <Stack.Screen name='Absensi' component={Absensi}></Stack.Screen>
+      <Stack.Screen name='ViewAbsen' component={ViewAbsen}></Stack.Screen>
+      <Stack.Screen name='LaporanAbsen' component={LaporanAbsen}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -24,7 +24,7 @@ export default function  Home ({navigation,route}) {
 
   //ambil data diri anggota untuk akses absensi 
     const getParamsAbsensi = async () => {
-      const  status = await  AsyncStorage.getItem('id_akun');
+      const  status = await  AsyncStorage.getItem('token');
         setId(status);
         var urlAksi = 'https://isecuritydaihatsu.com/api/datadiriAbsensi?id=' + status ;
           fetch(urlAksi,{
@@ -63,7 +63,7 @@ export default function  Home ({navigation,route}) {
               navigation.navigate("Absensi", {
                 nama: user.nama,
                 npk: user.npk,
-                id_akun: user.id_biodata,
+                id_akun: user.id_absen,
                 wilayah: user.wilayah,
                 area_kerja: user.areaKerja,
                 jabatan: user.jabatan,
@@ -78,7 +78,16 @@ export default function  Home ({navigation,route}) {
         </View>
 
         <View style={styles.row}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() =>
+              navigation.navigate("LaporanAbsen", {
+                nama: user.nama,
+                npk: user.npk,
+                id_akun: user.id_absen,
+                wilayah: user.wilayah,
+                area_kerja: user.areaKerja,
+                jabatan: user.jabatan,
+              })
+            }>
             <View style={[styles.menuBox, { backgroundColor: "#a6f081" }]}>
               <Image style={styles.icon} source={require("../src/img/absensi.png")} />
               <Text style={styles.info}>Absensi</Text>

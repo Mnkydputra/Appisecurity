@@ -13,7 +13,9 @@ export default function Absensi({navigation,route}) {
   const [hasilKorlap, setHasilKorlap] = useState(null);
   const [barcode ,setBarcode] = useState("");
   const [scanned, setScanned ] = useState(false);
-  const [informasi , setInformasi] = useState({gambar :'' , statusAbsensi: '' , keterangan : ''});
+  const [titleModal , setTitleModal] = useState("");
+  const [icon,setIcon] = useState(null);
+  const [informasi , setInformasi] = useState({gambar :'' , statusAbsensi: '' , keterangan : '' , status : '' , waktu : ''});
   const [user , setUser] = useState({npk : route.params.npk , id_absen : route.params.id_akun , wilayah: route.params.wilayah , areaKerja : route.params.area_kerja , jabatan: route.params.jabatan  , nama : route.params.nama })
   const [loading , setLoading ] = useState(false)
 
@@ -42,7 +44,8 @@ export default function Absensi({navigation,route}) {
 
 
     const handleBackPress = () => {
-      navigation.navigate('Home');
+      // navigation.navigate('Home');
+      navigation.goBack();
       return true;
     };
     BackHandler.addEventListener('hardwareBackPress', handleBackPress);
@@ -101,7 +104,7 @@ export default function Absensi({navigation,route}) {
         })
         .then((response)=> response.json())
         .then((json) => {
-           
+            // alert(json.message)
                 if(json.message == 1){
                         // hitung jarak antar user dan titik barcode      
                       var distance = getPreciseDistance(
@@ -124,18 +127,22 @@ export default function Absensi({navigation,route}) {
                             } ,
                             body : "npk=" + user.npk +"&area_kerja=" + user.areaKerja +"&wilayah=" + user.wilayah +"&id_absen=" + user.id_absen  
                         })
-                        .then((response) => response.json())
+                        .then((response) => response.json() )
                         .then((json) => {
-                            alert(json.message);
+                            //alert(json.message);
+                            // navigation.navigate('Home')
                             setLoading(false);
-                            navigation.navigate('Home')
+                            setModalVisible(true);
+                            setTitleModal("INFORMASI");
+                            setInformasi({ keterangan : json.message , status : json.info , waktu : json.time });
+                            setIcon('true');
                         })
                       }
                 }else {
                   // alert("barcode tidak sesuai area kerja");
                   setLoading(false);
                   setModalVisible(true);
-                  setInformasi({keterangan : "Bercode tidak sesuai area kerja"});
+                  setInformasi({keterangan : "Bercode tidak sesuai area kerja" , status : json.info });
                   // navigation.navigate('Home')
                 }
         })
@@ -161,11 +168,12 @@ export default function Absensi({navigation,route}) {
   }
 
   
+   var icon2 = "false" 
+    ? require('../src/img/success.png')
+    : require('../src/img/warning.png');
 
-  
-// useState({npk : '' , id_absen : '' , wilayah: '' , areaKerja : '' , jabatan:'ANGGOTA'  })
   return (
-    
+  
     <View style={styles.container} >
     <Modal
         animationType="slide"
@@ -178,14 +186,14 @@ export default function Absensi({navigation,route}) {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText2}>GAGAL</Text>
-            <Image source={require("../src/img/cancel.png")} style={{width: 80, height: 80 , marginBottom:12}}></Image>
+            <Text style={styles.modalText2}>{titleModal}</Text>
+            
+            <Image source={ icon2 } style={{width: 80, height: 80 , marginBottom:12}}></Image>
             <View style={{flex : 1}}>
               <Text>Nama             : {user.nama} </Text>
-              
               <Text>NPK                : {user.npk} </Text>
-              <Text>Status            : Absen Masuk </Text>
-              <Text>Waktu            : 2020-02-27 17:00:00</Text>
+              <Text>Status            : {informasi.status} </Text>
+              <Text>Waktu            : {informasi.waktu}</Text>
               <Text >Keterangan    : {informasi.keterangan} </Text>
             </View>
             <Pressable
@@ -227,6 +235,7 @@ export default function Absensi({navigation,route}) {
         <Text>{"area kerja : " + user.areaKerja }</Text>
         <Text>{"wilayah : " + user.wilayah }</Text>
         <Text>{"jabatan : " + user.jabatan }</Text>
+        <Text>{"id akun : " + user.id_absen }</Text>
         
       </View>
     </View>
