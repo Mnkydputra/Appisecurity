@@ -2,26 +2,28 @@ import React, { Component  ,useState , useEffect } from 'react';
 import { View, Text , StyleSheet , BackHandler ,FlatList ,ScrollView } from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 
-import { Table, TableWrapper, Row , Rows } from "react-native-table-component";
+import { DataTable } from 'react-native-paper';
 
-
+const optionsPerPage = [2, 3, 4];
 export default function ViewAbsen ({navigation,route}) {
     
-    const [dataAbsen , setDataAbsen] = useState([])
+    const [dataAbsen , setDataAbsen] = useState('')
     const [tableHead, setTableHead] = useState(['Tanggal', 'IN', 'OUT', 'KET']);
     const[tableData , settbl] = useState([
-        ['1', '2', '3', '4'],
-        ['a', 'b', 'c', 'd'],
-        ['1', '2', '3', '2'],
-        ['a', 'b', 'c', 'd'] 
+        ['2022-02-02', '18:00:00', '06:00:00', 'HADIR'],
+        ['2022-02-02', '18:00:00', '06:00:00', 'HADIR'],
+        ['2022-02-02', '18:00:00', '06:00:00', 'HADIR'],
+        ['2022-02-02', '18:00:00', '06:00:00', 'HADIR'] 
     ])
+    const [page, setPage] = useState(0);
+    const [itemsPerPage, setItemsPerPage] = useState(optionsPerPage[0]);
     useEffect(() => {
 
     //ambil data absensi anggota
     const getDataAbsensi = async  () => {
         const  bulan  =  route.params.bulan ;
         const  npk = await  AsyncStorage.getItem('token');
-          var  urlAksi = 'https://isecuritydaihatsu.com/api/ambil_absen?bulan=' + bulan + '&npk=' + route.params.npk ;
+          var  urlAksi = 'https://isecuritydaihatsu.com/api/ambil_absen?bulan=' + bulan + '&npk=' + route.params.npk + '&wilayah=' + route.params.wilayah  ;
             fetch(urlAksi,{
                 headers : {
                     'keys-isecurity' : 'isecurity' ,
@@ -32,8 +34,9 @@ export default function ViewAbsen ({navigation,route}) {
                 if(json.status === 'success'){
                     // console.log(json.result);
                     setDataAbsen(json.result)
+                    // setDataAbsen(JSON.stringify(json.result))
                 }else {
-                    console.log('not found item');
+                    setDataAbsen(json.status);
                 }
             })
       }
@@ -47,24 +50,64 @@ export default function ViewAbsen ({navigation,route}) {
         BackHandler.addEventListener('hardwareBackPress', handleBackPress);
         return () =>
         BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
-  }, []);
+        setPage(0);
+  }, [itemsPerPage]);
 
-
-
+//   console.log(dataAbsen);
+// data={tableData}
+// data={dataAbsen}
+//borderStyle={{borderWidth: 1, borderColor: '#ffa1d2'}}
     return (
-        <View style={styles.container}>
-        <ScrollView horizontal={true}>
-        <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
-          <Row data={tableHead} style={styles.head} textStyle={styles.text}/>
-          <Rows data={tableData} textStyle={styles.text}/>
-        </Table>
-        </ScrollView>
-      </View>
+        <View style={{flex : 1  ,marginTop:50}}>
+            <DataTable>
+            <DataTable.Header>
+                <DataTable.Title>Tanggal</DataTable.Title>
+                <DataTable.Title>IN</DataTable.Title>
+                <DataTable.Title>OUT</DataTable.Title>
+                <DataTable.Title>KET</DataTable.Title>
+            </DataTable.Header>
+           
+            <FlatList 
+                data={dataAbsen}
+                renderItem = {({item}) => (
+                    <DataTable.Row>
+                        <DataTable.Cell>{item.in_date}</DataTable.Cell>
+                        <DataTable.Cell>{item.in_time}</DataTable.Cell>
+                        <DataTable.Cell>{item.out_time}</DataTable.Cell>
+                        <DataTable.Cell>{item.ket}</DataTable.Cell>
+                    </DataTable.Row>
+                )}
+                keyExtractor={(item, index) => index.toString()}
+            />
+            {/* <DataTable.Pagination
+                        page={page}
+                        numberOfPages={3}
+                        onPageChange={(page) => setPage(page)}
+                        label="1-2 of 6"
+                        optionsPerPage={optionsPerPage}
+                        itemsPerPage={itemsPerPage}
+                        setItemsPerPage={setItemsPerPage}
+                        showFastPagination
+                        optionsLabel={'Rows per page'}
+                    /> */}
+            </DataTable>
+    </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-    head: { height: 40, backgroundColor: '#f1f8ff' },
-    text: { margin: 6 }
+    container: { 
+        flex: 1,
+        padding: 18,
+        paddingTop: 35,
+        backgroundColor: '#ffffff' 
+      },
+      HeadStyle: { 
+        height: 50,
+        alignContent: "center",
+        backgroundColor: '#ffe0f0'
+      },
+      TableText: { 
+        margin: 10
+      }
   });

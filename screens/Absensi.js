@@ -113,10 +113,10 @@ export default function Absensi({navigation,route}) {
                       );
                       console.log(`Jarak ${distance} Meter`);
                       const jarak =  distance ;
-                      if(jarak > 2000){
+                      if(jarak > 60){
                         alert("jarak dengan  " + user.areaKerja + " sejauh " + jarak + " meter");
                         setLoading(false);
-                        navigation.navigate('Home')
+                        // navigation.navigate('Home')
                       }else {
                         var urlAksi = 'https://isecuritydaihatsu.com/api/input_absen' ;
                         fetch(urlAksi,{

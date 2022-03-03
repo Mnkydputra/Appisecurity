@@ -59,7 +59,8 @@ export default function Profile({navigation , route }) {
             renderItem = {({item}) => (
             <TouchableOpacity onPress={() => navigation.navigate('ViewAbsen' , {
                   bulan : item.id ,
-                  npk : route.params.npk
+                  npk : route.params.npk ,
+                  wilayah : route.params.wilayah 
                 })} >
                 <View  style={styles.listItem} >
                   <Text >{item.bulan}</Text>

@@ -2,8 +2,7 @@ import React, { useState ,Component  , useEffect  } from 'react';
 import { View, Text , TouchableOpacity , Image , Dimensions , Button , BackHandler ,  Alert} from 'react-native';
 import styles from '../src/component/styles.js';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
-const windowWidth = Dimensions.get('window').width;
-const  windowHeight = Dimensions.get('window').height;
+
 export default function  Home ({navigation,route}) {
   const [user , setUser] = useState({npk : '' , id_absen : '' , wilayah: '' , areaKerja : '' , jabatan: ''  , nama : ''})
   const [id_ , setId] = useState(null)
