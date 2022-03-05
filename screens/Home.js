@@ -21,7 +21,19 @@ export default function  Home ({navigation,route}) {
   };
 
   useEffect(() => {
+    //jika token login ada isinya maka program redirect ke Home
+    const tokenLogin = async () => {
+      const value = await AsyncStorage.getItem("token");
+      const id = await AsyncStorage.getItem("id_akun");
+      if (value === null) {
+        navigation.navigate("Login");
+      }else if(value === null){
 
+      }
+      console.log(value);
+    };
+    tokenLogin();
+    //end
   //ambil data diri anggota untuk akses absensi 
     const getParamsAbsensi = async () => {
       const  status = await  AsyncStorage.getItem('token');
@@ -51,6 +63,20 @@ export default function  Home ({navigation,route}) {
   const  logout = async() => {
     await AsyncStorage.removeItem('token');
     navigation.navigate('Login')
+  }
+
+  const patrol = async() => {
+     const status =  await AsyncStorage.removeItem('patrol');
+     if(status === 'Y'){
+     Alert.alert('Perhatian' , 'Patrol Hanya untuk danru');
+    }else {
+      Alert.alert('Perhatian' , 'Patrol Hanya untuk danru');
+    }
+    console.log(status);
+  }
+
+  const informasi = async() => {
+    alert('Oops , sistem masih pengembangan');
   }
   
     return (
@@ -84,7 +110,22 @@ export default function  Home ({navigation,route}) {
           </TouchableOpacity>
         </View>
 
+
         <View style={styles.row}>
+        
+        <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("Profile", {
+                nama: "dasep",
+              })
+            }
+          >
+            <View style={[styles.menuBox, { backgroundColor: "#f0db81" }]}>
+              <Image style={styles.icon} source={require("../src/img/policeman.png")} />
+              <Text style={styles.info}>Profile</Text>
+            </View>
+          </TouchableOpacity>
+
           <TouchableOpacity onPress={() =>
               navigation.navigate("LaporanAbsen", {
                 nama: user.nama,
@@ -101,41 +142,30 @@ export default function  Home ({navigation,route}) {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={informasi}>
             <View style={[styles.menuBox, { backgroundColor: "#f09981" }]}>
               <Image style={styles.icon} source={require("../src/img/inbox.png")} />
               <Text style={styles.info}>Inbox</Text>
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("Profile", {
-                nama: "dasep",
-              })
-            }
-          >
-            <View style={[styles.menuBox, { backgroundColor: "#f0db81" }]}>
-              <Image style={styles.icon} source={require("../src/img/policeman.png")} />
-              <Text style={styles.info}>Profile</Text>
-            </View>
-          </TouchableOpacity>
+          
 
-          <TouchableOpacity>
-            <View style={[styles.menuBox, { backgroundColor: "#a64dff" }]}>
+          <TouchableOpacity onPress={patrol}>
+            <View style={[styles.menuBox, { backgroundColor: "#ff6600" }]}>
               <Image style={styles.icon} source={require("../src/img/security-guard.png")} />
               <Text style={styles.info}>I-Patrol</Text>
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
-            <View style={[styles.menuBox, { backgroundColor: "#595959" }]}>
-              <Image style={styles.icon} source={require("../src/img/inbox.png")} />
+          <TouchableOpacity onPress={informasi}>
+            <View style={[styles.menuBox, { backgroundColor: "#a64dff" }]}>
+              <Image style={styles.icon} source={require("../src/img/night-shift.png")} />
               <Text style={styles.info}>Ijin</Text>
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={informasi}>
             <View style={[styles.menuBox, { backgroundColor: "#ff80d5" }]}>
               <Image style={styles.icon} source={require("../src/img/online-course.png")} />
               <Text style={styles.info}>Course</Text>
