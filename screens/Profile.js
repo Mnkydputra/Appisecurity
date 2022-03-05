@@ -18,7 +18,6 @@ export default function Profile({navigation , route }) {
   }
 
     useEffect(() => {
-
         const getBiodata = async () => {
             const  id_akun = await  AsyncStorage.getItem('id_akun');
             console.log(id_akun)
@@ -55,11 +54,16 @@ export default function Profile({navigation , route }) {
           <BackButton goBack={navigation.goBack} />
           <View style={styles.btn}>
             <View style={{ marginRight: 4 }}>
-              <Button mode="contained" onPress={() => navigation.navigate("Profile")}>
-                Biodata
+              <Button  mode="contained" onPress={() => navigation.navigate("Profile")}>
+                Profile
               </Button>
               <Button mode="contained" onPress={() => navigation.navigate("Status")}>
-                Biodata
+               Status
+              </Button>
+              <Button mode="contained"  onPress={()=> navigation.navigate('Poto' , {
+              nama : biodata.nama 
+              })}>
+                Poto
               </Button>
             </View>
           </View>

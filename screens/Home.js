@@ -2,7 +2,8 @@ import React, { useState ,Component  , useEffect  } from 'react';
 import { View, Text , TouchableOpacity , Image , Dimensions , Button , BackHandler ,  Alert} from 'react-native';
 import styles from '../src/component/styles.js';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
-
+import AnimatedSplash from "react-native-animated-splash-screen";
+import Icon from 'react-native-vector-icons/FontAwesome';
 export default function  Home ({navigation,route}) {
   const [user , setUser] = useState({npk : '' , id_absen : '' , wilayah: '' , areaKerja : '' , jabatan: ''  , nama : ''})
   const [id_ , setId] = useState(null)
@@ -34,16 +35,14 @@ export default function  Home ({navigation,route}) {
           .then((response) => response.json())
           .then((json) => {
             const hasil =  json.result ;
-            // console.log(hasil.id_biodata)
+            // console.log(hasil)
             setUser({npk :  hasil.npk , id_absen : hasil.id_biodata , wilayah: hasil.wilayah , areaKerja : hasil.area_kerja , jabatan: hasil.jabatan , nama : hasil.nama })
           })
     }
     getParamsAbsensi();
   // end of ambil data diri 
 
-   
     BackHandler.addEventListener("hardwareBackPress", backAction);
-
     return () =>
       BackHandler.removeEventListener("hardwareBackPress", backAction)
   
@@ -56,6 +55,15 @@ export default function  Home ({navigation,route}) {
   
     return (
       <View style={styles.container}>
+      <View  style={styles.headText} >
+        <Text style={{fontWeight:'bold'}}>
+        <Icon
+          name="user-circle"
+          backgroundColor="#3b5998" 
+          style={{fontSize:25 , marginTop:2}}
+        ></Icon>  Hai , <Text style={{textDecorationLine: 'underline'}}>{user.nama}</Text> 
+        </Text>
+      </View>
         <View style={styles.header}>
           <TouchableOpacity
             onPress={() =>
@@ -100,26 +108,6 @@ export default function  Home ({navigation,route}) {
             </View>
           </TouchableOpacity>
 
-          {/* <TouchableOpacity>
-            <View style={[styles.menuBox, { backgroundColor: "#a481f0" }]}>
-              <Image style={styles.icon} source={require("../img/absensi.png")} />
-              <Text style={styles.info}>Absensi</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity>
-            <View style={[styles.menuBox, { backgroundColor: "#e781f0" }]}>
-              <Image style={styles.icon} source={require("../img/absensi.png")} />
-              <Text style={styles.info}>Absensi</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity>
-            <View style={[styles.menuBox, { backgroundColor: "#f081a0" }]}>
-              <Image style={styles.icon} source={require("../img/absensi.png")} />
-              <Text style={styles.info}>Absensi</Text>
-            </View>
-          </TouchableOpacity> */}
           <TouchableOpacity
             onPress={() =>
               navigation.navigate("Profile", {
@@ -132,6 +120,28 @@ export default function  Home ({navigation,route}) {
               <Text style={styles.info}>Profile</Text>
             </View>
           </TouchableOpacity>
+
+          <TouchableOpacity>
+            <View style={[styles.menuBox, { backgroundColor: "#a64dff" }]}>
+              <Image style={styles.icon} source={require("../src/img/security-guard.png")} />
+              <Text style={styles.info}>I-Patrol</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <View style={[styles.menuBox, { backgroundColor: "#595959" }]}>
+              <Image style={styles.icon} source={require("../src/img/inbox.png")} />
+              <Text style={styles.info}>Ijin</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <View style={[styles.menuBox, { backgroundColor: "#ff80d5" }]}>
+              <Image style={styles.icon} source={require("../src/img/online-course.png")} />
+              <Text style={styles.info}>Course</Text>
+            </View>
+          </TouchableOpacity>
+
         </View>
         <View>
           <TouchableOpacity>

@@ -1,6 +1,12 @@
 import React, { Component , useState , useEffect } from 'react';
-import { View, Text , StyleSheet , Button} from 'react-native';
+import { View, Text , StyleSheet } from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
+import BackButton from "../src/component/BackButton";
+import Background from "../src/component/Background";
+import Logo from "../src/component/Logo";
+import Header from "../src/component/Header";
+import Button from "../src/component/Button";
+import Paragraph from "../src/component/Paragraph";
 export default function Status({navigation , route }) {
     const [status , setStatus] = useState({
         id_employee: '',
@@ -48,13 +54,21 @@ export default function Status({navigation , route }) {
 
     }, []);
     return (
+      <Background>
         <View style={styles.container}>
         <View style={styles.btn}>
-        <View style={{marginRight:4}}>
-                    <Button  title='Biodata' onPress={()=> navigation.navigate('Profile')}></Button>
-        </View>
-        <View style={{marginLeft:4}} >
-            <Button title='Status'  onPress={()=> navigation.navigate('Status')}></Button>
+        <View style={{ marginRight: 4 }}>
+              <Button  mode="contained" onPress={() => navigation.navigate("Profile")}>
+                Profile
+              </Button>
+              <Button mode="contained" onPress={() => navigation.navigate("Status")}>
+               Status
+              </Button>
+              <Button mode="contained"  onPress={()=> navigation.navigate('Poto' , {
+              nama : status.nama 
+              })}>
+                Poto
+              </Button>
         </View>
         </View>
             <View>
@@ -72,6 +86,8 @@ export default function Status({navigation , route }) {
 
             </View>
         </View>
+      </Background>
+
     );
 
   }

@@ -28,7 +28,7 @@ export default StyleSheet.create({
     borderRadius: 25,
     alignItems: "center",
     justifyContent: "center",
-    margin: 10,
+    margin: windowWidth /  25,
   },
   linkAbsen: {
     backgroundColor: "#87CEFA",
@@ -54,5 +54,11 @@ export default StyleSheet.create({
   info: {
     fontSize: 14,
     color: "#fff",
+  },
+  headText : {
+    margin : 15 ,
+    fontSize : 26 ,
+    fontWeight : 'bold' ,
+    
   },
 });

@@ -1,5 +1,5 @@
 import React, { Component  ,useState , useEffect } from 'react';
-import { View, Text , StyleSheet , BackHandler ,FlatList ,ScrollView } from 'react-native';
+import { View, Text , StyleSheet , BackHandler ,FlatList ,ScrollView , Image ,ActivityIndicator} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 
 import { DataTable } from 'react-native-paper';
@@ -7,16 +7,19 @@ import { DataTable } from 'react-native-paper';
 const optionsPerPage = [2, 3, 4];
 export default function ViewAbsen ({navigation,route}) {
     
-    const [dataAbsen , setDataAbsen] = useState('')
+    const [dataAbsen , setDataAbsen] = useState('');
+    const [load,setLoading] = useState(true)
     const [tableHead, setTableHead] = useState(['Tanggal', 'IN', 'OUT', 'KET']);
-    const[tableData , settbl] = useState([
-        ['2022-02-02', '18:00:00', '06:00:00', 'HADIR'],
-        ['2022-02-02', '18:00:00', '06:00:00', 'HADIR'],
-        ['2022-02-02', '18:00:00', '06:00:00', 'HADIR'],
-        ['2022-02-02', '18:00:00', '06:00:00', 'HADIR'] 
-    ])
     const [page, setPage] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(optionsPerPage[0]);
+    const [align, setAlign] = useState('center');
+    const [alignsecond, setAlignsecond] = useState(false);
+  
+    setTimeout(() => {
+      setAlign('flex-start'), setAlignsecond(true);
+    }, 3000);
+
+
     useEffect(() => {
 
     //ambil data absensi anggota
@@ -58,8 +61,19 @@ export default function ViewAbsen ({navigation,route}) {
 // data={dataAbsen}
 //borderStyle={{borderWidth: 1, borderColor: '#ffa1d2'}}
     return (
-        <View style={{flex : 1  ,marginTop:50}}>
-            <DataTable>
+       
+        
+    <View style={{flex : 1  ,marginTop:50}}>
+    <View>
+       <ActivityIndicator
+                animating={true}
+                color ='red' 
+                size = 'large'
+            ></ActivityIndicator>
+    </View>
+      {!alignsecond ? null : (
+         
+        <DataTable>
             <DataTable.Header>
                 <DataTable.Title>Tanggal</DataTable.Title>
                 <DataTable.Title>IN</DataTable.Title>
@@ -79,6 +93,10 @@ export default function ViewAbsen ({navigation,route}) {
                 )}
                 keyExtractor={(item, index) => index.toString()}
             />
+            </DataTable>
+      )}
+      
+            
             {/* <DataTable.Pagination
                         page={page}
                         numberOfPages={3}
@@ -90,7 +108,7 @@ export default function ViewAbsen ({navigation,route}) {
                         showFastPagination
                         optionsLabel={'Rows per page'}
                     /> */}
-            </DataTable>
+            
     </View>
     );
 }
