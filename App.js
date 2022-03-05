@@ -12,6 +12,7 @@ import Status from './screens/Status';
 import Start from './screens/StartScreen';
 import LaporanAbsen from './screens/LaporanAbsen' ;
 import ViewAbsen from './screens/ViewAbsen' ;
+import Poto from './screens/Poto' ;
 const Stack = createStackNavigator();
 
 
@@ -27,8 +28,9 @@ export default function App() {
       >
       <Stack.Screen name='Start'  component={Start}></Stack.Screen>
       <Stack.Screen name='Login'  component={Login}></Stack.Screen>
-      <Stack.Screen name='Home'  component={Home}></Stack.Screen>
+      <Stack.Screen name='Home'   component={Home}></Stack.Screen>
       <Stack.Screen name='Profile'  component={Profile}></Stack.Screen>
+      <Stack.Screen name='Poto'  component={Poto}></Stack.Screen>
       <Stack.Screen name='Status' component={Status}></Stack.Screen>
       <Stack.Screen name='Absensi' component={Absensi}></Stack.Screen>
       <Stack.Screen name='ViewAbsen' component={ViewAbsen}></Stack.Screen>
