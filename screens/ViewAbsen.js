@@ -1,115 +1,125 @@
 import React, { Component  ,useState , useEffect } from 'react';
-import { View, Text , StyleSheet , BackHandler ,FlatList ,ScrollView , Image ,ActivityIndicator} from 'react-native';
+import { View, Text , StyleSheet , BackHandler ,FlatList ,ScrollView , Image ,ActivityIndicator , Modal , Button} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
-
 import { DataTable } from 'react-native-paper';
 
 const optionsPerPage = [2, 3, 4];
 export default function ViewAbsen ({navigation,route}) {
     
     const [dataAbsen , setDataAbsen] = useState('');
-    const [load,setLoading] = useState(true)
+    const [loading,setLoading] = useState(true)
     const [tableHead, setTableHead] = useState(['Tanggal', 'IN', 'OUT', 'KET']);
     const [page, setPage] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(optionsPerPage[0]);
     const [align, setAlign] = useState('center');
     const [alignsecond, setAlignsecond] = useState(false);
-  
-    setTimeout(() => {
-      setAlign('flex-start'), setAlignsecond(true);
-    }, 3000);
 
-
-    useEffect(() => {
-
-    //ambil data absensi anggota
-    const getDataAbsensi = async  () => {
-        const  bulan  =  route.params.bulan ;
-        const  npk = await  AsyncStorage.getItem('token');
-          var  urlAksi = 'https://isecuritydaihatsu.com/api/ambil_absen?bulan=' + bulan + '&npk=' + route.params.npk + '&wilayah=' + route.params.wilayah  ;
-            fetch(urlAksi,{
-                headers : {
-                    'keys-isecurity' : 'isecurity' ,
-                } ,
-            })
-            .then((response) => response.json())
-            .then((json) => {
-                if(json.status === 'success'){
-                    // console.log(json.result);
-                    setDataAbsen(json.result)
-                    // setDataAbsen(JSON.stringify(json.result))
-                }else {
-                    setDataAbsen(json.status);
+  useEffect(() => {
+                //ambil data absensi anggota
+                const getDataAbsensi = async  () => {
+                  const  bulan  =  route.params.bulan ;
+                  const  npk = await  AsyncStorage.getItem('token');
+                    var  urlAksi = 'https://isecuritydaihatsu.com/api/ambil_absen?bulan=' + bulan + '&npk=' + route.params.npk + '&wilayah=' + route.params.wilayah  ;
+                      fetch(urlAksi,{
+                          headers : {
+                              'keys-isecurity' : 'isecurity' ,
+                          } ,
+                      })
+                      .then((response) => response.json())
+                      .then((json) => {
+                        // console.log(json);
+                          if(json.status === 'success'){
+                              // console.log(json.result);
+                              setDataAbsen(json.result)
+                              // console.log(dataAbsen);
+                          }else {
+                              setDataAbsen(json.status);
+                              console.log(json.status);
+                          }
+                      })
                 }
-            })
-      }
-      getDataAbsensi();
-      // end of ambil data diri 
+                getDataAbsensi();
+                // end of ambil data absensi
 
         const handleBackPress = () => {
           navigation.goBack();
+          setDataAbsen(null);
           return true;
         };
         BackHandler.addEventListener('hardwareBackPress', handleBackPress);
-        return () =>
-        BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
-        setPage(0);
-  }, [itemsPerPage]);
+        return function cleanup() {
+          BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+          getDataAbsensi();
+        }
 
-//   console.log(dataAbsen);
-// data={tableData}
-// data={dataAbsen}
-//borderStyle={{borderWidth: 1, borderColor: '#ffa1d2'}}
+  }, [itemsPerPage ]);
+
+
+
+
+//fungsi loading 
+const showLoad = () => {
+  setTimeout(() => {
+    setLoading(false);
+  },3000)
+}
+showLoad();
+//
+
+
+
+
+//fungsi untuk menampilkan data absen karyawan
+const showData = () => {
+  if(dataAbsen == 'failed'){
     return (
-       
-        
-    <View style={{flex : 1  ,marginTop:50}}>
-    <View>
-       <ActivityIndicator
-                animating={true}
-                color ='red' 
-                size = 'large'
-            ></ActivityIndicator>
-    </View>
-      {!alignsecond ? null : (
+      <DataTable.Row>
+        <DataTable.Cell>Data Tidak Ditemukan</DataTable.Cell>
+      </DataTable.Row>
+    )
+  }else {
+    return (
+       <FlatList 
+          data={dataAbsen}
+          renderItem = {({item}) => (
+              <DataTable.Row>
+                  <DataTable.Cell>{item.in_date}</DataTable.Cell>
+                  <DataTable.Cell>{item.in_time}</DataTable.Cell>
+                  <DataTable.Cell>{item.out_time}</DataTable.Cell>
+                  <DataTable.Cell>{item.ket}</DataTable.Cell>
+              </DataTable.Row>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        /> 
+    )
+  }
+}
+
+
+
+    return (
+
+      <View style={{flex : 1  ,marginTop:50}}>
+          {
+            loading ? 
+            <View style={{flex : 1 , justifyContent : 'center'}}>
+              <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
+            </View>
+            :
+            <View>
+                <DataTable>
+                  <DataTable.Header>
+                      <DataTable.Title>Tanggal</DataTable.Title>
+                      <DataTable.Title>IN</DataTable.Title>
+                      <DataTable.Title>OUT</DataTable.Title>
+                      <DataTable.Title>KET</DataTable.Title>
+                  </DataTable.Header>
+                  { showData()  }
+              </DataTable>
+            </View>
+          }
          
-        <DataTable>
-            <DataTable.Header>
-                <DataTable.Title>Tanggal</DataTable.Title>
-                <DataTable.Title>IN</DataTable.Title>
-                <DataTable.Title>OUT</DataTable.Title>
-                <DataTable.Title>KET</DataTable.Title>
-            </DataTable.Header>
-           
-            <FlatList 
-                data={dataAbsen}
-                renderItem = {({item}) => (
-                    <DataTable.Row>
-                        <DataTable.Cell>{item.in_date}</DataTable.Cell>
-                        <DataTable.Cell>{item.in_time}</DataTable.Cell>
-                        <DataTable.Cell>{item.out_time}</DataTable.Cell>
-                        <DataTable.Cell>{item.ket}</DataTable.Cell>
-                    </DataTable.Row>
-                )}
-                keyExtractor={(item, index) => index.toString()}
-            />
-            </DataTable>
-      )}
-      
-            
-            {/* <DataTable.Pagination
-                        page={page}
-                        numberOfPages={3}
-                        onPageChange={(page) => setPage(page)}
-                        label="1-2 of 6"
-                        optionsPerPage={optionsPerPage}
-                        itemsPerPage={itemsPerPage}
-                        setItemsPerPage={setItemsPerPage}
-                        showFastPagination
-                        optionsLabel={'Rows per page'}
-                    /> */}
-            
-    </View>
+      </View>
     );
 }
 

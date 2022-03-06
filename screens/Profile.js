@@ -10,8 +10,7 @@ import Paragraph from "../src/component/Paragraph";
 export default function Profile({navigation , route }) {
     const [biodata , setBiodata] = useState({npk: '', nama: '',ktp: '',kk: '',tempat_lahir: '',tanggal_lahir: '',email: '',no_hp: '',no_emergency: '',tinggi_badan: '',berat_badan: '',imt: '',keterangan: '',jl_ktp: '',rt_ktp: '',rw_ktp: '',kel_ktp: '',kec_ktp: '',kota_ktp: '',provinsi_ktp: '',jl_dom: '',rt_dom: '',rw_dom: '',kel_dom: '',kec_dom: '',kota_dom: '',provinsi_dom: '' })
 
-
-    //tombol kembali 
+  //tombol kembali 
   function handleBackButtonClick() {
     navigation.goBack();
     return true;
@@ -20,7 +19,6 @@ export default function Profile({navigation , route }) {
     useEffect(() => {
         const getBiodata = async () => {
             const  id_akun = await  AsyncStorage.getItem('id_akun');
-            console.log(id_akun)
               var urlAksi = 'https://isecuritydaihatsu.com/api/biodata?id=' + id_akun ;
                 fetch(urlAksi,{
                     headers : {

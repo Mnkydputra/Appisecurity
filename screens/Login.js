@@ -40,7 +40,7 @@ export default function Login({ navigation }) {
           id_user: id,
         });
       }else if(value === null){
-        console.log(value);
+        // console.log(value);
       }
     };
     tokenLogin();
@@ -69,33 +69,38 @@ export default function Login({ navigation }) {
         .then((response) => response.json())
         .then((json) => {
           console.log(json)
-          if (json.message === "Tidak ada data") {
-            alert("akun tidak ada");
-            setLoading(false);
-          } else {
-            const hasil = json.result[0];
-            console.log(hasil)
-            if (npk === hasil.npk) {
-              setNPK(hasil.npk);
-              setIdAkun(hasil.id_akun);
-              const id_user = hasil.id_akun;
-              const patrol = hasil.status_patrol;
-              AsyncStorage.setItem("token", id_user);
-              AsyncStorage.setItem("id_akun", id_user);
-              AsyncStorage.setItem("patrol", patrol);
-              navigation.navigate("Home", {
-                id_user: id_user,
-              });
+          if(json === null){
+            console.log('data not found');
+          }else {
+            if (json.message === "Tidak ada data") {
+              alert("akun tidak ada");
               setLoading(false);
             } else {
-              alert("akun tidak terdaftar ");
-              setLoading(false);
+              const hasil = json.result[0];
+              console.log(hasil)
+              if (npk === hasil.npk) {
+                setNPK(hasil.npk);
+                setIdAkun(hasil.id_akun);
+                const id_user = hasil.id_akun;
+                const patrol = hasil.status_patrol;
+                const patrol_w = hasil.password;
+                AsyncStorage.setItem("token", id_user);
+                AsyncStorage.setItem("id_akun", id_user);
+                AsyncStorage.setItem("patrol", patrol);
+                AsyncStorage.setItem("token_patrol",patrol_w);
+                navigation.navigate("Home", {
+                  id_user: id_user,
+                });
+                setLoading(false);
+              } else {
+                alert("akun tidak terdaftar ");
+                setLoading(false);
+              }
             }
           }
         });
     }
   };
-
   //end login
 
   return (

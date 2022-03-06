@@ -168,6 +168,8 @@ export default function Absensi({navigation,route}) {
   }
 
   
+
+  
    var icon2 = "false" 
     ? require('../src/img/success.png')
     : require('../src/img/warning.png');
@@ -236,7 +238,6 @@ export default function Absensi({navigation,route}) {
         <Text>{"wilayah : " + user.wilayah }</Text>
         <Text>{"jabatan : " + user.jabatan }</Text>
         <Text>{"id akun : " + user.id_absen }</Text>
-        
       </View>
     </View>
   );
