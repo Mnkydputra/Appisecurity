@@ -15,41 +15,49 @@ export default function ViewAbsen ({navigation,route}) {
     const [alignsecond, setAlignsecond] = useState(false);
 
   useEffect(() => {
-                //ambil data absensi anggota
-                const getDataAbsensi = async  () => {
-                  const  bulan  =  route.params.bulan ;
-                  const  npk = await  AsyncStorage.getItem('token');
-                    var  urlAksi = 'https://isecuritydaihatsu.com/api/ambil_absen?bulan=' + bulan + '&npk=' + route.params.npk + '&wilayah=' + route.params.wilayah  ;
-                      fetch(urlAksi,{
-                          headers : {
-                              'keys-isecurity' : 'isecurity' ,
-                          } ,
-                      })
-                      .then((response) => response.json())
-                      .then((json) => {
-                        // console.log(json);
-                          if(json.status === 'success'){
-                              // console.log(json.result);
-                              setDataAbsen(json.result)
-                              // console.log(dataAbsen);
-                          }else {
-                              setDataAbsen(json.status);
-                              console.log(json.status);
-                          }
-                      })
-                }
-                getDataAbsensi();
-                // end of ambil data absensi
+    let controller = new AbortController();
+    const  bulan  =  route.params.bulan ;
+    var  url      = 'https://isecuritydaihatsu.com/api/ambil_absen?bulan=' + bulan + '&npk=' + route.params.npk + '&wilayah=' + route.params.wilayah  ;
+    
 
-        const handleBackPress = () => {
+    let unmounted = false
+    //ambil data absensi anggota
+    const getDataAbsensi = async  () => {
+      const  npk    = await  AsyncStorage.getItem('token');
+          fetch(url,{
+              headers : {
+                  'keys-isecurity' : 'isecurity' ,
+              } ,
+              signal : controller.signal 
+          })
+          .then((response) => response.json())
+          .then((json) => {
+
+            if(!unmounted)
+              if(json.status === 'success'){
+                  // console.log(json.result);
+                  setDataAbsen(json.result)
+                  // console.log(dataAbsen);
+              }else {
+                  setDataAbsen(json.status);
+                  console.log(json.status);
+              }
+          })
+    }
+    getDataAbsensi();
+    // end of ambil data absensi
+
+        BackHandler.addEventListener('hardwareBackPress', () => {
           navigation.goBack();
-          setDataAbsen(null);
           return true;
-        };
-        BackHandler.addEventListener('hardwareBackPress', handleBackPress);
-        return function cleanup() {
-          BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
-          getDataAbsensi();
+        });
+        return () =>  {
+          BackHandler.removeEventListener('hardwareBackPress', () => {
+            navigation.goBack();
+            return true;
+          });
+          // controller.abort();
+          unmounted = true ;
         }
 
   }, [itemsPerPage ]);
