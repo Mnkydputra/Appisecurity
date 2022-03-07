@@ -1,5 +1,5 @@
 import React, { Component , useState , useEffect } from 'react';
-import { View, Text , StyleSheet , BackHandler} from 'react-native';
+import { View, Text , StyleSheet , BackHandler ,ActivityIndicator} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import BackButton from "../src/component/BackButton";
 import Background from "../src/component/Background";
@@ -9,7 +9,7 @@ import Button from "../src/component/Button";
 import Paragraph from "../src/component/Paragraph";
 export default function Profile({navigation , route }) {
     const [biodata , setBiodata] = useState({npk: '', nama: '',ktp: '',kk: '',tempat_lahir: '',tanggal_lahir: '',email: '',no_hp: '',no_emergency: '',tinggi_badan: '',berat_badan: '',imt: '',keterangan: '',jl_ktp: '',rt_ktp: '',rw_ktp: '',kel_ktp: '',kec_ktp: '',kota_ktp: '',provinsi_ktp: '',jl_dom: '',rt_dom: '',rw_dom: '',kel_dom: '',kec_dom: '',kota_dom: '',provinsi_dom: '' })
-
+    const [loading,setLoading] = useState(true)
   //tombol kembali 
   function handleBackButtonClick() {
     navigation.goBack();
@@ -46,10 +46,25 @@ export default function Profile({navigation , route }) {
           return () =>
           BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
     }, []);
+
+    //fungsi loading 
+    const showLoad = () => {
+      setTimeout(() => {
+        setLoading(false);
+      },3000)
+    }
+    showLoad();
+    //
     return (
       <Background>
-        <View style={styles.container}>
-          <BackButton goBack={navigation.goBack} />
+        {
+            loading ? 
+            <View style={{flex : 1 , justifyContent : 'center'}}>
+              <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
+            </View>
+            :
+          <View style={styles.container}>
+            <BackButton goBack={navigation.goBack} />
           <View style={styles.btn}>
             <View style={{ marginRight: 4 }}>
               <Button  mode="contained" onPress={() => navigation.navigate("Profile")}>
@@ -96,7 +111,10 @@ export default function Profile({navigation , route }) {
             <Text> provinsi Domisili: {biodata.provinsi_dom} </Text>
           </View>
         </View>
+
+        }
       </Background>
+          
     );
 
   }

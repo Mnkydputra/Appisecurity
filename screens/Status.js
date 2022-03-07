@@ -1,5 +1,5 @@
 import React, { Component , useState , useEffect } from 'react';
-import { View, Text , StyleSheet } from 'react-native';
+import { View, Text , StyleSheet ,ActivityIndicator} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import BackButton from "../src/component/BackButton";
 import Background from "../src/component/Background";
@@ -21,7 +21,7 @@ export default function Status({navigation , route }) {
         wilayah: '',
         tgl_masuk_sigap: '',
         tgl_masuk_adm: '' })
-
+    const [loading,setLoading] = useState(true)
     useEffect(() => {
 
         const getBiodata = async () => {
@@ -53,8 +53,22 @@ export default function Status({navigation , route }) {
           getBiodata();
 
     }, []);
+    //fungsi loading 
+    const showLoad = () => {
+      setTimeout(() => {
+        setLoading(false);
+      },3000)
+    }
+    showLoad();
+    //
     return (
       <Background>
+      {
+            loading ? 
+            <View style={{flex : 1 , justifyContent : 'center'}}>
+              <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
+            </View>
+            :
         <View style={styles.container}>
         <View style={styles.btn}>
         <View style={{ marginRight: 4 }}>
@@ -86,6 +100,10 @@ export default function Status({navigation , route }) {
 
             </View>
         </View>
+
+
+
+      }
       </Background>
 
     );
