@@ -41,12 +41,11 @@ export default function Absensi({navigation,route}) {
       // end of posisi user 
     })();
 
-
     const handleBackPress = () => {
-      navigation.navigate('Home');
-      // navigation.goBack();
+      navigation.goBack();
       return true;
     };
+  
     BackHandler.addEventListener('hardwareBackPress', handleBackPress);
     return () =>
     BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
@@ -112,7 +111,7 @@ export default function Absensi({navigation,route}) {
                       );
                       console.log(`Jarak ${distance} Meter`);
                       const jarak =  distance ;
-                      if(jarak > 60){
+                      if(jarak > 2000){
                         alert("jarak dengan  " + user.areaKerja + " sejauh " + jarak + " meter");
                         setLoading(false);
                         // navigation.navigate('Home')
@@ -133,8 +132,9 @@ export default function Absensi({navigation,route}) {
                             setLoading(false);
                             setModalVisible(true);
                             setTitleModal("INFORMASI");
-                            setInformasi({ keterangan : json.message , status : json.info , waktu : json.time });
+                            setInformasi({ keterangan : json.message , status : json.status , waktu : json.time  , info : json.info  , gambar : json.status});
                             setIcon('true');
+                            console.log(json.status)
                         })
                       }
                 }else {
@@ -143,7 +143,7 @@ export default function Absensi({navigation,route}) {
                   setModalVisible(true);
                   setMsgBarcode(true);
                   setInformasi({keterangan : "Bercode tidak sesuai area kerja" , status : 'fail' });
-                  console.log(json);
+                  // console.log(json);
                 }
         })
         .catch((error)=> {
@@ -177,10 +177,13 @@ export default function Absensi({navigation,route}) {
 
 
 
-  
-   informasi.status = "fail" 
-    ? require('../src/img/warning.png')
-    : require('../src/img/success.png');
+    let image = require('../src/img/cancel.png') ;
+    if(informasi.gambar === 'fail'){
+     image =  require('../src/img/cancel.png') ;
+    }else {
+     image =  require('../src/img/success.png') ;
+    }
+    console.log(informasi.gambar);
 
   return (
   
@@ -222,7 +225,7 @@ export default function Absensi({navigation,route}) {
 
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => setModalVisible(!modalVisible) }
             >
               <Text style={styles.textStyle}>Tutup</Text>
             </Pressable>
@@ -243,11 +246,11 @@ export default function Absensi({navigation,route}) {
           <View style={styles.modalView}>
             <Text style={styles.modalText2}>{titleModal}</Text>
             
-            <Image source={ informasi.status } style={{width: 80, height: 80 , marginBottom:12}}></Image>
+            <Image source={ image } style={{width: 80, height: 80 , marginBottom:12}}></Image>
             <View style={{flex : 1}}>
               <Text>Nama             : {user.nama} </Text>
               <Text>NPK                : {user.npk} </Text>
-              <Text>Status            : {informasi.status} </Text>
+              <Text>Status            : {informasi.info} </Text>
               <Text>Waktu            : {informasi.waktu}</Text>
               <Text >Keterangan    : {informasi.keterangan} </Text>
             </View>

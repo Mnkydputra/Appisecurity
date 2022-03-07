@@ -38,7 +38,7 @@ export default function Profile({navigation , route }) {
           getBiodata();
     
           const handleBackPress = () => {
-            navigation.navigate('Home');
+            navigation.goBack();
             return true;
           };
         

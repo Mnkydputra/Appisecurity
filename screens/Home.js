@@ -10,13 +10,13 @@ export default function  Home ({navigation,route}) {
   const [id_ , setId] = useState(null)
   const [loading,setLoading] = useState(true)
   const backAction = () => {
-    Alert.alert("Hold on!", "Are you sure you want to go back?", [
+    Alert.alert("Perhatian!", "Keluar Aplikasi ?", [
       {
-        text: "Cancel",
+        text: "Batal",
         onPress: () => null,
         style: "cancel"
       },
-      { text: "YES", onPress: () => BackHandler.exitApp() }
+      { text: "Iya", onPress: () => BackHandler.exitApp() }
     ]);
     return true;
   };
