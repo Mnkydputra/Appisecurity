@@ -120,7 +120,7 @@ export default function Login({ navigation }) {
       <TextInput label="Password" onChangeText={(value) => setPassword(value)} placeholder="PASSWORD" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true} />
       <Button mode="contained" onPress={onLoginPress}>
         {loading ? 
-            <Text style={{color:'#fff'}}>Loading</Text>
+            <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>
          : 
           <Text style={{color:'#fff'}}>Login </Text>   
         }

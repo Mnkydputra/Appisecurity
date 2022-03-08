@@ -103,7 +103,7 @@ const showData = () => {
 
     return (
 
-      <View style={{flex : 1  ,marginTop:50}}>
+      <View style={{flex : 1}}>
           {
             loading ? 
             <View style={{flex : 1 , justifyContent : 'center'}}>
@@ -131,7 +131,6 @@ const styles = StyleSheet.create({
     container: { 
         flex: 1,
         padding: 18,
-        paddingTop: 35,
         backgroundColor: '#ffffff' 
       },
       HeadStyle: { 

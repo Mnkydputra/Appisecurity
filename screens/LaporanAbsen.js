@@ -66,7 +66,7 @@ export default function Profile({navigation , route }) {
             :
          <View style={styles.container}>
           <FlatList 
-          style={{width : windowWidth , height:200}}
+          style={{width : windowWidth }}
             data={bln}
             renderItem = {({item}) => (
             <TouchableOpacity onPress={() => navigation.navigate('View Absen' , {
@@ -90,11 +90,10 @@ export default function Profile({navigation , route }) {
   const styles = StyleSheet.create({
     container: {
       padding: 2,
-      flex : 1 ,
     },
     listItem: {
-      backgroundColor: "#70a4cf",
-      borderWidth: 0.4,
+      backgroundColor: "#87CEFA",
+      borderWidth: 1,
       borderColor: "#fff",
       padding: 21,
     },

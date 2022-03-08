@@ -23,18 +23,29 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName='Login' 
+        options = {{
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
       >
       <Stack.Screen name='Start' component={Start}></Stack.Screen>
       <Stack.Screen name='Login'  component={Login}></Stack.Screen>
-      <Stack.Screen name='Home'  options={{
+      <Stack.Screen name='Home'  
+      options={{
           headerShown: false  , 
+          
         }} component={Home}></Stack.Screen>
-      <Stack.Screen name='Profile'  component={Profile}></Stack.Screen>
+      <Stack.Screen name='Profile' component={Profile}></Stack.Screen>
       <Stack.Screen name='Poto'  component={Poto}></Stack.Screen>
       <Stack.Screen name='Status' component={Status}></Stack.Screen>
       <Stack.Screen name='Absensi' component={Absensi}></Stack.Screen>
       <Stack.Screen name='View Absen' component={ViewAbsen}></Stack.Screen>
-      <Stack.Screen name='Laporan Absen' component={LaporanAbsen}></Stack.Screen>
+      <Stack.Screen name='Laporan Absen'  component={LaporanAbsen}></Stack.Screen>
       <Stack.Screen name='Edit Profile' component={EditProfile}></Stack.Screen>
       <Stack.Screen name='Edit Status' component={EditStatus}></Stack.Screen>
       </Stack.Navigator>
