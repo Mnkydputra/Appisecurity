@@ -47,18 +47,14 @@ export default function ViewAbsen ({navigation,route}) {
     getDataAbsensi();
     // end of ambil data absensi
 
-        BackHandler.addEventListener('hardwareBackPress', () => {
-          navigation.goBack();
-          return true;
-        });
-        return () =>  {
-          BackHandler.removeEventListener('hardwareBackPress', () => {
-            navigation.goBack();
-            return true;
-          });
-          // controller.abort();
-          unmounted = true ;
-        }
+    const handleBackPress = () => {
+      navigation.goBack();
+      return true;
+    };
+  
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+    return () =>
+    BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
 
   }, [itemsPerPage ]);
 

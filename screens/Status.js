@@ -1,5 +1,5 @@
 import React, { Component , useState , useEffect } from 'react';
-import { View, Text , StyleSheet ,ActivityIndicator} from 'react-native';
+import { View, Text , StyleSheet ,ActivityIndicator , BackHandler} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import BackButton from "../src/component/BackButton";
 import Background from "../src/component/Background";
@@ -51,6 +51,15 @@ export default function Status({navigation , route }) {
                 })
           }
           getBiodata();
+
+          const handleBackPress = () => {
+            navigation.goBack();
+            return true;
+          };
+        
+          BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+          return () =>
+          BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
 
     }, []);
     //fungsi loading 

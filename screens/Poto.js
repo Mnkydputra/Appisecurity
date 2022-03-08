@@ -1,5 +1,5 @@
 import React, { Component , useState , useEffect } from 'react';
-import { View, Text , StyleSheet ,  Image , TouchableOpacity , ActivityIndicator} from 'react-native';
+import { View, Text , StyleSheet ,  Image , TouchableOpacity , ActivityIndicator , BackHandler} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import ImagePicker from 'react-native-image-picker';
 import BackButton from "../src/component/BackButton";
@@ -29,6 +29,15 @@ const [loading,setLoading] = useState(true)
                 })
           }
           getPoto();
+
+          const handleBackPress = () => {
+            navigation.goBack();
+            return true;
+          };
+        
+          BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+          return () =>
+          BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
     }, []);
 
 

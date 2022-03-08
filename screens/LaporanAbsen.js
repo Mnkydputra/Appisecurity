@@ -1,12 +1,15 @@
 import React, { Component , useState , useEffect } from 'react';
-import { View, Text , StyleSheet , BackHandler , FlatList , TouchableOpacity} from 'react-native';
+import { View, Text , StyleSheet , BackHandler , FlatList , TouchableOpacity , Dimensions , ActivityIndicator} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
+import Icon from 'react-native-vector-icons/FontAwesome';
 import BackButton from "../src/component/BackButton";
 import Background from "../src/component/Background";
 import Logo from "../src/component/Logo";
 import Header from "../src/component/Header";
 import Button from "../src/component/Button";
 import Paragraph from "../src/component/Paragraph";
+const windowWidth = Dimensions.get('window').width;
+const  windowHeight = Dimensions.get('window').height;
 export default function Profile({navigation , route }) {
 
 
@@ -18,19 +21,17 @@ export default function Profile({navigation , route }) {
 
 
     useEffect(() => {
- 
-          const handleBackPress = () => {
-            navigation.navigate('Home');
-            return true;
-          };
-        
-          BackHandler.addEventListener('hardwareBackPress', handleBackPress);
-          return () =>
-          BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+      const handleBackPress = () => {
+        navigation.goBack();
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+      return () =>
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
     }, []);
 
     const BULAN = ["JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI", "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER" , "DESEMBER"]; 
-
+    const [loading,setLoading] = useState(true)
     const [bln,setBln] =useState([
       { id : '01' , bulan : 'Januari'} ,
       { id : '02' , bulan : 'Februari'} ,
@@ -46,29 +47,41 @@ export default function Profile({navigation , route }) {
       { id : '12' , bulan : 'Desember'} 
     ])
 
+    //fungsi loading 
+    const showLoad = () => {
+      setTimeout(() => {
+        setLoading(false);
+      },3000)
+    }
+    showLoad();
+    //
 
     return (
       <Background>
+      {
+            loading ? 
+            <View style={{flex : 1 , justifyContent : 'center'}}>
+              <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
+            </View>
+            :
          <View style={styles.container}>
-         <View>
-           <Text>{route.params.nama}</Text>
-         </View>
           <FlatList 
+          style={{width : windowWidth , height:200}}
             data={bln}
-
             renderItem = {({item}) => (
-            <TouchableOpacity onPress={() => navigation.navigate('ViewAbsen' , {
+            <TouchableOpacity onPress={() => navigation.navigate('View Absen' , {
                   bulan : item.id ,
                   npk : route.params.npk ,
                   wilayah : route.params.wilayah 
                 })} >
                 <View  style={styles.listItem} >
-                  <Text >{item.bulan}</Text>
+                  <Text style={{color:'#fff'}} >{item.bulan}</Text>
                 </View>
             </TouchableOpacity>
             )}
           />
         </View> 
+      }
       </Background>
     );
 
@@ -76,16 +89,14 @@ export default function Profile({navigation , route }) {
 
   const styles = StyleSheet.create({
     container: {
-      width: "100%",
       padding: 2,
-      paddingTop: 50,
+      flex : 1 ,
     },
     listItem: {
-      backgroundColor: "#ddd",
-      borderWidth: 1,
-      borderColor: "#333",
-      color : '#fff' ,
-      padding: 25,
+      backgroundColor: "#70a4cf",
+      borderWidth: 0.4,
+      borderColor: "#fff",
+      padding: 21,
     },
   })
 

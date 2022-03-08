@@ -31,23 +31,31 @@ export default function Login({ navigation }) {
   };
 
   useEffect(() => {
+    let unmounted = false
     //jika token login ada isinya maka program redirect ke Home
     const tokenLogin = async () => {
       const value = await AsyncStorage.getItem("token");
       const id = await AsyncStorage.getItem("id_akun");
-      if (value !== null) {
-        navigation.navigate("Home", {
-          id_user: id,
-        });
-      }else if(value === null){
-        // console.log(value);
+      if(!unmounted){
+        if (value !== null) {
+          navigation.navigate("Home", {
+            id_user: id,
+          });
+        }else if(value === null){
+          // console.log(value);
+        }
       }
     };
     tokenLogin();
     //end
     BackHandler.addEventListener("hardwareBackPress", backAction);
 
-    return () => BackHandler.removeEventListener("hardwareBackPress", backAction);
+    return function cleanup() {
+      BackHandler.removeEventListener("hardwareBackPress", backAction);
+      unmounted = false ;
+    }
+
+
   }, []);
 
   //jika di tekan tombol login  maka jalankan fungsi ini
@@ -105,9 +113,9 @@ export default function Login({ navigation }) {
 
   return (
     <Background>
-      <BackButton goBack={navigation.goBack} />
+      {/* <BackButton goBack={navigation.goBack} /> */}
       <Logo />
-      <Header>Welcome back.</Header>
+      <Header>Welcome  </Header>
       <TextInput label="NPK" onChangeText={(value) => setNPK(value)} placeholder="NPK" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
       <TextInput label="Password" onChangeText={(value) => setPassword(value)} placeholder="PASSWORD" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true} />
       <Button mode="contained" onPress={onLoginPress}>

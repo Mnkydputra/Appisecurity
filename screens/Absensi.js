@@ -266,15 +266,15 @@ export default function Absensi({navigation,route}) {
   }
     
 
-      <Pressable
+      {/* <Pressable
         style={[styles.button, styles.buttonOpen]}
         onPress={() => setModalVisible(true)}
       >
         <Text style={styles.textStyle}>Show Modal</Text>
-      </Pressable>
+      </Pressable> */}
 
       <Text style={[styles.info ,{color:'red' , fontSize:20} ]} >Absen Security Guard ADM</Text>
-      <Text>Sekarang jam 18:00:00</Text>
+      {/* <Text>Sekarang jam 18:00:00</Text> */}
       <View>
       <ActivityIndicator
                 animating={loading}
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textInput : {
-    backgroundColor : '#AdA3AA' ,
+    backgroundColor : 'red' ,
     color : '#fff' ,
     borderRadius:3 ,
     marginBottom : 4 ,

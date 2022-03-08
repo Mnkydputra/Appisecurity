@@ -22,6 +22,8 @@ export default function  Home ({navigation,route}) {
   };
 
   useEffect(() => {
+    let unmounted = false
+
     //jika token login ada isinya maka program redirect ke Home
     const tokenLogin = async () => {
       const value = await AsyncStorage.getItem("token");
@@ -51,10 +53,13 @@ export default function  Home ({navigation,route}) {
             .then((json) => {
               const hasil =  json.result ;
               // console.log(hasil)
-              if(hasil === null ){
-                console.log("not found data");
-              }else {
-                setUser({npk :  hasil.npk , id_absen : hasil.id_biodata , wilayah: hasil.wilayah , areaKerja : hasil.area_kerja , jabatan: hasil.jabatan , nama : hasil.nama })
+
+              if(!unmounted){
+                if(hasil === null ){
+                  console.log("not found data");
+                }else {
+                  setUser({npk :  hasil.npk , id_absen : hasil.id_biodata , wilayah: hasil.wilayah , areaKerja : hasil.area_kerja , jabatan: hasil.jabatan , nama : hasil.nama })
+                }
               }
             })
         }
@@ -62,14 +67,39 @@ export default function  Home ({navigation,route}) {
     getParamsAbsensi();
   // end of ambil data diri 
 
-    BackHandler.addEventListener("hardwareBackPress", backAction);
-    return () =>
-      BackHandler.removeEventListener("hardwareBackPress", backAction)
-  
+    BackHandler.addEventListener("hardwareBackPress", () => {
+      Alert.alert("Perhatian!", "Keluar Aplikasi ?", [
+        {
+          text: "Batal",
+          onPress: () => null,
+          style: "cancel"
+        },
+        { text: "Iya", onPress: () => BackHandler.exitApp() }
+      ]);
+      return true;
+    });
+   return  function cleanup(){
+        unmounted = true ;
+        BackHandler.removeEventListener("hardwareBackPress", () => {
+          Alert.alert("Perhatian!", "Keluar Aplikasi ?", [
+            {
+              text: "Batal",
+              onPress: () => null,
+              style: "cancel"
+            },
+            { text: "Iya", onPress: () => BackHandler.exitApp() }
+          ]);
+          return true;
+        })
+    }
   }, []);
   
   const  logout = async() => {
     const st = await AsyncStorage.removeItem('token');
+    await AsyncStorage.removeItem("token");
+    await AsyncStorage.removeItem("id_akun");
+    await AsyncStorage.removeItem("patrol");
+    await AsyncStorage.removeItem("token_patrol");
     if(st === null) {
       navigation.navigate('Login')
     }
@@ -169,7 +199,7 @@ showLoad();
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() =>
-                    navigation.navigate("LaporanAbsen", {
+                    navigation.navigate("Laporan Absen", {
                       nama: user.nama,
                       npk: user.npk,
                       id_akun: user.id_absen,
@@ -220,10 +250,17 @@ showLoad();
                   <Button title="LOGOUT" onPress={logout}></Button>
                 </TouchableOpacity>
               </View>
+
+              {/* <TouchableOpacity onPress={ () => {
+                navigation.navigate('EditStatus')
+              }}>
+                  <View style={[styles.menuBox, { backgroundColor: "#ff80d5" }]}>
+                    <Image style={styles.icon} source={require("../src/img/online-course.png")} />
+                    <Text style={styles.info}>Edit Status</Text>
+                  </View>
+                </TouchableOpacity> */}
             </>
         }
-      
-     
       </View>
     );
   }

@@ -3,6 +3,7 @@
     "name": "isecurity2",
     "slug": "isecurity2",
     "version": "1.0.0",
+    "icon" : "src/img/policeman.png" ,
     "assetBundlePatterns": [
       "**/*"
     ],
