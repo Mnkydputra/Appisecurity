@@ -75,7 +75,10 @@ export default function Profile({navigation , route }) {
                   wilayah : route.params.wilayah 
                 })} >
                 <View  style={styles.listItem} >
-                  <Text style={{color:'#fff'}} >{item.bulan}</Text>
+                  <Text style={{color:'#fff' , fontSize:20}} >{item.bulan}</Text>
+                  <View style={{flexDirection:'row' , display:'flex'}}>
+                    <Icon name="chevron-right" style={{color:'#fff'}}></Icon>
+                  </View>
                 </View>
             </TouchableOpacity>
             )}
@@ -89,13 +92,15 @@ export default function Profile({navigation , route }) {
 
   const styles = StyleSheet.create({
     container: {
-      padding: 2,
+      flex : 1 
     },
     listItem: {
-      backgroundColor: "#87CEFA",
+      backgroundColor: "#5d7987",
       borderWidth: 1,
-      borderColor: "#fff",
-      padding: 21,
+      borderColor: "#000",
+      height: 60  ,
+      display: 'flex' ,
+      padding : 15 ,
     },
   })
 

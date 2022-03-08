@@ -245,12 +245,14 @@ showLoad();
                 </TouchableOpacity>
 
               </View>
+              
               <View>
                 <TouchableOpacity>
-                  <Button title="LOGOUT" onPress={logout}></Button>
+                  <Text mode="contained" onPress={logout}>
+                    Logout <Icon name=''></Icon>
+                  </Text>
                 </TouchableOpacity>
               </View>
-
               {/* <TouchableOpacity onPress={ () => {
                 navigation.navigate('EditStatus')
               }}>
@@ -259,6 +261,7 @@ showLoad();
                     <Text style={styles.info}>Edit Status</Text>
                   </View>
                 </TouchableOpacity> */}
+
             </>
         }
       </View>

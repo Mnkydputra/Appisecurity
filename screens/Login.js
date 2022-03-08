@@ -61,10 +61,15 @@ export default function Login({ navigation }) {
   //jika di tekan tombol login  maka jalankan fungsi ini
   const onLoginPress = async () => {
     setLoading(true);
-    if (npk === "" || password === "") {
-      alert("isi npk dan password");
-      setLoading(false);
-    } else {
+    if (npk === "" ) {
+      Alert.alert("Perhatian!", "NPK HARUS DI ISI", [
+        { text: "YA", onPress: () => setLoading(false) },
+      ]);
+    } else if(password === ""){
+      Alert.alert("Perhatian!", "PASSWORD HARUS DI ISI", [
+        { text: "YA", onPress: () => setLoading(false) },
+      ]);
+    }else {
       var urlAksi = "https://isecuritydaihatsu.com/api/cekAkun";
       fetch(urlAksi, {
         method: "POST",
@@ -81,8 +86,9 @@ export default function Login({ navigation }) {
             console.log('data not found');
           }else {
             if (json.message === "Tidak ada data") {
-              alert("akun tidak ada");
-              setLoading(false);
+              Alert.alert("Perhatian!", "AKUN TIDAK TERDAFTAR", [
+                { text: "YA", onPress: () => setLoading(false) },
+              ]);
             } else {
               const hasil = json.result[0];
               console.log(hasil)
@@ -101,8 +107,11 @@ export default function Login({ navigation }) {
                 });
                 setLoading(false);
               } else {
-                alert("akun tidak terdaftar ");
-                setLoading(false);
+                Alert.alert("Perhatian!", "AKUN TIDAK TERDAFTAR", [
+                  { text: "YA", onPress: () => setLoading(false) },
+                ]);
+                // alert("akun tidak terdaftar ");
+                
               }
             }
           }
