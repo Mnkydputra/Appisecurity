@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { TouchableOpacity, StyleSheet, View, BackHandler , Alert } from "react-native";
-// import { Alert, Image, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableWithoutFeedback, Pressable, StyleSheet, Button, ActivityIndicator, BackHandler } from "react-native";
+// import { TouchableOpacity, StyleSheet, View, BackHandler  } from "react-native";
+import { Alert, Image, Keyboard, KeyboardAvoidingView,   TouchableWithoutFeedback, Pressable, StyleSheet,  ActivityIndicator , BackHandler , TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Background from "../src/component/Background";
@@ -19,7 +19,7 @@ export default function Login({ navigation }) {
   const [loading, setLoading] = useState(false);
 
   const backAction = () => {
-    Alert.alert("Hold on!", "Are you sure you want to go back?", [
+    Alert.alert("Perhatian!", "Keluar Aplikasi ?", [
       {
         text: "Cancel",
         onPress: () => null,
@@ -119,7 +119,11 @@ export default function Login({ navigation }) {
       <TextInput label="NPK" onChangeText={(value) => setNPK(value)} placeholder="NPK" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
       <TextInput label="Password" onChangeText={(value) => setPassword(value)} placeholder="PASSWORD" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true} />
       <Button mode="contained" onPress={onLoginPress}>
-        Login
+        {loading ? 
+            <Text style={{color:'#fff'}}>Loading</Text>
+         : 
+          <Text style={{color:'#fff'}}>Login </Text>   
+        }
       </Button>
     </Background>
   );

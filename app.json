@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "isecurity2",
-    "slug": "isecurity2",
+    "name": "isecurity",
+    "slug": "isecurity",
     "version": "1.0.0",
     "icon" : "src/img/policeman.png" ,
     "assetBundlePatterns": [
       "**/*"
     ],
     "android": {
-      "package": "com.dasep12.isecurity2"
+      "package": "com.dasep12.isecurity"
     }
   },
-  "name": "isecurity2"
+  "name": "isecurity"
 }
