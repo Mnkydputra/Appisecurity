@@ -165,7 +165,6 @@ const styles = StyleSheet.create({
     container : {
         flex :2 , 
         margin: 14 ,
-        marginTop:60 
     } ,
     marginTextInput : {
         marginBottom:-17

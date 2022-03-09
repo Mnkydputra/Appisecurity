@@ -1,5 +1,5 @@
 import React, { Component , useState , useEffect } from 'react';
-import { View, Text, StyleSheet  , BackHandler , ScrollView , TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet  , BackHandler , ScrollView , TouchableOpacity , ActivityIndicator} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 // import datetimepicker from '@react-native-community/datetimepicker';
 
@@ -22,27 +22,29 @@ export default function EditProfile ({navigation,route}) {
 
     const [date, setDate] = useState(new Date())
     const [open, setOpen] = useState(false)
+    const [loading , setLoading ] = useState(true)
+    const getBiodata = async () => {
+      const  id_akun = await  AsyncStorage.getItem('id_akun');
+        var urlAksi = 'https://isecuritydaihatsu.com/api/employe?id=' + id_akun ;
+          fetch(urlAksi,{
+              headers : {
+                  'keys-isecurity' : 'isecurity' ,
+              } ,
+          })
+          .then((response) => response.json())
+          .then((json) => {
+            const hasil =  json.result[0] ;
+              // console.log(hasil)
+              setKta(hasil.no_kta)
+              setExpKta(hasil.expired_kta)
+              setMasukAdm(hasil.tgl_masuk_adm)
+              setMasukSigap(hasil.tgl_masuk_sigap)
+          })
+    }
+
     useEffect(() => {
-        const getBiodata = async () => {
-            const  id_akun = await  AsyncStorage.getItem('id_akun');
-              var urlAksi = 'https://isecuritydaihatsu.com/api/employe?id=' + id_akun ;
-                fetch(urlAksi,{
-                    headers : {
-                        'keys-isecurity' : 'isecurity' ,
-                    } ,
-                })
-                .then((response) => response.json())
-                .then((json) => {
-                  const hasil =  json.result[0] ;
-                    // console.log(hasil)
-                    setKta(hasil.no_kta)
-                    setExpKta(hasil.expired_kta)
-                    setMasukAdm(hasil.tgl_masuk_adm)
-                    setMasukSigap(hasil.tgl_masuk_sigap)
-                })
-          }
+
           getBiodata();
-    
           const handleBackPress = () => {
             navigation.goBack();
             return true;
@@ -58,66 +60,82 @@ export default function EditProfile ({navigation,route}) {
       alert(idakun)
     }
 
+    //fungsi loading 
+    const showLoad = () => {
+      setTimeout(() => {
+        setLoading(false);
+      },3000)
+    }
+    showLoad();
+    //
+
 
     return (
-        <ScrollView>
+      <View style={{flex:1}}>
+          {loading ? 
+            <View style={{flex : 1 , justifyContent : 'center'}}>
+              <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
+            </View>
+          :
+          <ScrollView>
+            <View style={styles.container}>
+            <View style={styles.marginTextInput}>
+            <TextInput label="NO KTA" 
+              value={kta}
+              onChangeText={text =>  setKta(text)}
+              placeholder="NO KTA" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
+              </TextInput>
+            </View>
+            <View style={styles.marginTextInput}>
+            <TextInput label="EXPIRED KTA" 
+              value={exp_kta}
+              onChangeText={text => setExpKta(text)}
+              placeholder="Ex KTA" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
+              </TextInput>
+            </View>
 
-      <View style={styles.container}>
-      <View style={styles.marginTextInput}>
-      <TextInput label="NO KTA" 
-        value={kta}
-        onChangeText={text =>  setKta(text)}
-        placeholder="NO KTA" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
+            <View style={styles.marginTextInput}>
+            <TextInput label="Tanggal Masuk Sigap" 
+              value={masuk_sigap}
+              onChangeText={text => setMasukSigap(text)}
+              placeholder="Tanggal Masuk Sigap" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
+              </TextInput>
+            </View>
+
+            <View style={styles.marginTextInput}>
+            <TextInput label="Tanggal Masuk ADM" 
+              value={masuk_adm}
+              onChangeText={text => setMasukAdm( text )}
+              placeholder="Tanggal Masuk ADM" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
+              </TextInput>
+            </View>
+
+            <Button mode="contained"  onPress={update}>
+              Update Data
+            </Button>
+
+            <TouchableOpacity onPress={() => setOpen(true)} >
+                <Text>
+                  tekan
+                </Text>
+            </TouchableOpacity>
+            <DatePicker
+              modal
+              open={open}
+              date={date}
+              onConfirm={(date) => {
+                setOpen(false)
+                setDate(date)
+              }}
+              onCancel={() => {
+                setOpen(false)
+              }}
+            />
+            </View>
+          </ScrollView>
+          }
       </View>
-      <View style={styles.marginTextInput}>
-      <TextInput label="EXPIRED KTA" 
-        value={exp_kta}
-        onChangeText={text => setExpKta(text)}
-        placeholder="Ex KTA" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-
-      <View style={styles.marginTextInput}>
-      <TextInput label="Tanggal Masuk Sigap" 
-        value={masuk_sigap}
-        onChangeText={text => setMasukSigap(text)}
-        placeholder="Tanggal Masuk Sigap" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-
-      <View style={styles.marginTextInput}>
-      <TextInput label="Tanggal Masuk ADM" 
-        value={masuk_adm}
-        onChangeText={text => setMasukAdm( text )}
-        placeholder="Tanggal Masuk ADM" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-
-
-      <Button mode="contained"  onPress={update}>
-        Update Data
-      </Button>
-
-      <TouchableOpacity onPress={() => setOpen(true)} >
-          <Text>
-            tekan
-          </Text>
-      </TouchableOpacity>
-      <DatePicker
-        modal
-        open={open}
-        date={date}
-        onConfirm={(date) => {
-          setOpen(false)
-          setDate(date)
-        }}
-        onCancel={() => {
-          setOpen(false)
-        }}
-      />
-      </View>
-      </ScrollView>
+      
 
     );
 }
@@ -127,7 +145,6 @@ const styles = StyleSheet.create({
     container : {
         flex :2 , 
         margin: 14 ,
-        marginTop:60 
     } ,
     marginTextInput : {
         marginBottom:-17

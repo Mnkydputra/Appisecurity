@@ -21,22 +21,7 @@ export default function  Home ({navigation,route}) {
     return true;
   };
 
-  useEffect(() => {
-    let unmounted = false
-
-    //jika token login ada isinya maka program redirect ke Home
-    const tokenLogin = async () => {
-      const value = await AsyncStorage.getItem("token");
-      const id = await AsyncStorage.getItem("id_akun");
-      if (value === null) {
-        navigation.navigate("Login");
-      }else if(value !== null){
-        // console.log(value);
-      }
-    };
-    tokenLogin();
-    //end
-  //ambil data diri anggota untuk akses absensi 
+    //ambil data diri anggota untuk akses absensi 
     const getParamsAbsensi = async () => {
       const  status = await  AsyncStorage.getItem('token');
         setId(status);
@@ -53,17 +38,33 @@ export default function  Home ({navigation,route}) {
             .then((json) => {
               const hasil =  json.result ;
               // console.log(hasil)
-
-              if(!unmounted){
-                if(hasil === null ){
-                  console.log("not found data");
-                }else {
-                  setUser({npk :  hasil.npk , id_absen : hasil.id_biodata , wilayah: hasil.wilayah , areaKerja : hasil.area_kerja , jabatan: hasil.jabatan , nama : hasil.nama })
-                }
-              }
+              setUser({npk :  hasil.npk , id_absen : hasil.id_biodata , wilayah: hasil.wilayah , areaKerja : hasil.area_kerja , jabatan: hasil.jabatan , nama : hasil.nama })
+              // if(!unmounted){
+              //   if(hasil === null ){
+              //     console.log("not found data");
+              //   }else {
+              //     setUser({npk :  hasil.npk , id_absen : hasil.id_biodata , wilayah: hasil.wilayah , areaKerja : hasil.area_kerja , jabatan: hasil.jabatan , nama : hasil.nama })
+              //   }
+              // }
             })
         }
     }
+
+  useEffect(() => {
+    let unmounted = false
+
+    //jika token login ada isinya maka program redirect ke Home
+    const tokenLogin = async () => {
+      const value = await AsyncStorage.getItem("token");
+      const id = await AsyncStorage.getItem("id_akun");
+      if (value === null) {
+        navigation.navigate("Login");
+      }else if(value !== null){
+        // console.log(value);
+      }
+    };
+    tokenLogin();
+    //end
     getParamsAbsensi();
   // end of ambil data diri 
 
@@ -146,7 +147,6 @@ showLoad();
   
     return (
       <View style={styles.container}>
-      
         { loading ? 
             <View style={{flex : 1 , justifyContent : 'center'}}>
               <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
@@ -154,6 +154,19 @@ showLoad();
             :
             <>
             <View  style={styles.headText} >
+            <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Akun", {
+                      nama: user.nama,
+                      npk: user.npk,
+                      id_akun: user.id_absen,
+                      wilayah: user.wilayah,
+                      area_kerja: user.areaKerja,
+                      jabatan: user.jabatan,
+                    })
+                  }
+                >
+
               <Text style={{fontWeight:'bold'}}>
               <Icon
                 name="user-circle"
@@ -161,6 +174,7 @@ showLoad();
                 style={{fontSize:25 , marginTop:2}}
               ></Icon>  Hai , <Text style={{textDecorationLine: 'underline'}}>{user.nama}</Text> 
               </Text>
+                </TouchableOpacity>
             </View>
               <View style={styles.header}>
                 <TouchableOpacity

@@ -15,6 +15,7 @@ import ViewAbsen from './screens/ViewAbsen' ;
 import EditProfile from './screens/EditProfile' ;
 import EditStatus from './screens/EditStatus' ;
 import Poto from './screens/Poto' ;
+import Sidebar from './screens/Sidebar' ;
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -48,6 +49,7 @@ export default function App() {
       <Stack.Screen name='Laporan Absen'  component={LaporanAbsen}></Stack.Screen>
       <Stack.Screen name='Edit Profile' component={EditProfile}></Stack.Screen>
       <Stack.Screen name='Edit Status' component={EditStatus}></Stack.Screen>
+      <Stack.Screen name='Akun' component={Sidebar}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
