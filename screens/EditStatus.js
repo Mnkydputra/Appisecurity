@@ -56,8 +56,26 @@ export default function EditProfile ({navigation,route}) {
 
 
     const update = async () => {
-      const idakun = await AsyncStorage.getItem('id_akun');
-      alert(idakun)
+      const id_akun = await AsyncStorage.getItem('id_akun');
+      var url = 'https://isecuritydaihatsu.com/api/employe/update';
+          fetch(url,{
+              headers : {
+                  'keys-isecurity' : 'isecurity' ,
+                  'Content-Type': 'application/json' , 
+              } ,
+              method : 'PUT' , 
+              body : JSON.stringify({
+                'no_kta'            : kta,
+                'ex_kta'            : exp_kta,
+                'masuk_sigap'       : masuk_sigap,
+                'masuk_adm'         : masuk_adm,
+                'id'                : id_akun
+              })
+          })
+          .then((response) => response.json())
+          .then((json) => {
+            console.log(json)
+          })
     }
 
     //fungsi loading 
@@ -113,24 +131,6 @@ export default function EditProfile ({navigation,route}) {
             <Button mode="contained"  onPress={update}>
               Update Data
             </Button>
-
-            <TouchableOpacity onPress={() => setOpen(true)} >
-                <Text>
-                  tekan
-                </Text>
-            </TouchableOpacity>
-            <DatePicker
-              modal
-              open={open}
-              date={date}
-              onConfirm={(date) => {
-                setOpen(false)
-                setDate(date)
-              }}
-              onCancel={() => {
-                setOpen(false)
-              }}
-            />
             </View>
           </ScrollView>
           }

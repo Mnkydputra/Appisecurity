@@ -1,27 +1,73 @@
-import React, { Component , useState , useEffect } from 'react';
+import React, { Component , useState , useEffect  } from 'react';
 import { StyleSheet,
     Text,
     View,
     Image,
     ScrollView,
     TouchableOpacity,
+    ActivityIndicator,
+    BackHandler , 
     FlatList} from 'react-native';
     import Icon from 'react-native-vector-icons/FontAwesome';
-    export default function Sidebar ({navigation,navigate}) {
+    import  AsyncStorage  from "@react-native-async-storage/async-storage";
+    export default function Sidebar ({navigation,route}) {
 
     const [data , setData ] =  useState([
-        {id:1, image: "https://img.icons8.com/color/70/000000/cottage.png", title:"Ubah Status" , link : 'Edit Status' },
-        {id:2, image: "https://img.icons8.com/color/70/000000/administrator-male.png", title:"Ubah Profile" , link : 'Edit Profile'},
-        {id:3, image: "https://img.icons8.com/color/70/000000/filled-like.png", title:"Logout" , link : 'Logout'},
+        {id:1, title:"Ubah Status" , link : 'Edit Status' },
+        {id:2, title:"Ubah Profile" , link : 'Edit Profile'},
+        {id:3, title:"Logout" , link : 'Logout'},
     ])
+    const [loading,setLoading] = useState(true)
+    const [imgUrl , setImgUrl ] = useState('');
 
+    useEffect(() => {
+      const handleBackPress = () => {
+        navigation.goBack();
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+      return () =>
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+    },[])
+
+
+    const showLoad = () => {
+      setTimeout(() => {
+        setLoading(false);
+      },3000)
+    }
+    showLoad();
+
+    const getPoto = async () => {
+      const  status = await  AsyncStorage.getItem('token');
+        console.log(status);
+        var urlAksi = 'https://isecuritydaihatsu.com/api/poto?id=' + status ;
+          fetch(urlAksi,{
+              headers : {
+                  'keys-isecurity' : 'isecurity' ,
+              } ,
+          })
+          .then((response) => response.json())
+          .then((json) => {
+              setImgUrl(json.url);
+          })
+    }
+    getPoto();
 
     return (
-        <View style={styles.container}>
+
+      <View style={{flex:1}}>
+       { loading ? 
+            <View style={{flex : 1 , justifyContent : 'center'}}>
+              <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
+            </View>
+            :
+            <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.headerContent}>
-              <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar3.png'}}/>
-              <Text style={styles.name}>Jane Doe</Text>
+              <Image style={styles.avatar} source={{uri: `${imgUrl}`}}/>
+              <Text style={styles.name}>{route.params.nama}</Text>
+              <Text style={styles.name}>{route.params.npk}</Text>
           </View>
         </View>
 
@@ -51,6 +97,9 @@ import { StyleSheet,
           }}/>
         </View>
     </View>
+       }
+      </View>
+        
     );
 }
 

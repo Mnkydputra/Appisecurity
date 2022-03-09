@@ -260,22 +260,6 @@ showLoad();
 
               </View>
               
-              <View>
-                <TouchableOpacity>
-                  <Text mode="contained" onPress={logout}>
-                    Logout <Icon name=''></Icon>
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              {/* <TouchableOpacity onPress={ () => {
-                navigation.navigate('EditStatus')
-              }}>
-                  <View style={[styles.menuBox, { backgroundColor: "#ff80d5" }]}>
-                    <Image style={styles.icon} source={require("../src/img/online-course.png")} />
-                    <Text style={styles.info}>Edit Status</Text>
-                  </View>
-                </TouchableOpacity> */}
-
             </>
         }
       </View>
