@@ -39,9 +39,9 @@ import { StyleSheet,
     showLoad();
 
     const getPoto = async () => {
-      const  status = await  AsyncStorage.getItem('token');
-        console.log(status);
-        var urlAksi = 'https://isecuritydaihatsu.com/api/poto?id=' + status ;
+      const  id_akun = await  AsyncStorage.getItem('token');
+        // console.log(id_akun);
+        var urlAksi = 'https://isecuritydaihatsu.com/api/poto?id=' + id_akun ;
           fetch(urlAksi,{
               headers : {
                   'keys-isecurity' : 'isecurity' ,

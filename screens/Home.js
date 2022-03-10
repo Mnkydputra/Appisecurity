@@ -50,9 +50,7 @@ export default function  Home ({navigation,route}) {
         }
     }
 
-  useEffect(() => {
-    let unmounted = false
-
+    
     //jika token login ada isinya maka program redirect ke Home
     const tokenLogin = async () => {
       const value = await AsyncStorage.getItem("token");
@@ -63,6 +61,10 @@ export default function  Home ({navigation,route}) {
         // console.log(value);
       }
     };
+
+  useEffect(() => {
+    let unmounted = false
+
     tokenLogin();
     //end
     getParamsAbsensi();
