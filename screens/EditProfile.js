@@ -10,6 +10,7 @@ import BackButton from "../src/component/BackButton";
 import { theme } from "../src/core/theme";
 export default function EditProfile ({navigation,route}) {
     const [biodata , setBiodata] = useState({npk: '', nama: '',ktp: '',kk: '',tempat_lahir: '',tanggal_lahir: '',email: '',no_hp: '',no_emergency: '',tinggi_badan: '',berat_badan: '',imt: '',keterangan: '',jl_ktp: '',rt_ktp: '',rw_ktp: '',kel_ktp: '',kec_ktp: '',kota_ktp: '',provinsi_ktp: '',jl_dom: '',rt_dom: '',rw_dom: '',kel_dom: '',kec_dom: '',kota_dom: '',provinsi_dom: ''  , kta : ''});
+    const [loading , setLoading ] = useState(true)
     useEffect(() => {
         const getBiodata = async () => {
             const  id_akun = await  AsyncStorage.getItem('id_akun');
@@ -41,6 +42,15 @@ export default function EditProfile ({navigation,route}) {
     }, []);
 
 
+    //fungsi loading 
+    const showLoad = () => {
+      setTimeout(() => {
+        setLoading(false);
+      },3000)
+    }
+    showLoad();
+    //
+    
     const update = () => {
 
     }
@@ -80,24 +90,24 @@ export default function EditProfile ({navigation,route}) {
         </TextInput>
       </View>
       <View style={styles.marginTextInput}>
-      <TextInput label="NO KTA" 
+      <TextInput label="NO HANDPHONE" 
         value={biodata.kta}
         onChangeText={ newText => setBiodata({ kta : newText }) }
-        placeholder="NO KTA" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
+        placeholder="NO HANDPHONE" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
       <View style={styles.marginTextInput}>
-      <TextInput label="Tempat Lahir" 
+      <TextInput label="NO EMERGENCY" 
         value={biodata.tempat_lahir}
         onChangeText={newText => setBiodata(newText)}
-        placeholder="Tempat Lahir" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
+        placeholder="NO EMERGENCY" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
       <View style={styles.marginTextInput}>
-      <TextInput label="Nama Lengkap" 
+      <TextInput label="Email" 
         value={biodata.nama}
         onChangeText={ newText => setBiodata({ nama : newText }) }
-        placeholder="Nama" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
+        placeholder="Email" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
       <View style={styles.marginTextInput}>

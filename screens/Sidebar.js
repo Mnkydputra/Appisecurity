@@ -7,9 +7,16 @@ import { StyleSheet,
     TouchableOpacity,
     ActivityIndicator,
     BackHandler , 
-    FlatList} from 'react-native';
+    FlatList, Button} from 'react-native';
     import Icon from 'react-native-vector-icons/FontAwesome';
     import  AsyncStorage  from "@react-native-async-storage/async-storage";
+    import DocumentPicker from "react-native-document-picker";
+    import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+
+
+    import ImagePicker from 'expo-images-picker';
+
+
     export default function Sidebar ({navigation,route}) {
 
     const [data , setData ] =  useState([
@@ -19,6 +26,9 @@ import { StyleSheet,
     ])
     const [loading,setLoading] = useState(true)
     const [imgUrl , setImgUrl ] = useState('');
+    const [filePath, setFilePath] = useState({});
+
+    const [image, setImage] = useState(null);
 
     useEffect(() => {
       const handleBackPress = () => {
@@ -29,6 +39,24 @@ import { StyleSheet,
       return () =>
       BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
     },[])
+
+
+    const pickImage = async () => {
+        try {
+          const result = await ImagePicker.launchImageLibraryAsync();
+
+          // Explore the result
+          console.log(result);
+
+          if (result.cancelled === false) {
+              setPickedImagePath(result.uri);
+              console.log(result.uri);
+          }
+        } catch (error) {
+            alert('Error Occur: ' + error.message)
+            // closeSheet()
+        }
+  };
 
 
     const showLoad = () => {
@@ -54,6 +82,32 @@ import { StyleSheet,
     }
     getPoto();
 
+
+    //
+    const options = {
+      title: 'Select Image',
+      type: 'library',
+      options: {
+        maxHeight: 200,
+        maxWidth: 200,
+        selectionLimit: 1,
+        mediaType: 'photo',
+        includeBase64: false,
+      }
+    }
+
+  const openGallery =  () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true
+    }).then(image => {
+      console.log(image);
+    });
+  }
+
+    //
+
     return (
 
       <View style={{flex:1}}>
@@ -68,6 +122,7 @@ import { StyleSheet,
               <Image style={styles.avatar} source={{uri: `${imgUrl}`}}/>
               <Text style={styles.name}>{route.params.nama}</Text>
               <Text style={styles.name}>{route.params.npk}</Text>
+              <Button title='Upload Poto' onPress={openGallery}></Button>
           </View>
         </View>
 

@@ -1,7 +1,8 @@
 import React, { Component , useState , useEffect } from 'react';
-import { View, Text, StyleSheet  , BackHandler , ScrollView , TouchableOpacity , ActivityIndicator} from 'react-native';
+import { View, Text, StyleSheet  , BackHandler , ScrollView , TouchableOpacity , ActivityIndicator , Alert} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
-// import datetimepicker from '@react-native-community/datetimepicker';
+
+// import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Background from "../src/component/Background";
 import Logo from "../src/component/Logo";
@@ -19,10 +20,39 @@ export default function EditProfile ({navigation,route}) {
     const [masuk_adm , setMasukAdm] = useState('');
     const [masuk_sigap , setMasukSigap] = useState('');
     const [id_akun , setId ] = useState('');
-
-    const [date, setDate] = useState(new Date())
     const [open, setOpen] = useState(false)
     const [loading , setLoading ] = useState(true)
+    const [wait , setWaiting ] = useState(false)
+
+
+    // 
+    const [date, setDate] = useState(new Date());
+    const [mode, setMode] = useState('date');
+    const [show, setShow] = useState(false);
+    // 
+
+
+    const onChange = (event, selectedDate) => {
+      const currentDate = selectedDate || date;
+      setShow(Platform.OS === 'ios');
+      setDate(currentDate);
+      setKta(date)
+    };
+
+    const showMode = (currentMode) => {
+      setShow(true);
+      setMode(currentMode);
+    };
+  
+    const showDatepicker = () => {
+      showMode('date');
+    };
+  
+    const showTimepicker = () => {
+      showMode('time');
+    };
+
+
     const getBiodata = async () => {
       const  id_akun = await  AsyncStorage.getItem('id_akun');
         var urlAksi = 'https://isecuritydaihatsu.com/api/employe?id=' + id_akun ;
@@ -56,6 +86,7 @@ export default function EditProfile ({navigation,route}) {
 
 
     const update = async () => {
+      setWaiting(true);
       const id_akun = await AsyncStorage.getItem('id_akun');
       var url = 'https://isecuritydaihatsu.com/api/employe/update';
           fetch(url,{
@@ -74,7 +105,17 @@ export default function EditProfile ({navigation,route}) {
           })
           .then((response) => response.json())
           .then((json) => {
-            console.log(json)
+            console.log(json.status);
+            // setWaiting(false);
+            if(json.status === "ok"){
+              Alert.alert("Berhasil!", "UPDATE SUKSES", [
+                { text: "YA", onPress: () => setWaiting(false) },
+              ]);
+            }else {
+              Alert.alert("Gagal!", "TERJADI KESALAHAN", [
+                { text: "YA", onPress: () => setWaiting(false) },
+              ]);
+            }
           })
     }
 
@@ -100,7 +141,7 @@ export default function EditProfile ({navigation,route}) {
             <View style={styles.marginTextInput}>
             <TextInput label="NO KTA" 
               value={kta}
-              onChangeText={text =>  setKta(text)}
+              onChangeText={date =>  setKta(date)}
               placeholder="NO KTA" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
               </TextInput>
             </View>
@@ -129,9 +170,31 @@ export default function EditProfile ({navigation,route}) {
             </View>
 
             <Button mode="contained"  onPress={update}>
-              Update Data
+            {wait ? 
+            <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>
+            : 
+              <Text style={{color:'#fff'}}>UPDATE DATA </Text>   
+            }
             </Button>
             </View>
+
+            {/* <View>
+                <TouchableOpacity onPress={showDatepicker}>
+                  <Text>KLIK</Text>
+                </TouchableOpacity>
+            </View> */}
+            {/* {show && (
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode='date'
+                    is24Hour={true}
+                    display="default"
+                    onChange={onChange}
+                    dateFormat="dayofweek day month"
+                    style={{flex: 1}}
+                  />
+              )} */}
           </ScrollView>
           }
       </View>

@@ -1,7 +1,7 @@
 import React, { Component , useState , useEffect } from 'react';
 import { View, Text , StyleSheet ,  Image , TouchableOpacity , ActivityIndicator , BackHandler} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
-import ImagePicker from 'react-native-image-picker';
+// import ImagePicker from 'react-native-image-picker';
 import BackButton from "../src/component/BackButton";
 import Background from "../src/component/Background";
 import Logo from "../src/component/Logo";
@@ -26,6 +26,7 @@ const [loading,setLoading] = useState(true)
                 .then((response) => response.json())
                 .then((json) => {
                     setImgUrl(json.url);
+                    console.log(json.url)
                 })
           }
           getPoto();
@@ -50,46 +51,18 @@ const [loading,setLoading] = useState(true)
     showLoad();
     //
     return (
-      <Background>
+      <>
       {
             loading ? 
             <View style={{flex : 1 , justifyContent : 'center'}}>
               <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
             </View>
             :
-        <View style={styles.container}>
-        <View style={styles.btn}>
-        <View style={{ marginRight: 4 }}>
-          <Button  mode="contained" onPress={() => navigation.navigate("Profile")}>
-            Profile
-          </Button>
-          <Button mode="contained" onPress={() => navigation.navigate("Status")}>
-            Status
-          </Button>
-          <Button mode="contained"  onPress={()=> navigation.navigate('Poto' , {
-          nama : biodata.nama 
-          })}>
-            Poto
-          </Button>
-        </View>
-        </View>
-            <View>
-                <Text>{ route.params.nama }</Text>
-                <Image style={{ width: 250, height: 250}} 
-               source={{uri:imgUrl ? imgUrl : null}} />
+            <View style={styles.container}>
+              <Image style={{height:450 ,width:400}} source={{uri: `${imgUrl}`}}/>
             </View>
-            <View>
-            <Image
-                source={{uri: filePath.uri}}
-                style={styles.imageStyle}
-                />
-                <Text style={styles.textStyle}>
-                {filePath.uri}
-                </Text>
-            </View>
-        </View>
       }
-    </Background>
+    </>
     );
   }
 
@@ -99,13 +72,6 @@ const [loading,setLoading] = useState(true)
         alignItems: "center",
         justifyContent: "center"
       },
-    btn : {
-        alignItems: "center",
-        justifyContent: "center" ,
-        flexDirection: 'row',
-        flexWrap: 'wrap' ,
-        marginLeft : 2 ,
-        backgroundColor : '#fff'
-    }  
+      
   })
 

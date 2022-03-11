@@ -2,7 +2,6 @@ import React, { useState ,Component  , useEffect  } from 'react';
 import { View, Text , TouchableOpacity , Image , Dimensions , Button , BackHandler ,  Alert , Linking , ActivityIndicator } from 'react-native';
 import styles from '../src/component/styles.js';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
-import AnimatedSplash from "react-native-animated-splash-screen";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function  Home ({navigation,route}) {
@@ -24,6 +23,7 @@ export default function  Home ({navigation,route}) {
     //ambil data diri anggota untuk akses absensi 
     const getParamsAbsensi = async () => {
       const  status = await  AsyncStorage.getItem('token');
+      try {
         setId(status);
         if(status === null ){
           console.log('not found data')
@@ -39,15 +39,12 @@ export default function  Home ({navigation,route}) {
               const hasil =  json.result ;
               // console.log(hasil)
               setUser({npk :  hasil.npk , id_absen : hasil.id_biodata , wilayah: hasil.wilayah , areaKerja : hasil.area_kerja , jabatan: hasil.jabatan , nama : hasil.nama })
-              // if(!unmounted){
-              //   if(hasil === null ){
-              //     console.log("not found data");
-              //   }else {
-              //     setUser({npk :  hasil.npk , id_absen : hasil.id_biodata , wilayah: hasil.wilayah , areaKerja : hasil.area_kerja , jabatan: hasil.jabatan , nama : hasil.nama })
-              //   }
-              // }
             })
         }
+      }catch(error){
+          alert(error.message)
+      }
+        
     }
 
     
@@ -55,11 +52,11 @@ export default function  Home ({navigation,route}) {
     const tokenLogin = async () => {
       const value = await AsyncStorage.getItem("token");
       const id = await AsyncStorage.getItem("id_akun");
-      if (value === null) {
-        navigation.navigate("Login");
-      }else if(value !== null){
-        // console.log(value);
-      }
+      // if (value === null) {
+      //   navigation.navigate("Login");
+      // }else if(value !== null){
+      //   console.log(value);
+      // }
     };
 
   useEffect(() => {
@@ -97,17 +94,6 @@ export default function  Home ({navigation,route}) {
     }
   }, []);
   
-  const  logout = async() => {
-    const st = await AsyncStorage.removeItem('token');
-    await AsyncStorage.removeItem("token");
-    await AsyncStorage.removeItem("id_akun");
-    await AsyncStorage.removeItem("patrol");
-    await AsyncStorage.removeItem("token_patrol");
-    if(st === null) {
-      navigation.navigate('Login')
-    }
-  }
-
 
 
   //patrol link 
@@ -203,7 +189,7 @@ showLoad();
               
               <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate("Profile", {
+                    navigation.navigate("Pro", {
                       nama: "dasep",
                     })
                   }

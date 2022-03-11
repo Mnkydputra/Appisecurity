@@ -117,7 +117,7 @@ export default function Absensi({navigation,route}) {
                       );
                       console.log(`Jarak ${distance} Meter`);
                       const jarak =  distance ;
-                      if(jarak > 60){
+                      if(jarak > 300){
                         Alert.alert("Perhatian" ,"jarak dengan  " + user.areaKerja + " sejauh " + jarak + " meter" , [
                           {
                             text : 'OK' ,
