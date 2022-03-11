@@ -16,19 +16,25 @@ const [loading,setLoading] = useState(true)
 
         const getPoto = async () => {
             const  status = await  AsyncStorage.getItem('token');
-              console.log(status);
+            try {
               var urlAksi = 'https://isecuritydaihatsu.com/api/poto?id=' + status ;
-                fetch(urlAksi,{
-                    headers : {
-                        'keys-isecurity' : 'isecurity' ,
-                    } ,
-                })
-                .then((response) => response.json())
-                .then((json) => {
-                    setImgUrl(json.url);
-                    console.log(json.url)
-                })
-          }
+              fetch(urlAksi,{
+                  headers : {
+                      'keys-isecurity' : 'isecurity' ,
+                  } ,
+              })
+              .then((response) => response.json())
+              .then((json) => {
+                if(json === null){
+                  setImgUrl('https://png.pngtree.com/element_our/20200701/ourlarge/pngtree-vector-security-personnel-image_2277454.jpg');
+                }else {
+                  setImgUrl(json.url);
+                }
+              })
+            }catch(error){
+              alert(error.message)
+            }
+        }
           getPoto();
 
           const handleBackPress = () => {
@@ -71,7 +77,6 @@ const [loading,setLoading] = useState(true)
         flex: 1,
         alignItems: "center",
         justifyContent: "center"
-      },
-      
+    },  
   })
 

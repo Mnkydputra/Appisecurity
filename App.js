@@ -12,7 +12,7 @@ import Status from './screens/Status';
 import Start from './screens/StartScreen';
 import LaporanAbsen from './screens/LaporanAbsen' ;
 import ViewAbsen from './screens/ViewAbsen' ;
-import EditProfile from './screens/EditProfile' ;
+import EditBiodata from './screens/EditBiodata' ;
 import EditStatus from './screens/EditStatus' ;
 import Poto from './screens/Poto' ;
 import Sidebar from './screens/Sidebar' ;
@@ -53,7 +53,7 @@ export default function App() {
       <Stack.Screen name='Absensi' component={Absensi}></Stack.Screen>
       <Stack.Screen name='View Absen' component={ViewAbsen}></Stack.Screen>
       <Stack.Screen name='Laporan Absen'  component={LaporanAbsen}></Stack.Screen>
-      <Stack.Screen name='Edit Profile' component={EditProfile}></Stack.Screen>
+      <Stack.Screen name='Edit Profile' component={EditBiodata}></Stack.Screen>
       <Stack.Screen name='Edit Status' component={EditStatus}></Stack.Screen>
       <Stack.Screen name='Akun' component={Sidebar}></Stack.Screen>
       <Stack.Screen name='Logout' component={Logout}></Stack.Screen>

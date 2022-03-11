@@ -21,6 +21,7 @@ export default function Profile({navigation , route }) {
     useEffect(() => {
         const getBiodata = async () => {
             const  id_akun = await  AsyncStorage.getItem('id_akun');
+            try {
               var urlAksi = 'https://isecuritydaihatsu.com/api/biodata?id=' + id_akun ;
                 fetch(urlAksi,{
                     headers : {
@@ -36,6 +37,10 @@ export default function Profile({navigation , route }) {
                   email: hasil.email , no_hp: hasil.no_hp ,no_emergency: hasil.no_emergency,
                   tinggi_badan: hasil.tinggi_badan ,berat_badan: hasil.berat_badan,imt: hasil.imt ,keterangan: hasil.keterangan, jl_ktp: hasil.jl_ktp ,rt_ktp: hasil.rt_ktp ,rw_ktp: hasil.rw_ktp,kel_ktp: hasil.kel_ktp,kec_ktp: hasil.kec_ktp,kota_ktp: hasil.kota_ktp,provinsi_ktp: hasil.provinsi_ktp, jl_dom: hasil.jl_dom,rt_dom: hasil.rt_dom ,rw_dom: hasil.rw_dom,kel_dom: hasil.kel_dom,kec_dom: hasil.kec_dom, kota_dom: hasil.kota_dom,provinsi_dom: hasil.provinsi_dom}) 
                 })
+            }catch(error){
+                alert(error.message)
+            }
+              
           }
           getBiodata();
     
@@ -100,19 +105,20 @@ export default function Profile({navigation , route }) {
               biodata.provinsi_ktp + ' '  +
               biodata.kota_ktp + ' '  +
               biodata.kec_ktp + ' '  +
-              biodata.provinsi_ktp + ' '  +
-              biodata.provinsi_ktp + ' ' 
+              biodata.kel_ktp + ' '  +
+              biodata.rw_ktp + ' '  +
+              biodata.rt_ktp + ' ' 
             }</DataTable.Cell>
           </DataTable.Row>
 
-          <TextInput>
+          {/* <TextInput>
               { 
                 biodata.jl_ktp + ' ' + 
                 biodata.jl_ktp + ' ' + 
                 biodata.jl_ktp + ' ' + 
                 biodata.jl_ktp + ' ' 
               }
-          </TextInput>
+          </TextInput> */}
 
 
           <DataTable.Row>

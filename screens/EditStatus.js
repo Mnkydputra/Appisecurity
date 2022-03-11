@@ -1,4 +1,4 @@
-import React, { Component , useState , useEffect } from 'react';
+import React, { Component , useState , useEffect , useCallback } from 'react';
 import { View, Text, StyleSheet  , BackHandler , ScrollView , TouchableOpacity , ActivityIndicator , Alert} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 
@@ -11,8 +11,8 @@ import Button from "../src/component/Button";
 import TextInput from "../src/component/TextInput";
 import BackButton from "../src/component/BackButton";
 import { theme } from "../src/core/theme";
-
-import DatePicker from 'react-native-date-picker'
+// import { Button } from 'react-native-paper'
+import { DatePickerModal } from 'react-native-paper-dates'
 export default function EditProfile ({navigation,route}) {
     const [status , setStatus] = useState({kta: '', expired_kta: '',ktp: '',masuk_adm: '' , masuk_sigap : ''});
     const [kta , setKta] = useState('');
@@ -20,37 +20,13 @@ export default function EditProfile ({navigation,route}) {
     const [masuk_adm , setMasukAdm] = useState('');
     const [masuk_sigap , setMasukSigap] = useState('');
     const [id_akun , setId ] = useState('');
-    const [open, setOpen] = useState(false)
     const [loading , setLoading ] = useState(true)
     const [wait , setWaiting ] = useState(false)
 
 
     // 
-    const [date, setDate] = useState(new Date());
-    const [mode, setMode] = useState('date');
-    const [show, setShow] = useState(false);
+    const [visible, setVisible] = useState(false)
     // 
-
-
-    const onChange = (event, selectedDate) => {
-      const currentDate = selectedDate || date;
-      setShow(Platform.OS === 'ios');
-      setDate(currentDate);
-      setKta(date)
-    };
-
-    const showMode = (currentMode) => {
-      setShow(true);
-      setMode(currentMode);
-    };
-  
-    const showDatepicker = () => {
-      showMode('date');
-    };
-  
-    const showTimepicker = () => {
-      showMode('time');
-    };
 
 
     const getBiodata = async () => {
@@ -128,6 +104,15 @@ export default function EditProfile ({navigation,route}) {
     showLoad();
     //
 
+    const date = new Date()
+    const onDismiss = () => {
+      setVisible(false)
+    }
+  
+    const onChange = () => {
+      setVisible(false)
+    }
+
 
     return (
       <View style={{flex:1}}>
@@ -178,23 +163,20 @@ export default function EditProfile ({navigation,route}) {
             </Button>
             </View>
 
-            {/* <View>
-                <TouchableOpacity onPress={showDatepicker}>
-                  <Text>KLIK</Text>
-                </TouchableOpacity>
-            </View> */}
-            {/* {show && (
-                  <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode='date'
-                    is24Hour={true}
-                    display="default"
-                    onChange={onChange}
-                    dateFormat="dayofweek day month"
-                    style={{flex: 1}}
-                  />
-              )} */}
+
+      <DatePickerModal
+        mode="single"
+        visible={visible}
+        onDismiss={onDismiss}
+        date={date}
+        onConfirm={onChange}
+        saveLabel="Save" // optional
+        label="Select date" // optional
+      />
+      <Button onPress={()=> setVisible(true)}>
+        Pick date
+      </Button>
+            
           </ScrollView>
           }
       </View>
