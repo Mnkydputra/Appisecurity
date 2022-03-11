@@ -71,31 +71,15 @@ export default function Status({navigation , route }) {
     showLoad();
     //
     return (
-      <Background>
+      <>
       {
             loading ? 
             <View style={{flex : 1 , justifyContent : 'center'}}>
               <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
             </View>
             :
-        <View style={styles.container}>
-        <View style={styles.btn}>
-        <View style={{ marginRight: 4 }}>
-              <Button  mode="contained" onPress={() => navigation.navigate("Profile")}>
-                Profile
-              </Button>
-              <Button mode="contained" onPress={() => navigation.navigate("Status")}>
-               Status
-              </Button>
-              <Button mode="contained"  onPress={()=> navigation.navigate('Poto' , {
-              nama : status.nama 
-              })}>
-                Poto
-              </Button>
-        </View>
-        </View>
+        
             <View>
-                <Text>Status  </Text>
                 <Text>NPK : {status.npk}</Text>
                 <Text>NO KTA : {status.no_kta}</Text>
                 <Text>EXPIRED KTA : {status.expired_kta}</Text>
@@ -106,14 +90,9 @@ export default function Status({navigation , route }) {
                 <Text>WILAYAH : {status.wilayah}</Text>
                 <Text>TANGGAL MASUK SIGAP : {status.tgl_masuk_sigap}</Text>
                 <Text>TANGGAL MASUK ADM : {status.tgl_masuk_adm}</Text>
-
-            </View>
         </View>
-
-
-
       }
-      </Background>
+      </>
 
     );
 

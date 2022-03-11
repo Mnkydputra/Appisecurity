@@ -3,7 +3,7 @@ import{ useEffect , React , useState } from 'react';
 import { StyleSheet, Text, View , BackHandler , Alert } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Home from './screens/Home';
 import Absensi from './screens/Absensi';
 import Login from './screens/Login';
@@ -15,7 +15,13 @@ import ViewAbsen from './screens/ViewAbsen' ;
 import EditProfile from './screens/EditProfile' ;
 import EditStatus from './screens/EditStatus' ;
 import Poto from './screens/Poto' ;
+import Sidebar from './screens/Sidebar' ;
+import Logout from './screens/Logout' ;
+import Pro from './screens/Pro' ;
 const Stack = createStackNavigator();
+const Tab = createMaterialTopTabNavigator();
+
+
 
 export default function App() {
 
@@ -35,6 +41,7 @@ export default function App() {
       >
       <Stack.Screen name='Start' component={Start}></Stack.Screen>
       <Stack.Screen name='Login'  component={Login}></Stack.Screen>
+      <Stack.Screen name='Pro'  component={Pro}></Stack.Screen>
       <Stack.Screen name='Home'  
       options={{
           headerShown: false  , 
@@ -48,7 +55,10 @@ export default function App() {
       <Stack.Screen name='Laporan Absen'  component={LaporanAbsen}></Stack.Screen>
       <Stack.Screen name='Edit Profile' component={EditProfile}></Stack.Screen>
       <Stack.Screen name='Edit Status' component={EditStatus}></Stack.Screen>
+      <Stack.Screen name='Akun' component={Sidebar}></Stack.Screen>
+      <Stack.Screen name='Logout' component={Logout}></Stack.Screen>
       </Stack.Navigator>
+
     </NavigationContainer>
   );
 }

@@ -61,62 +61,68 @@ export default function Login({ navigation }) {
   //jika di tekan tombol login  maka jalankan fungsi ini
   const onLoginPress = async () => {
     setLoading(true);
-    if (npk === "" ) {
-      Alert.alert("Perhatian!", "NPK HARUS DI ISI", [
-        { text: "YA", onPress: () => setLoading(false) },
-      ]);
-    } else if(password === ""){
-      Alert.alert("Perhatian!", "PASSWORD HARUS DI ISI", [
-        { text: "YA", onPress: () => setLoading(false) },
-      ]);
-    }else {
-      var urlAksi = "https://isecuritydaihatsu.com/api/cekAkun";
-      fetch(urlAksi, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "keys-isecurity": "isecurity",
-        },
-        body: "npk=" + npk + "&password=" + password,
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          console.log(json)
-          if(json === null){
-            console.log('data not found');
-          }else {
-            if (json.message === "Tidak ada data") {
-              Alert.alert("Perhatian!", "AKUN TIDAK TERDAFTAR", [
-                { text: "YA", onPress: () => setLoading(false) },
-              ]);
-            } else {
-              const hasil = json.result[0];
-              console.log(hasil)
-              if (npk === hasil.npk) {
-                setNPK(hasil.npk);
-                setIdAkun(hasil.id_akun);
-                const id_user = hasil.id_akun;
-                const patrol = hasil.status_patrol;
-                const patrol_w = hasil.password;
-                AsyncStorage.setItem("token", id_user);
-                AsyncStorage.setItem("id_akun", id_user);
-                AsyncStorage.setItem("patrol", patrol);
-                AsyncStorage.setItem("token_patrol",patrol_w);
-                navigation.navigate("Home", {
-                  id_user: id_user,
-                });
-                setLoading(false);
-              } else {
+
+    try {
+      if (npk === "" ) {
+        Alert.alert("Perhatian!", "NPK HARUS DI ISI", [
+          { text: "YA", onPress: () => setLoading(false) },
+        ]);
+      } else if(password === ""){
+        Alert.alert("Perhatian!", "PASSWORD HARUS DI ISI", [
+          { text: "YA", onPress: () => setLoading(false) },
+        ]);
+      }else {
+        var urlAksi = "https://isecuritydaihatsu.com/api/cekAkun";
+        fetch(urlAksi, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "keys-isecurity": "isecurity",
+          },
+          body: "npk=" + npk + "&password=" + password,
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            console.log(json)
+            if(json === null){
+              console.log('data not found');
+            }else {
+              if (json.message === "Tidak ada data") {
                 Alert.alert("Perhatian!", "AKUN TIDAK TERDAFTAR", [
                   { text: "YA", onPress: () => setLoading(false) },
                 ]);
-                // alert("akun tidak terdaftar ");
-                
+              } else {
+                const hasil = json.result[0];
+                console.log(hasil)
+                if (npk === hasil.npk) {
+                  setNPK(hasil.npk);
+                  setIdAkun(hasil.id_akun);
+                  const id_user = hasil.id_akun;
+                  const patrol = hasil.status_patrol;
+                  const patrol_w = hasil.password;
+                  AsyncStorage.setItem("token", id_user);
+                  AsyncStorage.setItem("id_akun", id_user);
+                  AsyncStorage.setItem("patrol", patrol);
+                  AsyncStorage.setItem("token_patrol",patrol_w);
+                  navigation.navigate("Home", {
+                    id_user: id_user,
+                  });
+                  setLoading(false);
+                } else {
+                  Alert.alert("Perhatian!", "AKUN TIDAK TERDAFTAR", [
+                    { text: "YA", onPress: () => setLoading(false) },
+                  ]);
+                  // alert("akun tidak terdaftar ");
+                  
+                }
               }
             }
-          }
-        });
+          });
+      }
+    }catch(error){
+      alert(error.message)
     }
+    
   };
   //end login
 

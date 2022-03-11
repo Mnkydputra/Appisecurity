@@ -1,5 +1,5 @@
 import React, { Component , useState , useEffect } from 'react';
-import { View, Text , StyleSheet , BackHandler ,ActivityIndicator} from 'react-native';
+import { View, Text , StyleSheet , BackHandler ,ActivityIndicator , ScrollView} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import BackButton from "../src/component/BackButton";
 import Background from "../src/component/Background";
@@ -7,6 +7,8 @@ import Logo from "../src/component/Logo";
 import Header from "../src/component/Header";
 import Button from "../src/component/Button";
 import Paragraph from "../src/component/Paragraph";
+import { DataTable } from 'react-native-paper';
+import TextInput from '../src/component/TextInput';
 export default function Profile({navigation , route }) {
     const [biodata , setBiodata] = useState({npk: '', nama: '',ktp: '',kk: '',tempat_lahir: '',tanggal_lahir: '',email: '',no_hp: '',no_emergency: '',tinggi_badan: '',berat_badan: '',imt: '',keterangan: '',jl_ktp: '',rt_ktp: '',rw_ktp: '',kel_ktp: '',kec_ktp: '',kota_ktp: '',provinsi_ktp: '',jl_dom: '',rt_dom: '',rw_dom: '',kel_dom: '',kec_dom: '',kota_dom: '',provinsi_dom: '' })
     const [loading,setLoading] = useState(true)
@@ -56,64 +58,111 @@ export default function Profile({navigation , route }) {
     showLoad();
     //
     return (
-      <Background>
+      <>
+
         {
             loading ? 
             <View style={{flex : 1 , justifyContent : 'center'}}>
               <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
             </View>
             :
-          <View style={styles.container}>
-            <BackButton goBack={navigation.goBack} />
-          <View style={styles.btn}>
-            <View style={{ marginRight: 4 }}>
-              <Button  mode="contained" onPress={() => navigation.navigate("Profile")}>
-                Profile
-              </Button>
-              <Button mode="contained" onPress={() => navigation.navigate("Status")}>
-               Status
-              </Button>
-              <Button mode="contained"  onPress={()=> navigation.navigate('Poto' , {
-              nama : biodata.nama 
-              })}>
-                Poto
-              </Button>
-            </View>
-          </View>
-          <View>
-            <Text> Profile anggota </Text>
-            <Text> Nama : {biodata.nama} </Text>
-            <Text> Npk : {biodata.npk} </Text>
-            <Text> KTP : {biodata.ktp} </Text>
-            <Text> KK : {biodata.kk} </Text>
-            <Text> tempat lahir : {biodata.tempat_lahir} </Text>
-            <Text> Tanggal Lahir : {biodata.tanggal_lahir} </Text>
-            <Text> email : {biodata.email} </Text>
-            <Text> no hp : {biodata.no_hp} </Text>
-            <Text> no emergency : {biodata.no_emergency} </Text>
-            <Text> tinggi badan : {biodata.tinggi_badan} </Text>
-            <Text> berat badan: {biodata.berat_badan} </Text>
-            <Text> imt : {biodata.imt} </Text>
-            <Text> keterangan : {biodata.keterangan} </Text>
-            <Text> Alamat KTP: {biodata.jl_ktp} </Text>
-            <Text> RT KTP: {biodata.rt_ktp} </Text>
-            <Text> RW KTP: {biodata.rw_ktp} </Text>
-            <Text> Kecamatan KTP: {biodata.kec_ktp} </Text>
-            <Text> Kelurahan KTP: {biodata.kel_ktp} </Text>
-            <Text> Kota KTP: {biodata.kota_ktp} </Text>
-            <Text> Provinsi KTP: {biodata.provinsi_ktp} </Text>
-            <Text> Jalan Domisili: {biodata.jl_dom} </Text>
-            <Text> rt Domisili: {biodata.rt_dom} </Text>
-            <Text> RW Domisili: {biodata.rw_dom} </Text>
-            <Text> kelurahan Domisili: {biodata.kel_dom} </Text>
-            <Text> kecamatan Domisili: {biodata.kec_dom} </Text>
-            <Text> kota Domisili: {biodata.kota_dom} </Text>
-            <Text> provinsi Domisili: {biodata.provinsi_dom} </Text>
-          </View>
-        </View>
+          <ScrollView>
+          <DataTable.Row>
+            <DataTable.Cell>Nama</DataTable.Cell>
+            <DataTable.Cell>{biodata.nama}</DataTable.Cell>
+          </DataTable.Row>
 
+          <DataTable.Row>
+            <DataTable.Cell>Npk</DataTable.Cell>
+            <DataTable.Cell>{biodata.npk}</DataTable.Cell>
+          </DataTable.Row>
+
+          <DataTable.Row>
+            <DataTable.Cell>Tempat Lahir</DataTable.Cell>
+            <DataTable.Cell>{biodata.tempat_lahir}</DataTable.Cell>
+          </DataTable.Row>
+
+          <DataTable.Row>
+            <DataTable.Cell>Tanggal Lahir</DataTable.Cell>
+            <DataTable.Cell>{biodata.tanggal_lahir}</DataTable.Cell>
+          </DataTable.Row>
+
+          <DataTable.Row>
+            <DataTable.Cell>Alamat KTP</DataTable.Cell>
+            <DataTable.Cell>{biodata.no_emergency}</DataTable.Cell>
+          </DataTable.Row>
+
+
+          <DataTable.Row>
+            <DataTable.Cell>Alamat Domisili</DataTable.Cell>
+            <DataTable.Cell>{
+              biodata.jl_ktp + ' '  +
+              biodata.provinsi_ktp + ' '  +
+              biodata.kota_ktp + ' '  +
+              biodata.kec_ktp + ' '  +
+              biodata.provinsi_ktp + ' '  +
+              biodata.provinsi_ktp + ' ' 
+            }</DataTable.Cell>
+          </DataTable.Row>
+
+          <TextInput>
+              { 
+                biodata.jl_ktp + ' ' + 
+                biodata.jl_ktp + ' ' + 
+                biodata.jl_ktp + ' ' + 
+                biodata.jl_ktp + ' ' 
+              }
+          </TextInput>
+
+
+          <DataTable.Row>
+            <DataTable.Cell>No Hp</DataTable.Cell>
+            <DataTable.Cell>{biodata.no_hp}</DataTable.Cell>
+          </DataTable.Row>
+
+
+          <DataTable.Row>
+            <DataTable.Cell>No Emergency</DataTable.Cell>
+            <DataTable.Cell>{biodata.no_emergency}</DataTable.Cell>
+          </DataTable.Row>
+
+
+          <DataTable.Row>
+            <DataTable.Cell>Email</DataTable.Cell>
+            <DataTable.Cell>{biodata.email}</DataTable.Cell>
+          </DataTable.Row>
+
+          <DataTable.Row>
+            <DataTable.Cell>No Hp</DataTable.Cell>
+            <DataTable.Cell>{biodata.no_hp}</DataTable.Cell>
+          </DataTable.Row>
+
+
+          <DataTable.Row>
+            <DataTable.Cell>Tinggi Badan</DataTable.Cell>
+            <DataTable.Cell>{biodata.tinggi_badan + ' CM'}</DataTable.Cell>
+          </DataTable.Row>
+
+
+          <DataTable.Row>
+            <DataTable.Cell>Berat Badan</DataTable.Cell>
+            <DataTable.Cell>{biodata.berat_badan + ' KG'}</DataTable.Cell>
+          </DataTable.Row>
+
+          <DataTable.Row>
+            <DataTable.Cell>IMT</DataTable.Cell>
+            <DataTable.Cell>{biodata.imt}</DataTable.Cell>
+          </DataTable.Row>
+
+          <DataTable.Row>
+            <DataTable.Cell>Keterangan</DataTable.Cell>
+            <DataTable.Cell>{biodata.keterangan}</DataTable.Cell>
+          </DataTable.Row>
+
+         
+        </ScrollView>
         }
-      </Background>
+      </>
           
     );
 
@@ -122,8 +171,8 @@ export default function Profile({navigation , route }) {
   const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center"
+        // alignItems: "center",
+        // justifyContent: "center"
       },
     btn : {
         alignItems: "center",

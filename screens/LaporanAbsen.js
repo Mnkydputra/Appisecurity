@@ -1,5 +1,5 @@
 import React, { Component , useState , useEffect } from 'react';
-import { View, Text , StyleSheet , BackHandler , FlatList , TouchableOpacity , Dimensions , ActivityIndicator} from 'react-native';
+import { View, Text , StyleSheet , BackHandler , FlatList , TouchableOpacity , Dimensions , ActivityIndicator , Image } from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BackButton from "../src/component/BackButton";
@@ -46,7 +46,6 @@ export default function Profile({navigation , route }) {
       { id : '11' , bulan : 'November' } ,
       { id : '12' , bulan : 'Desember'} 
     ])
-
     //fungsi loading 
     const showLoad = () => {
       setTimeout(() => {
@@ -56,51 +55,98 @@ export default function Profile({navigation , route }) {
     showLoad();
     //
 
+
+   const  renderItem = ({item}) => {
+      return (
+        <TouchableOpacity onPress={() => navigation.navigate('View Absen' , {
+                      bulan : item.id ,
+                      npk : route.params.npk ,
+                      wilayah : route.params.wilayah 
+                    })} >
+          <View style={styles.row}>
+            <View>
+              <View style={styles.nameContainer}>
+                <Text style={styles.nameTxt} numberOfLines={1} ellipsizeMode="tail">{item.bulan}</Text>
+                <Text style={styles.mblTxt}>
+                </Text>
+                <Icon style={styles.mblTxt} name="chevron-right" ></Icon>
+              </View>
+              <View style={styles.msgContainer}>
+                {/* <Text style={styles.msgTxt}>{item.status}</Text> */}
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+      );
+    }
+
     return (
-      <Background>
-      {
-            loading ? 
-            <View style={{flex : 1 , justifyContent : 'center'}}>
+      <View style={{flex:1}}>
+      { loading ? 
+          <View style={{flex : 1 , justifyContent : 'center'}}>
               <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
             </View>
-            :
-         <View style={styles.container}>
+       :
+        <View style={{ flex: 1 }} >
           <FlatList 
-          style={{width : windowWidth }}
+            // extraData={this.state}
             data={bln}
-            renderItem = {({item}) => (
-            <TouchableOpacity onPress={() => navigation.navigate('View Absen' , {
-                  bulan : item.id ,
-                  npk : route.params.npk ,
-                  wilayah : route.params.wilayah 
-                })} >
-                <View  style={styles.listItem} >
-                  <Text style={{color:'#fff' , fontSize:20}} >{item.bulan}</Text>
-                  <View style={{flexDirection:'row' , display:'flex'}}>
-                    <Icon name="chevron-right" style={{color:'#fff'}}></Icon>
-                  </View>
-                </View>
-            </TouchableOpacity>
-            )}
-          />
-        </View> 
+            keyExtractor = {(item) => {
+              return item.id;
+            }}
+            renderItem={renderItem}/>
+        </View>
       }
-      </Background>
+      </View>
     );
 
   }
 
   const styles = StyleSheet.create({
-    container: {
-      flex : 1 
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderColor: '#DCDCDC',
+      backgroundColor: '#fff',
+      borderBottomWidth: 1,
+      padding: 10,
     },
-    listItem: {
-      backgroundColor: "#5d7987",
-      borderWidth: 1,
-      borderColor: "#000",
-      height: 60  ,
-      display: 'flex' ,
-      padding : 15 ,
+    pic: {
+      borderRadius: 30,
+      width: 60,
+      height: 60,
     },
+    nameContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      width: 280,
+    },
+    nameTxt: {
+      marginLeft: 15,
+      fontWeight: '600',
+      color: '#222',
+      fontSize: 18,
+      width:170,
+    },
+    mblTxt: {
+      fontWeight: '200',
+      color: '#777',
+      fontSize: 13,
+      padding : 4 ,
+      marginLeft : 90
+    },
+    msgContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    msgTxt: {
+      fontWeight: '400',
+      color: '#008B8B',
+      fontSize: 12,
+      marginLeft: 15,
+    },
+
+
+
   })
 
