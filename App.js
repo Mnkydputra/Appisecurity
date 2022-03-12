@@ -18,6 +18,7 @@ import Poto from './screens/Poto' ;
 import Sidebar from './screens/Sidebar' ;
 import Logout from './screens/Logout' ;
 import Pro from './screens/Pro' ;
+import Splash from './screens/Splash' ;
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
@@ -28,7 +29,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName='Login' 
+        initialRouteName='Splash' 
         options = {{
           headerStyle: {
             backgroundColor: '#f4511e',
@@ -56,6 +57,9 @@ export default function App() {
       <Stack.Screen name='Edit Profile' component={EditBiodata}></Stack.Screen>
       <Stack.Screen name='Edit Status' component={EditStatus}></Stack.Screen>
       <Stack.Screen name='Akun' component={Sidebar}></Stack.Screen>
+      <Stack.Screen options={{
+          headerShown: false  , 
+        }} name='Splash' component={Splash}></Stack.Screen>
       <Stack.Screen name='Logout' component={Logout}></Stack.Screen>
       </Stack.Navigator>
 

@@ -52,11 +52,11 @@ export default function  Home ({navigation,route}) {
     const tokenLogin = async () => {
       const value = await AsyncStorage.getItem("token");
       const id = await AsyncStorage.getItem("id_akun");
-      // if (value === null) {
-      //   navigation.navigate("Login");
-      // }else if(value !== null){
-      //   console.log(value);
-      // }
+      if (value === null) {
+        navigation.navigate("Login");
+      }else if(value !== null){
+        // console.log(value);
+      }
     };
 
   useEffect(() => {

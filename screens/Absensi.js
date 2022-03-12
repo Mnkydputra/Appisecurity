@@ -71,28 +71,35 @@ export default function Absensi({navigation,route}) {
             console.log("response : " + json.message);
             setHasilKorlap(json.message);
                 if(json.message == 1){
-                       var linkAbsen = 'https://isecuritydaihatsu.com/api/input_absen' ;
-                        fetch(linkAbsen,{
-                            method : 'POST'  ,
-                            headers : {
-                              'Content-Type' : 'application/x-www-form-urlencoded'  ,
-                              'keys-isecurity' : 'isecurity' ,
-                            } ,
-                            body : "npk=" + user.npk +"&area_kerja=" + user.areaKerja +"&wilayah=" + user.wilayah +"&id_absen=" + user.id_absen  
-                        })
-                        .then((response) => response.json())
-                        .then((json) => {
-                            // alert(json.message);
-                            // setLoading(false);
+                  try {
+                    var linkAbsen = 'https://isecuritydaihatsu.com/api/input_absen' ;
+                    fetch(linkAbsen,{
+                        method : 'POST'  ,
+                        headers : {
+                          'Content-Type' : 'application/x-www-form-urlencoded'  ,
+                          'keys-isecurity' : 'isecurity' ,
+                        } ,
+                        body : "npk=" + user.npk +"&area_kerja=" + user.areaKerja +"&wilayah=" + user.wilayah +"&id_absen=" + user.id_absen  
+                    })
+                    .then((response) => response.json())
+                    .then((json) => {
+                        // alert(json.message);
+                        // setLoading(false);
 
-                            setLoading(false);
-                            setModalVisible(true);
-                            setTitleModal("INFORMASI");
-                            setInformasi({ keterangan : json.message , status : json.status , waktu : json.time  , info : json.info  , gambar : json.status});
-                            setIcon('true');
-                        })
+                        setLoading(false);
+                        setModalVisible(true);
+                        setTitleModal("INFORMASI");
+                        setInformasi({ keterangan : json.message , status : json.status , waktu : json.time  , info : json.info  , gambar : json.status});
+                        setIcon('true');
+                    })
+                  }catch(error){
+                    alert(alert.message)
+                  }  
                 }else {
-                  alert("absen antar wilayah di tolak");
+                  Alert.alert( "Perhatian" ,"absen antar wilayah di tolak" , [{
+                    text : 'YA' ,
+                    onPress : () => null  
+                  }]);
                   setLoading(false);
                 }
         })
@@ -127,26 +134,31 @@ export default function Absensi({navigation,route}) {
                         // setLoading(false);
                         // navigation.navigate('Home')
                       }else {
-                        var urlAksi = 'https://isecuritydaihatsu.com/api/input_absen' ;
-                        fetch(urlAksi,{
-                            method : 'POST'  ,
-                            headers : {
-                              'Content-Type' : 'application/x-www-form-urlencoded'  ,
-                              'keys-isecurity' : 'isecurity' ,
-                            } ,
-                            body : "npk=" + user.npk +"&area_kerja=" + user.areaKerja +"&wilayah=" + user.wilayah +"&id_absen=" + user.id_absen  
-                        })
-                        .then((response) => response.json() )
-                        .then((json) => {
-                            //alert(json.message);
-                            // navigation.navigate('Home')
-                            setLoading(false);
-                            setModalVisible(true);
-                            setTitleModal("INFORMASI");
-                            setInformasi({ keterangan : json.message , status : json.status , waktu : json.time  , info : json.info  , gambar : json.status});
-                            setIcon('true');
-                            // console.log(json.status)
-                        })
+                        try {
+                          var urlAksi = 'https://isecuritydaihatsu.com/api/input_absen' ;
+                          fetch(urlAksi,{
+                              method : 'POST'  ,
+                              headers : {
+                                'Content-Type' : 'application/x-www-form-urlencoded'  ,
+                                'keys-isecurity' : 'isecurity' ,
+                              } ,
+                              body : "npk=" + user.npk +"&area_kerja=" + user.areaKerja +"&wilayah=" + user.wilayah +"&id_absen=" + user.id_absen  
+                          })
+                          .then((response) => response.json() )
+                          .then((json) => {
+                              //alert(json.message);
+                              // navigation.navigate('Home')
+                              setLoading(false);
+                              setModalVisible(true);
+                              setTitleModal("INFORMASI");
+                              setInformasi({ keterangan : json.message , status : json.status , waktu : json.time  , info : json.info  , gambar : json.status});
+                              setIcon('true');
+                              // console.log(json.status)
+                          })
+                        }catch(error){
+                          alert(error.message)
+                        }
+                        
                       }
                 }else {
                   // alert("barcode tidak sesuai area kerja");
@@ -158,7 +170,7 @@ export default function Absensi({navigation,route}) {
                 }
         })
         .catch((error)=> {
-            console.log(error)
+            alert(error)
         })
       }
   };
@@ -335,7 +347,7 @@ export default function Absensi({navigation,route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // alignItems: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
   },
   textInput : {

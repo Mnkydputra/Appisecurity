@@ -104,9 +104,7 @@ export default function Login({ navigation }) {
                   AsyncStorage.setItem("id_akun", id_user);
                   AsyncStorage.setItem("patrol", patrol);
                   AsyncStorage.setItem("token_patrol",patrol_w);
-                  navigation.navigate("Home", {
-                    id_user: id_user,
-                  });
+                  navigation.navigate("Splash");
                   setLoading(false);
                 } else {
                   Alert.alert("Perhatian!", "AKUN TIDAK TERDAFTAR", [
