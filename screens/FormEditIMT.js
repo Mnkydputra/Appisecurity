@@ -1,7 +1,7 @@
 // FormEditIMT.js
 
 import React, { Component , useState , useEffect } from 'react';
-import { View, Text, StyleSheet  , BackHandler , ScrollView} from 'react-native';
+import { View, Text, StyleSheet  , BackHandler , ScrollView , Alert} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import Background from "../src/component/Background";
 import Logo from "../src/component/Logo";
@@ -14,36 +14,42 @@ import { theme } from "../src/core/theme";
 
 export default function FormEditIMT({navigation,route}) {
     const [loading , setLoading ] = useState(true);
-    const [biodata , setBiodata] = useState({npk: '', nama: '',ktp: '',kk: '',tempat_lahir: '',tanggal_lahir: '',email: '',no_hp: '',no_emergency: '',tinggi_badan: '',berat_badan: '',imt: '',keterangan: '',jl_ktp: '',rt_ktp: '',rw_ktp: '',kel_ktp: '',kec_ktp: '',kota_ktp: '',provinsi_ktp: '',jl_dom: '',rt_dom: '',rw_dom: '',kel_dom: '',kec_dom: '',kota_dom: '',provinsi_dom: ''  , kta : ''});
+    const [wait , setWaiting ] = useState(false)
+    const [berat_badan , setBB] = useState('');
+    const [tinggi_badan , setTB] = useState('');
+    const [imt , setIMT]  = useState('');
+    const [keterangan , setKet] = useState('');
     useEffect(() => {
-          try {
-            const getKTP = async () => {
-              const  id_akun = await  AsyncStorage.getItem('id_akun');
-                var urlAksi = 'https://isecuritydaihatsu.com/api/biodata?id=' + id_akun ;
-                  fetch(urlAksi,{
-                      headers : {
-                          'keys-isecurity' : 'isecurity' ,
-                      } ,
-                  })
-                  .then((response) => response.json())
-                  .then((json) => {
-                    const hasil =  json.result[0] ;
-                  //   console.log(hasil.id_biodata)
-                  setBiodata({ tinggi_badan: hasil.tinggi_badan,berat_badan: hasil.berat_badan,imt: hasil.imt,keterangan: hasil.keterangan})
-                  })
-            }
-            getKTP();
-          }catch(error){
-            alert(error.message)
-          }
+      try {
+        const getKTP = async () => {
+          const  id_akun = await  AsyncStorage.getItem('id_akun');
+            var urlAksi = 'https://isecuritydaihatsu.com/api/biodata?id=' + id_akun ;
+          fetch(urlAksi,{
+              headers : {
+                  'keys-isecurity' : 'isecurity' ,
+              } ,
+          })
+          .then((response) => response.json())
+          .then((json) => {
+            const hasil =  json.result[0] ;
+            setBB(hasil.berat_badan);
+            setTB(hasil.tinggi_badan);
+            setKet(hasil.keterangan);
+            setIMT(hasil.imt)
+          })
+        }
+        getKTP();
+      }catch(error){
+        alert(error.message)
+      }
 
-          const handleBackPress = () => {
-            navigation.goBack();
-            return true;
-          };
-          BackHandler.addEventListener('hardwareBackPress', handleBackPress);
-          return () =>
-          BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+      const handleBackPress = () => {
+        navigation.goBack();
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+      return () =>
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
     }, []);
 
 
@@ -56,29 +62,79 @@ export default function FormEditIMT({navigation,route}) {
     showLoad();
     //
 
+    const updateIMT = async () => {
+      const id_akun = await AsyncStorage.getItem('id_akun')
+      if(berat_badan === '' || berat_badan === null){
+        Alert.alert("Perhatian!", "Field Berat Badan  Kosong", [
+          { text: "YA", onPress: () => null },
+        ]);
+      }else if(tinggi_badan === '' || tinggi_badan === null){
+        Alert.alert("Perhatian!", "Field Tinggi Badan Kosong", [
+          { text: "YA", onPress: () => null },
+        ]);
+      }else {
+        try {
+          setWaiting(true);
+          const id_akun = await AsyncStorage.getItem('id_akun');
+          var url = 'https://isecuritydaihatsu.com/api/updateIMT';
+              fetch(url,{
+                  headers : {
+                      'keys-isecurity' : 'isecurity' ,
+                      'Content-Type': 'application/json' , 
+                  } ,
+                  method : 'PUT' , 
+                  body : JSON.stringify({
+                    "id"             : id_akun ,
+                    "berat_badan"    : berat_badan, 
+                    "tinggi_badan"   : tinggi_badan ,
+                    "imt"            : imt ,
+                    "keterangan"     : keterangan,
+                  })
+              })
+              .then((response) => response.json())
+              .then((json) => {
+                console.log(json.status);
+                if(json.status === "ok"){
+                  setWaiting(false);
+                  // alert(JSON.stringify(json.result));
+                  Alert.alert("Berhasil!", "UPDATE SUKSES", [
+                    { text: "YA", onPress: () => setWaiting(false) },
+                  ]);
+                }else {
+                  Alert.alert("Gagal!", "TERJADI KESALAHAN", [
+                    { text: "YA", onPress: () => setWaiting(false) },
+                  ]);
+                }
+              })
+        }catch(error){
+            alert(error.message)
+        }
+    }
+    }
+
 
     return (
       <View>
         <View style={styles.marginTextInput}>
       <TextInput label="Berat Badan" 
-        value={biodata.berat_badan}
-        onChangeText={newText => setBiodata({ berat_badan: newText }) }
+        value={berat_badan}
+        onChangeText={text => setBB(text) }
         placeholder="Berat Badan" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
 
       <View style={styles.marginTextInput}>
       <TextInput label="Tinggi Badan" 
-        value={biodata.tinggi_badan}
-        onChangeText={ newText => setBiodata({ tinggi_badan: newText }) }
+        value={tinggi_badan}
+        onChangeText={ text => setTB(text) }
         placeholder="Tinggi  Badan" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
       <View style={styles.marginTextInput}>
       <TextInput label="IMT" 
-        value={biodata.imt}
+        value={imt}
         editable={false}
-        onChangeText={newText => setBiodata({ imt : newText })}
+        onChangeText={text => setIMT(text)}
         placeholder="IMT" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
@@ -86,14 +142,19 @@ export default function FormEditIMT({navigation,route}) {
       <View style={styles.marginTextInput}>
       <TextInput label="Keterangan" 
         editable={false}
-        value={biodata.keterangan}
-        onChangeText={newText => setBiodata({ keterangan : newText })}
+        value={keterangan}
+        onChangeText={text =>  setKet(text) }
         placeholder="IMT" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
 
-      <Button mode="contained" onPress={() => null } style={{marginTop:20}}>
-          UPDATE POSTUR TUBUH
+      <Button mode="contained" onPress={updateIMT } style={{marginTop:20}}>
+      {
+        wait ? 
+            <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>
+            : 
+            <Text style={{color:'#fff'}}>UPDATE IMT </Text>   
+      }
       </Button>
       </View>
     );
