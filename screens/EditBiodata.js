@@ -34,9 +34,9 @@ export default function EditBiodata ({navigation,route}) {
     return (
       <Tab.Navigator>
         <Tab.Screen name="Biodata" component={FormBiodata} />
-        <Tab.Screen name="KTP" component={FormKTP} />
+        <Tab.Screen name="Alamat" component={FormKTP} />
         <Tab.Screen name="Domisili" component={FormEditDomisili} />
-        <Tab.Screen name="Postur Tubuh" component={FormEditIMT} />
+        <Tab.Screen name="IMT" component={FormEditIMT} />
       </Tab.Navigator>
     );
 }

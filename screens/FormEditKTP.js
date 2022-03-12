@@ -1,5 +1,5 @@
 import React, { Component , useState , useEffect } from 'react';
-import { View, Text, StyleSheet  , BackHandler , ScrollView} from 'react-native';
+import { View, Text, StyleSheet  , BackHandler , ScrollView , Alert} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import Background from "../src/component/Background";
 import Logo from "../src/component/Logo";
@@ -12,7 +12,14 @@ import { theme } from "../src/core/theme";
 
 export default function FormEditKTP({navigation,route}) {
     const [loading , setLoading ] = useState(true);
-    const [biodata , setBiodata] = useState({npk: '', nama: '',ktp: '',kk: '',tempat_lahir: '',tanggal_lahir: '',email: '',no_hp: '',no_emergency: '',tinggi_badan: '',berat_badan: '',imt: '',keterangan: '',jl_ktp: '',rt_ktp: '',rw_ktp: '',kel_ktp: '',kec_ktp: '',kota_ktp: '',provinsi_ktp: '',jl_dom: '',rt_dom: '',rw_dom: '',kel_dom: '',kec_dom: '',kota_dom: '',provinsi_dom: ''  , kta : ''});
+    const [jl_ktp , setJLKTP ] = useState('');
+    const [rt_ktp , setRT]     = useState('');
+    const [rw_ktp , setRW]     = useState('');
+    const [kel_ktp ,setKel]    = useState('');
+    const [kec_ktp , setKec]   = useState('');
+    const [kota_ktp , setKota] = useState('');
+    const [provinsi_ktp , setProvinsi] = useState('');
+    const [wait , setWaiting ] = useState(false)
     useEffect(() => {
           try {
             const getKTP = async () => {
@@ -21,15 +28,19 @@ export default function FormEditKTP({navigation,route}) {
                   fetch(urlAksi,{
                       headers : {
                           'keys-isecurity' : 'isecurity' ,
-                      } ,
-                  })
-                  .then((response) => response.json())
-                  .then((json) => {
-                    const hasil =  json.result[0] ;
-                  //   console.log(hasil.id_biodata)
-                  setBiodata({npk: hasil.npk, nama: hasil.nama,ktp: hasil.ktp,kk: hasil.kk,tempat_lahir: hasil.tempat_lahir ,tanggal_lahir: hasil.tanggal_lahir,
-                    email: hasil.email , no_hp: hasil.no_hp ,no_emergency: hasil.no_emergency , jl_ktp: hasil.jl_ktp,rt_ktp: hasil.rt_ktp,rw_ktp: hasil.rw_ktp,kel_ktp: hasil.kel_ktp,kec_ktp: hasil.kec_ktp,kota_ktp: hasil.kota_ktp,provinsi_ktp: hasil.provinsi_ktp})
-                  })
+                        } ,
+                      })
+                      .then((response) => response.json())
+                      .then((json) => {
+                        const hasil =  json.result[0] ;
+                        setJLKTP(hasil.jl_ktp);
+                        setRT(hasil.rt_ktp)
+                        setRW(hasil.rw_ktp);
+                        setKel(hasil.kel_ktp);
+                        setKec(hasil.kec_ktp);
+                        setKota(hasil.kota_ktp)
+                        setProvinsi(hasil.provinsi_ktp)
+                })
             }
             getKTP();
           }catch(error){
@@ -56,66 +67,141 @@ export default function FormEditKTP({navigation,route}) {
     //
 
 
+    //function update data alamat sesua ktp 
+    const updateAlamat = async () => {
+      if(jl_ktp === '' || jl_ktp === null){
+        Alert.alert("Perhatian!", "Field Jalan  Kosong", [
+          { text: "YA", onPress: () => null },
+        ]);
+      }else if(rt_ktp === '' || rt_ktp === null){
+        Alert.alert("Perhatian!", "Field RT Kosong", [
+          { text: "YA", onPress: () => null },
+        ]);
+      }else if(rw_ktp === "" || rw_ktp === null){
+        Alert.alert("Perhatian!", "Field RW  Kosong", [
+          { text: "YA", onPress: () => null },
+        ]);
+      }else if(provinsi_ktp === '' || provinsi_ktp === null){
+        Alert.alert("Perhatian!", "Field Provinsi Kosong", [
+          { text: "YA", onPress: () => null },
+        ]);
+      }else if(kota_ktp === '' || kota_ktp === null){
+        Alert.alert("Perhatian!", "Field Kota Kosong", [
+          { text: "YA", onPress: () => null },
+        ]);
+      }else if(kec_ktp === '' || kec_ktp === null){
+        Alert.alert("Perhatian!", "Field Kecamatan Kosong", [
+          { text: "YA", onPress: () => null },
+        ]);
+      }else if(kel_ktp === '' || kel_ktp === null){
+        Alert.alert("Perhatian!", "Field Kelurahan Kosong", [
+          { text: "YA", onPress: () => null },
+        ]);
+      }else {
+        try {
+          setWaiting(true);
+          const id_akun = await AsyncStorage.getItem('id_akun');
+          var url = 'https://isecuritydaihatsu.com/api/updateKTP';
+              fetch(url,{
+                  headers : {
+                      'keys-isecurity' : 'isecurity' ,
+                      'Content-Type': 'application/json' , 
+                  } ,
+                  method : 'PUT' , 
+                  body : JSON.stringify({
+                    "id"             : id_akun ,
+                    "jl_ktp"         : jl_ktp, 
+                    "rt_ktp"         : rt_ktp ,
+                    "rw_ktp"         : rw_ktp ,
+                    "kel_ktp"        : kel_ktp,
+                    "kec_ktp"        : kec_ktp ,
+                    "kota_ktp"       : kota_ktp ,
+                    "provinsi_ktp"   : provinsi_ktp
+                  })
+              })
+              .then((response) => response.json())
+              .then((json) => {
+                console.log(json.status);
+                // setWaiting(false);
+                if(json.status === "ok"){
+                  Alert.alert("Berhasil!", "UPDATE SUKSES", [
+                    { text: "YA", onPress: () => setWaiting(false) },
+                  ]);
+                }else {
+                  Alert.alert("Gagal!", "TERJADI KESALAHAN", [
+                    { text: "YA", onPress: () => setWaiting(false) },
+                  ]);
+                }
+              })
+        }catch(error){
+            alert(error.message)
+        }
+    }
+  }
+
     return (
       <View>
         <View style={styles.marginTextInput}>
       <TextInput label="Nama Jalan" 
-        value={biodata.jl_ktp}
-        onChangeText={newText => setBiodata(newText)}
+        value={jl_ktp}
+        onChangeText={text => setJLKTP(text)}
         placeholder="Nama Jalan" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
 
       <View style={styles.marginTextInput}>
       <TextInput label="RT" 
-        value={biodata.rt_ktp}
-        onChangeText={ newText => setBiodata({ rt_ktp: newText }) }
+        value={rt_ktp}
+        onChangeText={ text => setRT(text) }
         placeholder="RT" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
       <View style={styles.marginTextInput}>
       <TextInput label="RW" 
-        value={biodata.rw_ktp}
-        onChangeText={newText => setBiodata({ rw_ktp : newText })}
+        value={rw_ktp}
+        onChangeText={text => setRW(text)}
         placeholder="RW" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
       <View style={styles.marginTextInput}>
       <TextInput label="PROVINSI" 
-        value={biodata.provinsi_ktp}
-        onChangeText={ newText => setBiodata({ provinsi_ktp : newText }) }
+        value={provinsi_ktp}
+        onChangeText={ text => setProvinsi(text) }
         placeholder="PROVINSI" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
       <View style={styles.marginTextInput}>
       <TextInput label="Kabupaten / Kota " 
-        value={biodata.kota_ktp}
-        onChangeText={ newText => setBiodata({ kota_ktp : newText }) }
+        value={kota_ktp}
+        onChangeText={ text => setKota(text) }
         placeholder="Kabupaten / Kota " placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
       <View style={styles.marginTextInput}>
       <TextInput label="Kecamatan" 
-        value={biodata.kec_ktp}
-        onChangeText={newText => setBiodata({ kec_ktp : newText })}
+        value={kec_ktp}
+        onChangeText={text => setKec(text)}
         placeholder="Kecamatan" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
       <View style={styles.marginTextInput}>
       <TextInput label="Kelurahan" 
-        value={biodata.kel_ktp}
-        onChangeText={ newText => setBiodata({ kel_ktp : newText }) }
+        value={kel_ktp}
+        onChangeText={ text => setKel(text) }
         placeholder="Kelurahan" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
 
-      <Button mode="contained" onPress={() => null } style={{marginTop:20}}>
-          UPDATE DATA KTP
+      <Button mode="contained" onPress={updateAlamat } style={{marginTop:20}}>
+      {wait ? 
+            <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>
+            : 
+              <Text style={{color:'#fff'}}>UPDATE ALAMAT KTP </Text>   
+        }
       </Button>
       </View>
     );
   }
-
 
   const styles = StyleSheet.create({
     container : {

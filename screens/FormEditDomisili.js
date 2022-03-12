@@ -1,5 +1,5 @@
 import React, { Component , useState , useEffect } from 'react';
-import { View, Text, StyleSheet  , BackHandler , ScrollView} from 'react-native';
+import { View, Text, StyleSheet  , BackHandler , ScrollView , Alert} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import Background from "../src/component/Background";
 import Logo from "../src/component/Logo";
@@ -12,7 +12,14 @@ import { theme } from "../src/core/theme";
 
 export default function FormEditDomisili({navigation,route}) {
     const [loading , setLoading ] = useState(true);
-    const [biodata , setBiodata] = useState({npk: '', nama: '',ktp: '',kk: '',tempat_lahir: '',tanggal_lahir: '',email: '',no_hp: '',no_emergency: '',tinggi_badan: '',berat_badan: '',imt: '',keterangan: '',jl_ktp: '',rt_ktp: '',rw_ktp: '',kel_ktp: '',kec_ktp: '',kota_ktp: '',provinsi_ktp: '',jl_dom: '',rt_dom: '',rw_dom: '',kel_dom: '',kec_dom: '',kota_dom: '',provinsi_dom: ''  , kta : ''});
+    const [jl_dom , setJLdom ] = useState('');
+    const [rt_dom , setRT]     = useState('');
+    const [rw_dom , setRW]     = useState('');
+    const [kel_dom ,setKel]    = useState('');
+    const [kec_dom , setKec]   = useState('');
+    const [kota_dom , setKota] = useState('');
+    const [provinsi_dom , setProvinsi] = useState('');
+    const [wait , setWaiting ] = useState(false)
     useEffect(() => {
           try {
             const getKTP = async () => {
@@ -21,14 +28,19 @@ export default function FormEditDomisili({navigation,route}) {
                   fetch(urlAksi,{
                       headers : {
                           'keys-isecurity' : 'isecurity' ,
-                      } ,
-                  })
-                  .then((response) => response.json())
-                  .then((json) => {
-                    const hasil =  json.result[0] ;
-                  //   console.log(hasil.id_biodata)
-                  setBiodata({ jl_dom: hasil.jl_dom,rt_dom: hasil.rt_dom,rw_dom: hasil.rw_dom,kel_dom: hasil.kel_dom,kec_dom: hasil.kec_dom,kota_dom: hasil.kota_dom,provinsi_dom: hasil.provinsi_dom})
-                  })
+                        } ,
+                      })
+                      .then((response) => response.json())
+                      .then((json) => {
+                        const hasil =  json.result[0] ;
+                        setJLdom(hasil.jl_dom);
+                        setRT(hasil.rt_dom)
+                        setRW(hasil.rw_dom);
+                        setKel(hasil.kel_dom);
+                        setKec(hasil.kec_dom);
+                        setKota(hasil.kota_dom)
+                        setProvinsi(hasil.provinsi_dom)
+                })
             }
             getKTP();
           }catch(error){
@@ -55,66 +67,145 @@ export default function FormEditDomisili({navigation,route}) {
     //
 
 
+    //function update data alamat sesua ktp 
+    const updateDomisili = async () => {
+      if(jl_dom === '' || jl_dom === null){
+        Alert.alert("Perhatian!", "Field Jalan  Kosong", [
+          { text: "YA", onPress: () => null },
+        ]);
+      }else if(rt_dom === '' || rt_dom === null){
+        Alert.alert("Perhatian!", "Field RT Lahir Kosong", [
+          { text: "YA", onPress: () => null },
+        ]);
+      }else if(rw_dom === "" || rw_dom === null){
+        Alert.alert("Perhatian!", "Field RW Kosong", [
+          { text: "YA", onPress: () => null },
+        ]);
+      }else if(provinsi_dom === '' || provinsi_dom === null){
+        Alert.alert("Perhatian!", "Field Kartu Keluarga Kosong", [
+          { text: "YA", onPress: () => null },
+        ]);
+      }else if(kota_dom === '' || kota_dom === null){
+        Alert.alert("Perhatian!", "Field No Handphone Kosong", [
+          { text: "YA", onPress: () => null },
+        ]);
+      }else if(kota_dom === '' || kota_dom === null ){
+        Alert.alert("Perhatian!", "Field No Emergency Kosong", [
+          { text: "YA", onPress: () => null },
+        ]);
+      }else if(kec_dom === '' || kec_dom === null){
+        Alert.alert("Perhatian!", "Field Email Kosong", [
+          { text: "YA", onPress: () => null },
+        ]);
+      }else if(kel_dom === '' || kel_dom === null){
+        Alert.alert("Perhatian!", "Field Email Kosong", [
+          { text: "YA", onPress: () => null },
+        ]);
+      }else {
+        try {
+          setWaiting(true);
+          const id_akun = await AsyncStorage.getItem('id_akun');
+          var url = 'https://isecuritydaihatsu.com/api/updateDomisili';
+              fetch(url,{
+                  headers : {
+                      'keys-isecurity' : 'isecurity' ,
+                      'Content-Type': 'application/json' , 
+                  } ,
+                  method : 'PUT' , 
+                  body : JSON.stringify({
+                    "id"             : id_akun ,
+                    "jl_dom"         : jl_dom, 
+                    "rt_dom"         : rt_dom ,
+                    "rw_dom"         : rw_dom ,
+                    "kel_dom"        : kel_dom,
+                    "kec_dom"        : kec_dom ,
+                    "kota_dom"       : kota_dom ,
+                    "provinsi_dom"   : provinsi_dom
+                  })
+              })
+              .then((response) => response.json())
+              .then((json) => {
+                console.log(json.status);
+                // setWaiting(false);
+                if(json.status === "ok"){
+                  Alert.alert("Berhasil!", "UPDATE SUKSES", [
+                    { text: "YA", onPress: () => setWaiting(false) },
+                  ]);
+                }else {
+                  Alert.alert("Gagal!", "TERJADI KESALAHAN", [
+                    { text: "YA", onPress: () => setWaiting(false) },
+                  ]);
+                }
+              })
+        }catch(error){
+            alert(error.message)
+        }
+    }
+  }
+
     return (
       <View>
         <View style={styles.marginTextInput}>
       <TextInput label="Nama Jalan" 
-        value={biodata.jl_dom}
-        onChangeText={newText => setBiodata(newText)}
+        value={jl_dom}
+        onChangeText={text => setJLdom(text)}
         placeholder="Nama Jalan" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
 
       <View style={styles.marginTextInput}>
       <TextInput label="RT" 
-        value={biodata.rt_dom}
-        onChangeText={ newText => setBiodata({ rt_dom: newText }) }
+        value={rt_dom}
+        onChangeText={ text => setRT(text) }
         placeholder="RT" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
       <View style={styles.marginTextInput}>
       <TextInput label="RW" 
-        value={biodata.rw_dom}
-        onChangeText={newText => setBiodata({ rw_dom : newText })}
+        value={rw_dom}
+        onChangeText={text => setRW(text)}
         placeholder="RW" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
       <View style={styles.marginTextInput}>
       <TextInput label="PROVINSI" 
-        value={biodata.provinsi_dom}
-        onChangeText={ newText => setBiodata({ provinsi_dom : newText }) }
+        value={provinsi_dom}
+        onChangeText={ text => setProvinsi(text) }
         placeholder="PROVINSI" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
       <View style={styles.marginTextInput}>
       <TextInput label="Kabupaten / Kota " 
-        value={biodata.kota_dom}
-        onChangeText={ newText => setBiodata({ kota_dom : newText }) }
+        value={kota_dom}
+        onChangeText={ text => setKota(text) }
         placeholder="Kabupaten / Kota " placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
       <View style={styles.marginTextInput}>
       <TextInput label="Kecamatan" 
-        value={biodata.kec_dom}
-        onChangeText={newText => setBiodata({ kec_dom : newText })}
+        value={kec_dom}
+        onChangeText={text => setKec(text)}
         placeholder="Kecamatan" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
       <View style={styles.marginTextInput}>
       <TextInput label="Kelurahan" 
-        value={biodata.kel_dom}
-        onChangeText={ newText => setBiodata({ kel_dom : newText }) }
+        value={kel_dom}
+        onChangeText={ text => setKel(text) }
         placeholder="Kelurahan" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
       </View>
 
-      <Button mode="contained" onPress={() => null } style={{marginTop:20}}>
-          UPDATE DATA DOMISILI
+      <Button mode="contained" onPress={updateDomisili } style={{marginTop:20}}>
+      {wait ? 
+            <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>
+            : 
+              <Text style={{color:'#fff'}}>UPDATE DOMISILI </Text>   
+        }
       </Button>
       </View>
     );
   }
-
 
   const styles = StyleSheet.create({
     container : {

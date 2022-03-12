@@ -2,7 +2,6 @@ import React, { Component , useState , useEffect , useCallback } from 'react';
 import { View, Text, StyleSheet  , BackHandler , ScrollView , TouchableOpacity , ActivityIndicator , Alert} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 
-// import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Background from "../src/component/Background";
 import Logo from "../src/component/Logo";
@@ -162,21 +161,6 @@ export default function EditProfile ({navigation,route}) {
             }
             </Button>
             </View>
-
-
-      <DatePickerModal
-        mode="single"
-        visible={visible}
-        onDismiss={onDismiss}
-        date={date}
-        onConfirm={onChange}
-        saveLabel="Save" // optional
-        label="Select date" // optional
-      />
-      <Button onPress={()=> setVisible(true)}>
-        Pick date
-      </Button>
-            
           </ScrollView>
           }
       </View>

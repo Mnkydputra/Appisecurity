@@ -77,6 +77,7 @@ export default function FormEditIMT({navigation,route}) {
       <View style={styles.marginTextInput}>
       <TextInput label="IMT" 
         value={biodata.imt}
+        editable={false}
         onChangeText={newText => setBiodata({ imt : newText })}
         placeholder="IMT" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
         </TextInput>
@@ -84,6 +85,7 @@ export default function FormEditIMT({navigation,route}) {
 
       <View style={styles.marginTextInput}>
       <TextInput label="Keterangan" 
+        editable={false}
         value={biodata.keterangan}
         onChangeText={newText => setBiodata({ keterangan : newText })}
         placeholder="IMT" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>

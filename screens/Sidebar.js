@@ -10,9 +10,6 @@ import { StyleSheet,
     FlatList, Button} from 'react-native';
     import Icon from 'react-native-vector-icons/FontAwesome';
     import  AsyncStorage  from "@react-native-async-storage/async-storage";
-    import DocumentPicker from "react-native-document-picker";
-    import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-
 
     import ImagePicker from 'expo-images-picker';
 
@@ -27,7 +24,6 @@ import { StyleSheet,
     const [loading,setLoading] = useState(true)
     const [imgUrl , setImgUrl ] = useState('');
     const [filePath, setFilePath] = useState({});
-
     const [image, setImage] = useState(null);
 
     useEffect(() => {
@@ -42,21 +38,8 @@ import { StyleSheet,
 
 
     const pickImage = async () => {
-        try {
-          const result = await ImagePicker.launchImageLibraryAsync();
-
-          // Explore the result
-          console.log(result);
-
-          if (result.cancelled === false) {
-              setPickedImagePath(result.uri);
-              console.log(result.uri);
-          }
-        } catch (error) {
-            alert('Error Occur: ' + error.message)
-            // closeSheet()
-        }
-  };
+        alert('masih pengembangan')
+    };
 
 
     const showLoad = () => {
@@ -69,44 +52,24 @@ import { StyleSheet,
     const getPoto = async () => {
       const  id_akun = await  AsyncStorage.getItem('token');
         // console.log(id_akun);
-        var urlAksi = 'https://isecuritydaihatsu.com/api/poto?id=' + id_akun ;
-          fetch(urlAksi,{
-              headers : {
-                  'keys-isecurity' : 'isecurity' ,
-              } ,
-          })
-          .then((response) => response.json())
-          .then((json) => {
-              setImgUrl(json.url);
-          })
+        try {
+          var urlAksi = 'https://isecuritydaihatsu.com/api/poto?id=' + id_akun ;
+            fetch(urlAksi,{
+                headers : {
+                    'keys-isecurity' : 'isecurity' ,
+                } ,
+            })
+            .then((response) => response.json())
+            .then((json) => {
+                setImgUrl(json.url);
+            })
+        }catch(error){
+          alert(error.message)
+        }
     }
     getPoto();
-
-
     //
-    const options = {
-      title: 'Select Image',
-      type: 'library',
-      options: {
-        maxHeight: 200,
-        maxWidth: 200,
-        selectionLimit: 1,
-        mediaType: 'photo',
-        includeBase64: false,
-      }
-    }
 
-  const openGallery =  () => {
-    ImagePicker.openPicker({
-      width: 300,
-      height: 400,
-      cropping: true
-    }).then(image => {
-      console.log(image);
-    });
-  }
-
-    //
 
     return (
 
@@ -120,9 +83,9 @@ import { StyleSheet,
         <View style={styles.header}>
           <View style={styles.headerContent}>
               <Image style={styles.avatar} source={{uri: `${imgUrl}`}}/>
-              <Text style={styles.name}>{route.params.nama}</Text>
-              <Text style={styles.name}>{route.params.npk}</Text>
-              <Button title='Upload Poto' onPress={openGallery}></Button>
+              <Text style={styles.username}>{route.params.nama}</Text>
+              <Text style={styles.username}>{route.params.jabatan}</Text>
+              {/* <Button title='Upload Poto' onPress={() => null }></Button> */}
           </View>
         </View>
 
@@ -145,7 +108,7 @@ import { StyleSheet,
                     <Text style={styles.title}>{item.title}</Text>
                     <Image style={styles.btn} source={{uri: "https://img.icons8.com/customer/office/40"}}/>
 
-                    <Icon style={{marginTop:14}} name="chevron-right" ></Icon>
+                    {/* <Icon style={{marginTop:14}} name="chevron-right" ></Icon> */}
                   </View>
                 </TouchableOpacity>
               )
@@ -161,10 +124,10 @@ import { StyleSheet,
 
 const styles = StyleSheet.create({
     header:{
-      backgroundColor: "#EE82EE",
+      backgroundColor: "#179bd4",
     },
     headerContent:{
-      padding:30,
+      padding:20,
       alignItems: 'center',
     },
     avatar: {
@@ -199,16 +162,16 @@ const styles = StyleSheet.create({
       marginBottom:3,
       backgroundColor: '#FFFFFF',
       flexDirection: 'row',
-    //   shadowColor: 'black',
-    //   shadowOpacity: .2,
-    //   shadowOffset: {
-    //     height:1,
-    //     width:-2
-    //   },
+      shadowColor: 'black',
+      shadowOpacity: .2,
+      shadowOffset: {
+        height:1,
+        width:-2
+      },
       elevation:2
     },
     username:{
-      color: "#20B2AA",
+      color: "#FFF",
       fontSize:22,
       alignSelf:'center',
       marginLeft:10
