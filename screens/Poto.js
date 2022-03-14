@@ -28,7 +28,10 @@ const [loading,setLoading] = useState(true)
                 if(json === null){
                   setImgUrl('https://png.pngtree.com/element_our/20200701/ourlarge/pngtree-vector-security-personnel-image_2277454.jpg');
                 }else {
-                  setImgUrl(json.url);
+                  const url = json.url ;
+                  const poto = json.poto ;
+                  const img =url + poto ;
+                  setImgUrl(img);
                 }
               })
             }catch(error){

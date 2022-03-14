@@ -4,10 +4,16 @@ import styles from '../src/component/styles.js';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import * as ImagePicker from 'expo-image-picker';
+
+
 export default function  Home ({navigation,route}) {
   const [user , setUser] = useState({npk : '' , id_absen : '' , wilayah: '' , areaKerja : '' , jabatan: ''  , nama : ''})
   const [id_ , setId] = useState(null)
   const [loading,setLoading] = useState(true)
+
+
+
   const backAction = () => {
     Alert.alert("Perhatian!", "Keluar Aplikasi ?", [
       {
@@ -61,7 +67,6 @@ export default function  Home ({navigation,route}) {
 
   useEffect(() => {
     let unmounted = false
-
     tokenLogin();
     //end
     getParamsAbsensi();
@@ -132,6 +137,8 @@ const showLoad = () => {
 }
 showLoad();
 //
+
+
   
     return (
       <View style={styles.container}>
@@ -246,6 +253,7 @@ showLoad();
                   </View>
                 </TouchableOpacity>
 
+                {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />} */}
               </View>
               
             </>

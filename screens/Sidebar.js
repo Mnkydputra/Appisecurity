@@ -10,8 +10,7 @@ import { StyleSheet,
     FlatList, Button} from 'react-native';
     import Icon from 'react-native-vector-icons/FontAwesome';
     import  AsyncStorage  from "@react-native-async-storage/async-storage";
-
-    import ImagePicker from 'expo-images-picker';
+    import * as ImagePicker from 'expo-image-picker';
 
 
     export default function Sidebar ({navigation,route}) {
@@ -25,29 +24,7 @@ import { StyleSheet,
     const [imgUrl , setImgUrl ] = useState('');
     const [filePath, setFilePath] = useState({});
     const [image, setImage] = useState(null);
-
-    useEffect(() => {
-      const handleBackPress = () => {
-        navigation.goBack();
-        return true;
-      };
-      BackHandler.addEventListener('hardwareBackPress', handleBackPress);
-      return () =>
-      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
-    },[])
-
-
-    const pickImage = async () => {
-        alert('masih pengembangan')
-    };
-
-
-    const showLoad = () => {
-      setTimeout(() => {
-        setLoading(false);
-      },3000)
-    }
-    showLoad();
+    const [loadUpload , setUploadLoad ] = useState(false);
 
     const getPoto = async () => {
       const  id_akun = await  AsyncStorage.getItem('token');
@@ -61,14 +38,96 @@ import { StyleSheet,
             })
             .then((response) => response.json())
             .then((json) => {
-                setImgUrl(json.url);
+              if(json === null || json.poto === null){
+                setImgUrl('https://png.pngtree.com/element_our/20200701/ourlarge/pngtree-vector-security-personnel-image_2277454.jpg');
+              }else {
+                const url = json.url ;
+                const poto = json.poto ;
+                const img =url + poto ;
+                setImgUrl(img);
+              }
             })
         }catch(error){
           alert(error.message)
         }
-    }
-    getPoto();
+      }
+      getPoto();
     //
+    
+    useEffect(() => {
+      // console.log(imgUrl)
+      const handleBackPress = () => {
+        navigation.goBack();
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+      return () =>
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+    },[getPoto])
+
+    const pickImage = async () => {
+      const id_akun = await AsyncStorage.getItem('id_akun');
+      // No permissions request is necessary for launching the image library
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+  
+      // console.log(result);
+  
+      if (!result.cancelled) {
+        setUploadLoad(true);
+        let localUri = result.uri;
+        let filename = localUri.split('/').pop();
+  
+        // Infer the type of the image
+        let match = /\.(\w+)$/.exec(filename);
+        let type = match ? `image/${match[1]}` : `image`;
+        
+        // Upload the image using the fetch and FormData APIs
+          let formData = new FormData();
+          // Assume "photo" is the name of the form field the server expects
+          formData.append('image', { uri: localUri, name: filename, type } );
+          formData.append('id_akun' , id_akun );
+  
+          const url = "https://isecuritydaihatsu.com/api/uploadImage" ;
+          try{
+            fetch(url, {
+              method: 'POST',
+              body: formData,
+              headers: {
+                'content-type'     : 'multipart/form-data',
+                'keys-isecurity'   : 'isecurity'
+              },
+            })
+            .then((response) => response.json())
+            .then((json) => {
+              if(json.message === 'success'){
+                 setUploadLoad(false);
+                 alert(json.message);
+                 getPoto();
+                 setImgUrl(localUri)
+               }else {
+                 alert(json.message)
+               }
+            })
+            // console.log(localUri)
+          }catch(error){
+            alert(error.message)
+          }
+      }
+    };
+
+
+    const showLoad = () => {
+      setTimeout(() => {
+        setLoading(false);
+      },3000)
+    }
+    showLoad();
+
 
 
     return (
@@ -83,9 +142,17 @@ import { StyleSheet,
         <View style={styles.header}>
           <View style={styles.headerContent}>
               <Image style={styles.avatar} source={{uri: `${imgUrl}`}}/>
+              
               <Text style={styles.username}>{route.params.nama}</Text>
               <Text style={styles.username}>{route.params.jabatan}</Text>
-              {/* <Button title='Upload Poto' onPress={() => null }></Button> */}
+              <Button style={{backgroundColor:'red'}} title='Upload Poto' onPress={pickImage}></Button>
+              {
+                loadUpload ? 
+                 <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
+                :
+                null
+              }
+                
           </View>
         </View>
 

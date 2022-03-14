@@ -1,9 +1,6 @@
 import React, { useState ,Component  , useEffect  } from 'react';
-import { View, Text , TouchableOpacity , Image , Dimensions , Button , BackHandler ,  Alert , Linking , ActivityIndicator , StyleSheet } from 'react-native';
-import styles from '../src/component/styles.js';
+import { View, Text , ActivityIndicator } from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
-import AnimatedSplash from "react-native-animated-splash-screen";
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function  Logout ({navigation,route}) {
 
@@ -27,10 +24,10 @@ export default function  Logout ({navigation,route}) {
   const showLoad = () => {
     setTimeout(() => {
       setLoading(false);
+      logout();
     },3000)
   }
   showLoad();
-  logout()
 
   
     return (

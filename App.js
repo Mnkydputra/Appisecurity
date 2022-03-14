@@ -41,7 +41,10 @@ export default function App() {
         }}
       >
       <Stack.Screen name='Start' component={Start}></Stack.Screen>
-      <Stack.Screen name='Login'  component={Login}></Stack.Screen>
+      <Stack.Screen name='Login' options={{
+          headerShown: false  , 
+          
+        }}  component={Login}></Stack.Screen>
       <Stack.Screen name='Pro'  component={Pro}></Stack.Screen>
       <Stack.Screen name='Home'  
       options={{
