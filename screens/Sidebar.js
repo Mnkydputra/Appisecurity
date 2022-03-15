@@ -71,7 +71,7 @@ import { StyleSheet,
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
-        aspect: [4, 3],
+        aspect: [4, 6],
         quality: 1,
       });
   
