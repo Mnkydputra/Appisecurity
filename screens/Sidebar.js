@@ -21,7 +21,7 @@ import { StyleSheet,
         {id:3, title:"Logout" , link : 'Logout'},
     ])
     const [loading,setLoading] = useState(true)
-    const [imgUrl , setImgUrl ] = useState('');
+    const [imgUrl , setImgUrl ] = useState(null);
     const [filePath, setFilePath] = useState({});
     const [image, setImage] = useState(null);
     const [loadUpload , setUploadLoad ] = useState(false);
@@ -43,8 +43,9 @@ import { StyleSheet,
               }else {
                 const url = json.url ;
                 const poto = json.poto ;
-                const img =url + poto ;
+                const img = url + poto ;
                 setImgUrl(img);
+                // setImgUrl(poto);
               }
             })
         }catch(error){
@@ -55,7 +56,6 @@ import { StyleSheet,
     //
     
     useEffect(() => {
-      // console.log(imgUrl)
       const handleBackPress = () => {
         navigation.goBack();
         return true;
@@ -63,7 +63,7 @@ import { StyleSheet,
       BackHandler.addEventListener('hardwareBackPress', handleBackPress);
       return () =>
       BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
-    },[getPoto])
+    },[])
 
     const pickImage = async () => {
       const id_akun = await AsyncStorage.getItem('id_akun');
@@ -107,8 +107,7 @@ import { StyleSheet,
               if(json.message === 'success'){
                  setUploadLoad(false);
                  alert(json.message);
-                 getPoto();
-                 setImgUrl(localUri)
+                 setImage(localUri);
                }else {
                  alert(json.message)
                }
@@ -141,7 +140,11 @@ import { StyleSheet,
             <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.headerContent}>
-              <Image style={styles.avatar} source={{uri: `${imgUrl}`}}/>
+              <Image style={styles.avatar} source={{
+                uri:   `${imgUrl}` + '?time'  + new Date(),
+                key : `${imgUrl}` ,
+                cache: 'reload'  ,
+              }}/>
               
               <Text style={styles.username}>{route.params.nama}</Text>
               <Text style={styles.username}>{route.params.jabatan}</Text>
