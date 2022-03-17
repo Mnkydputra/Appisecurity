@@ -117,31 +117,29 @@ export default function FormEditIMT({navigation,route}) {
     const hitungIMT = () => {
       
       const tinggi = tinggi_badan / 100 ;
-      const h_tinggi = tinggi * tinggi ;
-      const imt = berat_badan / h_tinggi ;
-      parseFloat(imt); 
-      console.log(imt)
-      if (imt > 27) {
-        setKet("Gemuk");
-        setIMT(imt);
-        // keterangan = "Gemuk, Kelebihan berat badan tingkat berat";
-      } else if ((imt >= 25.1) & (imt <= 27)) {
-        setIMT(imt);
-        setKet("Gemuk");
-        // keterangan = "Gemuk, Kelebihan berat badan tingkat ringan";
-      } else if ((imt >= 18.5) & (imt <= 25)) {
-        setIMT(imt);
-        setKet("Normal");
-        // keterangan = "Normal";
-      } else if ((imt >= 17) & (imt <= 18.4)) {
-        setIMT(imt);
-        setKet("Kurus");
-        // keterangan = "Kurus, Kekurangan berat badan tingkat ringan";
-      } else {
-        setIMT(imt);
-        setKet("Kurus");
-          // keterangan = "Kurus, Kekurangan berat badan tingkat berat";
-      }
+      const h_tinggi = tinggi.toFixed(2) * tinggi.toFixed(2) ;
+      setIMT(h_tinggi.toFixed(3))
+      // if (imt > 27) {
+      //   setKet("Gemuk");
+      //   setIMT(imt);
+      //   // keterangan = "Gemuk, Kelebihan berat badan tingkat berat";
+      // } else if ((imt >= 25.1) & (imt <= 27)) {
+      //   setIMT(imt);
+      //   setKet("Gemuk");
+      //   // keterangan = "Gemuk, Kelebihan berat badan tingkat ringan";
+      // } else if ((imt >= 18.5) & (imt <= 25)) {
+      //   setIMT(imt);
+      //   setKet("Normal");
+      //   // keterangan = "Normal";
+      // } else if ((imt >= 17) & (imt <= 18.4)) {
+      //   setIMT(imt);
+      //   setKet("Kurus");
+      //   // keterangan = "Kurus, Kekurangan berat badan tingkat ringan";
+      // } else {
+      //   setIMT(imt);
+      //   setKet("Kurus");
+      //     // keterangan = "Kurus, Kekurangan berat badan tingkat berat";
+      // }
     }
 
 

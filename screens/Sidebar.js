@@ -43,8 +43,9 @@ import { StyleSheet,
               }else {
                 const url = json.url ;
                 const poto = json.poto ;
-                const img = url + poto ;
+                const img = url + poto  + '?time=' + new Date();
                 setImgUrl(img);
+                console.log(img)
                 // setImgUrl(poto);
               }
             })
@@ -107,7 +108,7 @@ import { StyleSheet,
               if(json.message === 'success'){
                  setUploadLoad(false);
                  alert(json.message);
-                 setImage(localUri);
+                //  setImage(localUri);
                }else {
                  alert(json.message)
                }
@@ -141,7 +142,7 @@ import { StyleSheet,
         <View style={styles.header}>
           <View style={styles.headerContent}>
           <Image style={styles.avatar} source={{
-                uri :   `${imgUrl}` + '?time'  + new Date(),
+                uri :   `${imgUrl}` ,
           }}/>
               
               <Text style={styles.username}>{route.params.nama}</Text>
