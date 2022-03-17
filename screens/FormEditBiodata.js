@@ -1,5 +1,5 @@
 import React, { Component , useState , useEffect } from 'react';
-import { View, Text, StyleSheet  , BackHandler , ScrollView , ActivityIndicator , Alert } from 'react-native';
+import { View, Text, StyleSheet  , BackHandler , ScrollView , ActivityIndicator , Alert, Dimensions } from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import Background from "../src/component/Background";
 import Logo from "../src/component/Logo";
@@ -8,8 +8,9 @@ import Button from "../src/component/Button";
 import TextInput from "../src/component/TextInput";
 import BackButton from "../src/component/BackButton";
 import { theme } from "../src/core/theme";
-
-
+import DatePicker from 'react-native-datepicker';
+import moment from 'moment';
+const windowWidth = Dimensions.get('window').width;
 export default function FormEditBiodata({navigation,route}) {
     const [loading , setLoading ] = useState(true);
     const [ktp , setKTP] = useState('');
@@ -148,64 +149,98 @@ export default function FormEditBiodata({navigation,route}) {
               <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
             </View>
           :
-          <View>
-        <View style={styles.marginTextInput}>
-      <TextInput label="Tempat Lahir" 
-        value={tempat_lahir}
-        onChangeText={text => setTempatLahir(text)}
-        placeholder="Tempat Lahir" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
+          <View style={{backgroundColor:'#fff'}}>
+              <View style={styles.marginTextInput}>
+              <TextInput label="Tempat Lahir" 
+                value={tempat_lahir}
+                onChangeText={text => setTempatLahir(text)}
+                placeholder="Tempat Lahir" placeholderColor="#c4c3cb">
+                </TextInput>
+              </View>
 
-      <View style={styles.marginTextInput}>
-      <TextInput label="Tanggal Lahir" 
-        value={tanggal_lahir}
-        onChangeText={ text => setTanggalLahir(text)}
-        placeholder="Tanggal Lahir" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-      <View style={styles.marginTextInput}>
-      <TextInput label="NO KTP" 
-        value={ktp}
-        onChangeText={text => setKTP(text)}
-        placeholder="NO KTP" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-      <View style={styles.marginTextInput}>
-      <TextInput label="NO KK" 
-        value={kk}
-        onChangeText={ text => setKK(text) }
-        placeholder="NO KK" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-      <View style={styles.marginTextInput}>
-      <TextInput label="NO HANDPHONE" 
-        value={no_hp}
-        onChangeText={ text => setNoHP(text) }
-        placeholder="NO HANDPHONE" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-      <View style={styles.marginTextInput}>
-      <TextInput label="NO EMERGENCY" 
-        value={no_emergency}
-        onChangeText={text => setNoEmergency(text) }
-        placeholder="NO EMERGENCY" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-      <View style={styles.marginTextInput}>
-      <TextInput label="Email" 
-        value={email}
-        onChangeText={ text => setEmail(text) }
-        placeholder="Email" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-      <Button mode="contained" onPress={updateBiodata} style={{marginTop:20}}>
-      {wait ? 
-            <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>
-            : 
-              <Text style={{color:'#fff'}}>UPDATE BIODATA </Text>   
-        }
-      </Button>
+                <View style={styles.marginTextInput}>
+                  <Text style={styles.text}>Tanggal Lahir</Text>
+                      <DatePicker
+                      style={styles.datePickerStyle}
+                        date={tanggal_lahir}
+                        mode="date"
+                        placeholder="select date"
+                        format="YYYY-MM-DD"
+                        confirmBtnText="Confirm"
+                        cancelBtnText="Cancel"
+                        customStyles={{
+                          dateIcon: {
+                            position: 'absolute',
+                            right: -5,
+                            top: 4,
+                            marginLeft: 0,
+                          },
+                          dateInput: {
+                            borderColor : "gray",
+                            alignItems: "flex-start",
+                            borderWidth: 0,
+                            borderBottomWidth: 1,
+                          },
+                          placeholderText: {
+                            fontSize: 17,
+                            color: "gray"
+                          },
+                          dateText: {
+                            fontSize: 17,
+                          }
+                        }}
+                        onDateChange={(date) => {
+                          setTanggalLahir(date);
+                        }}
+                      />
+                </View>
+                <View style={styles.marginTextInput}>
+                <TextInput label="NO KTP" 
+                  value={ktp}
+                  keyboardType="phone-pad"
+                  onChangeText={text => setKTP(text)}
+                  placeholder="NO KTP" placeholderColor="#c4c3cb">
+                  </TextInput>
+                </View>
+                <View style={styles.marginTextInput}>
+                <TextInput label="NO KK" 
+                  value={kk}
+                  keyboardType="phone-pad"
+                  onChangeText={ text => setKK(text) }
+                  placeholder="NO KK" placeholderColor="#c4c3cb" >
+                  </TextInput>
+                </View>
+                <View style={styles.marginTextInput}>
+                <TextInput label="NO HANDPHONE" 
+                  value={no_hp}
+                  keyboardType="phone-pad"
+                  onChangeText={ text => setNoHP(text) }
+                  placeholder="NO HANDPHONE" placeholderColor="#c4c3cb">
+                  </TextInput>
+                </View>
+                <View style={styles.marginTextInput}>
+                <TextInput label="NO EMERGENCY" 
+                  value={no_emergency}
+                  keyboardType="phone-pad"
+                  onChangeText={text => setNoEmergency(text) }
+                  placeholder="NO EMERGENCY" placeholderColor="#c4c3cb">
+                  </TextInput>
+                </View>
+                <View style={styles.marginTextInput}>
+                <TextInput label="Email" 
+                  value={email}
+                  keyboardType="email-address"
+                  onChangeText={ text => setEmail(text) }
+                  placeholder="Email" placeholderColor="#c4c3cb">
+                  </TextInput>
+                </View>
+                <Button mode="contained" onPress={updateBiodata} style={{marginTop:20}}>
+                {wait ? 
+                      <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>
+                      : 
+                        <Text style={{color:'#fff'}}>UPDATE BIODATA </Text>   
+                  }
+                </Button>
       </View>
         }
       </>
@@ -217,9 +252,20 @@ export default function FormEditBiodata({navigation,route}) {
   const styles = StyleSheet.create({
     container : {
         flex :2 , 
-        margin: 14 ,
     } ,
-    marginTextInput : {
-        marginBottom:-17
+    title: {
+      textAlign: 'left',
+      fontSize: 20,
+      marginLeft:10 ,
+      fontWeight: 'bold',
+    },
+    datePickerStyle: {
+      width: windowWidth - 10 , 
+    },
+    text: {
+      textAlign: 'left',
+      width: 230,
+      fontSize: 12,
+      color : "#948b73"
     }
 })

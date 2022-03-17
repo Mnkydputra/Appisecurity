@@ -1,11 +1,9 @@
-import React, { useState ,Component  , useEffect  } from 'react';
+import React, { useState ,Component  , useEffect , useCallback } from 'react';
 import { View, Text , TouchableOpacity , Image , Dimensions , Button , BackHandler ,  Alert , Linking , ActivityIndicator } from 'react-native';
 import styles from '../src/component/styles.js';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-import * as ImagePicker from 'expo-image-picker';
-
+import { TextInput } from "react-native-paper";
 
 export default function  Home ({navigation,route}) {
   const [user , setUser] = useState({npk : '' , id_absen : '' , wilayah: '' , areaKerja : '' , jabatan: ''  , nama : ''})
@@ -13,18 +11,6 @@ export default function  Home ({navigation,route}) {
   const [loading,setLoading] = useState(true)
 
 
-
-  const backAction = () => {
-    Alert.alert("Perhatian!", "Keluar Aplikasi ?", [
-      {
-        text: "Batal",
-        onPress: () => null,
-        style: "cancel"
-      },
-      { text: "Iya", onPress: () => BackHandler.exitApp() }
-    ]);
-    return true;
-  };
 
     //ambil data diri anggota untuk akses absensi 
     const getParamsAbsensi = async () => {
@@ -138,7 +124,6 @@ const showLoad = () => {
 showLoad();
 //
 
-
   
     return (
       <View style={styles.container}>
@@ -148,6 +133,15 @@ showLoad();
             </View>
             :
             <>
+            <View>
+              <TextInput
+                label="Email"
+                left={<TextInput.Icon name="email" />}
+                mode="flat"
+                style={{ margin: 10 }}
+              />
+            </View>
+
             <View  style={styles.headText} >
             <TouchableOpacity
                   onPress={() =>
@@ -252,10 +246,8 @@ showLoad();
                     <Text style={styles.info}>Course</Text>
                   </View>
                 </TouchableOpacity>
-
-                {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />} */}
               </View>
-              
+
             </>
         }
       </View>

@@ -144,65 +144,65 @@ export default function FormEditDomisili({navigation,route}) {
   }
 
     return (
-      <View>
+      <View style={{backgroundColor:'#fff'}}>
         <View style={styles.marginTextInput}>
-      <TextInput label="Nama Jalan" 
-        value={jl_dom}
-        onChangeText={text => setJLdom(text)}
-        placeholder="Nama Jalan" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
+          <TextInput label="Nama Jalan" 
+            value={jl_dom}
+            onChangeText={text => setJLdom(text)}
+            placeholder="Nama Jalan" placeholderColor="#c4c3cb">
+            </TextInput>
+          </View>
 
-      <View style={styles.marginTextInput}>
-      <TextInput label="RT" 
-        value={rt_dom}
-        onChangeText={ text => setRT(text) }
-        placeholder="RT" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-      <View style={styles.marginTextInput}>
-      <TextInput label="RW" 
-        value={rw_dom}
-        onChangeText={text => setRW(text)}
-        placeholder="RW" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-      <View style={styles.marginTextInput}>
-      <TextInput label="PROVINSI" 
-        value={provinsi_dom}
-        onChangeText={ text => setProvinsi(text) }
-        placeholder="PROVINSI" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-      <View style={styles.marginTextInput}>
-      <TextInput label="Kabupaten / Kota " 
-        value={kota_dom}
-        onChangeText={ text => setKota(text) }
-        placeholder="Kabupaten / Kota " placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-      <View style={styles.marginTextInput}>
-      <TextInput label="Kecamatan" 
-        value={kec_dom}
-        onChangeText={text => setKec(text)}
-        placeholder="Kecamatan" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-      <View style={styles.marginTextInput}>
-      <TextInput label="Kelurahan" 
-        value={kel_dom}
-        onChangeText={ text => setKel(text) }
-        placeholder="Kelurahan" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
+          <View style={styles.marginTextInput}>
+          <TextInput label="RT" 
+            value={rt_dom}
+            onChangeText={ text => setRT(text) }
+            placeholder="RT" placeholderColor="#c4c3cb">
+            </TextInput>
+          </View>
+          <View style={styles.marginTextInput}>
+          <TextInput label="RW" 
+            value={rw_dom}
+            onChangeText={text => setRW(text)}
+            placeholder="RW" placeholderColor="#c4c3cb">
+            </TextInput>
+          </View>
+          <View style={styles.marginTextInput}>
+          <TextInput label="PROVINSI" 
+            value={provinsi_dom}
+            onChangeText={ text => setProvinsi(text) }
+            placeholder="PROVINSI" placeholderColor="#c4c3cb">
+            </TextInput>
+          </View>
+          <View style={styles.marginTextInput}>
+          <TextInput label="Kabupaten / Kota " 
+            value={kota_dom}
+            onChangeText={ text => setKota(text) }
+            placeholder="Kabupaten / Kota " placeholderColor="#c4c3cb">
+            </TextInput>
+          </View>
+          <View style={styles.marginTextInput}>
+          <TextInput label="Kecamatan" 
+            value={kec_dom}
+            onChangeText={text => setKec(text)}
+            placeholder="Kecamatan" placeholderColor="#c4c3cb">
+            </TextInput>
+          </View>
+          <View style={styles.marginTextInput}>
+          <TextInput label="Kelurahan" 
+            value={kel_dom}
+            onChangeText={ text => setKel(text) }
+            placeholder="Kelurahan" placeholderColor="#c4c3cb">
+            </TextInput>
+          </View>
 
-      <Button mode="contained" onPress={updateDomisili } style={{marginTop:20}}>
-      {wait ? 
-            <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>
-            : 
-              <Text style={{color:'#fff'}}>UPDATE DOMISILI </Text>   
-        }
-      </Button>
+          <Button mode="contained" onPress={updateDomisili } style={{marginTop:20}}>
+          {wait ? 
+                <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>
+                : 
+                  <Text style={{color:'#fff'}}>UPDATE DOMISILI </Text>   
+            }
+          </Button>
       </View>
     );
   }

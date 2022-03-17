@@ -68,7 +68,9 @@ const [loading,setLoading] = useState(true)
             </View>
             :
             <View style={styles.container}>
-              <Image style={{height:450 ,width:400}} source={{uri: `${imgUrl}`}}/>
+              <Image style={{height:450 ,width:400}} source={{
+                uri: `${imgUrl}`   + '?time'  + new Date(),
+                }}/>
             </View>
       }
     </>

@@ -114,48 +114,50 @@ export default function FormEditIMT({navigation,route}) {
 
 
     return (
-      <View>
-        <View style={styles.marginTextInput}>
-      <TextInput label="Berat Badan" 
-        value={berat_badan}
-        onChangeText={text => setBB(text) }
-        placeholder="Berat Badan" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
+      <View style={{backgroundColor:'#fff'}}>
+          <View style={styles.marginTextInput}>
+          <TextInput label="Berat Badan" 
+            value={berat_badan}
+            keyboardType="phone-pad"
+            onChangeText={text => setBB(text) }
+            placeholder="Berat Badan" placeholderColor="#c4c3cb" >
+            </TextInput>
+          </View>
 
-      <View style={styles.marginTextInput}>
-      <TextInput label="Tinggi Badan" 
-        value={tinggi_badan}
-        onChangeText={ text => setTB(text) }
-        placeholder="Tinggi  Badan" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-      <View style={styles.marginTextInput}>
-      <TextInput label="IMT" 
-        value={imt}
-        editable={false}
-        onChangeText={text => setIMT(text)}
-        placeholder="IMT" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
+          <View style={styles.marginTextInput}>
+          <TextInput label="Tinggi Badan" 
+            value={tinggi_badan}
+            keyboardType="phone-pad"
+            onChangeText={ text => setTB(text) }
+            placeholder="Tinggi  Badan" placeholderColor="#c4c3cb" >
+            </TextInput>
+          </View>
+          <View style={styles.marginTextInput}>
+          <TextInput label="IMT" 
+            value={imt}
+            editable={false}
+            onChangeText={text => setIMT(text)}
+            placeholder="IMT" placeholderColor="#c4c3cb" >
+            </TextInput>
+          </View>
 
-      <View style={styles.marginTextInput}>
-      <TextInput label="Keterangan" 
-        editable={false}
-        value={keterangan}
-        onChangeText={text =>  setKet(text) }
-        placeholder="IMT" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
+          <View style={styles.marginTextInput}>
+          <TextInput label="Keterangan" 
+            editable={false}
+            value={keterangan}
+            onChangeText={text =>  setKet(text) }
+            placeholder="IMT" placeholderColor="#c4c3cb" >
+            </TextInput>
+          </View>
 
-      <Button mode="contained" onPress={updateIMT } style={{marginTop:20}}>
-      {
-        wait ? 
-            <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>
-            : 
-            <Text style={{color:'#fff'}}>UPDATE IMT </Text>   
-      }
-      </Button>
+          <Button mode="contained" onPress={updateIMT } style={{marginTop:20}}>
+          {
+            wait ? 
+                <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>
+                : 
+                <Text style={{color:'#fff'}}>UPDATE IMT </Text>   
+          }
+          </Button>
       </View>
     );
   }

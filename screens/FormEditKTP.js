@@ -140,65 +140,65 @@ export default function FormEditKTP({navigation,route}) {
   }
 
     return (
-      <View>
-        <View style={styles.marginTextInput}>
-      <TextInput label="Nama Jalan" 
-        value={jl_ktp}
-        onChangeText={text => setJLKTP(text)}
-        placeholder="Nama Jalan" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
+      <View style={{backgroundColor:'#fff'}}>
+          <View style={styles.marginTextInput}>
+            <TextInput label="Nama Jalan" 
+              value={jl_ktp}
+              onChangeText={text => setJLKTP(text)}
+              placeholder="Nama Jalan" placeholderColor="#c4c3cb" >
+              </TextInput>
+            </View>
 
-      <View style={styles.marginTextInput}>
-      <TextInput label="RT" 
-        value={rt_ktp}
-        onChangeText={ text => setRT(text) }
-        placeholder="RT" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-      <View style={styles.marginTextInput}>
-      <TextInput label="RW" 
-        value={rw_ktp}
-        onChangeText={text => setRW(text)}
-        placeholder="RW" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-      <View style={styles.marginTextInput}>
-      <TextInput label="PROVINSI" 
-        value={provinsi_ktp}
-        onChangeText={ text => setProvinsi(text) }
-        placeholder="PROVINSI" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-      <View style={styles.marginTextInput}>
-      <TextInput label="Kabupaten / Kota " 
-        value={kota_ktp}
-        onChangeText={ text => setKota(text) }
-        placeholder="Kabupaten / Kota " placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-      <View style={styles.marginTextInput}>
-      <TextInput label="Kecamatan" 
-        value={kec_ktp}
-        onChangeText={text => setKec(text)}
-        placeholder="Kecamatan" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
-      <View style={styles.marginTextInput}>
-      <TextInput label="Kelurahan" 
-        value={kel_ktp}
-        onChangeText={ text => setKel(text) }
-        placeholder="Kelurahan" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput , {height:50, fontSize: 14 }] }>
-        </TextInput>
-      </View>
+            <View style={styles.marginTextInput}>
+            <TextInput label="RT" 
+              value={rt_ktp}
+              onChangeText={ text => setRT(text) }
+              placeholder="RT" placeholderColor="#c4c3cb" >
+              </TextInput>
+            </View>
+            <View style={styles.marginTextInput}>
+            <TextInput label="RW" 
+              value={rw_ktp}
+              onChangeText={text => setRW(text)}
+              placeholder="RW" placeholderColor="#c4c3cb" >
+              </TextInput>
+            </View>
+            <View style={styles.marginTextInput}>
+            <TextInput label="PROVINSI" 
+              value={provinsi_ktp}
+              onChangeText={ text => setProvinsi(text) }
+              placeholder="PROVINSI" placeholderColor="#c4c3cb" >
+              </TextInput>
+            </View>
+            <View style={styles.marginTextInput}>
+            <TextInput label="Kabupaten / Kota " 
+              value={kota_ktp}
+              onChangeText={ text => setKota(text) }
+              placeholder="Kabupaten / Kota " placeholderColor="#c4c3cb" >
+              </TextInput>
+            </View>
+            <View style={styles.marginTextInput}>
+            <TextInput label="Kecamatan" 
+              value={kec_ktp}
+              onChangeText={text => setKec(text)}
+              placeholder="Kecamatan" placeholderColor="#c4c3cb" >
+              </TextInput>
+            </View>
+            <View style={styles.marginTextInput}>
+            <TextInput label="Kelurahan" 
+              value={kel_ktp}
+              onChangeText={ text => setKel(text) }
+              placeholder="Kelurahan" placeholderColor="#c4c3cb" >
+              </TextInput>
+            </View>
 
-      <Button mode="contained" onPress={updateAlamat } style={{marginTop:20}}>
-      {wait ? 
-            <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>
-            : 
-              <Text style={{color:'#fff'}}>UPDATE ALAMAT KTP </Text>   
-        }
-      </Button>
+            <Button mode="contained" onPress={updateAlamat } style={{marginTop:20}}>
+            {wait ? 
+                  <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>
+                  : 
+                    <Text style={{color:'#fff'}}>UPDATE ALAMAT KTP </Text>   
+              }
+            </Button>
       </View>
     );
   }

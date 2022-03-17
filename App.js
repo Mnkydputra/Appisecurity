@@ -63,7 +63,9 @@ export default function App() {
       <Stack.Screen options={{
           headerShown: false  , 
         }} name='Splash' component={Splash}></Stack.Screen>
-      <Stack.Screen name='Logout' component={Logout}></Stack.Screen>
+      <Stack.Screen name='Logout'  options={{
+          headerShown: false  ,  
+        }}   component={Logout}></Stack.Screen>
       </Stack.Navigator>
 
     </NavigationContainer>
