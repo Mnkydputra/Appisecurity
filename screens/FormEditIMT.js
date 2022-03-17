@@ -109,8 +109,43 @@ export default function FormEditIMT({navigation,route}) {
         }catch(error){
             alert(error.message)
         }
+      }
     }
+
+
+    //hitung imt
+    const hitungIMT = () => {
+      
+      const tinggi = tinggi_badan / 100 ;
+      const h_tinggi = tinggi * tinggi ;
+      const imt = berat_badan / h_tinggi ;
+      parseFloat(imt); 
+      console.log(imt)
+      if (imt > 27) {
+        setKet("Gemuk");
+        setIMT(imt);
+        // keterangan = "Gemuk, Kelebihan berat badan tingkat berat";
+      } else if ((imt >= 25.1) & (imt <= 27)) {
+        setIMT(imt);
+        setKet("Gemuk");
+        // keterangan = "Gemuk, Kelebihan berat badan tingkat ringan";
+      } else if ((imt >= 18.5) & (imt <= 25)) {
+        setIMT(imt);
+        setKet("Normal");
+        // keterangan = "Normal";
+      } else if ((imt >= 17) & (imt <= 18.4)) {
+        setIMT(imt);
+        setKet("Kurus");
+        // keterangan = "Kurus, Kekurangan berat badan tingkat ringan";
+      } else {
+        setIMT(imt);
+        setKet("Kurus");
+          // keterangan = "Kurus, Kekurangan berat badan tingkat berat";
+      }
     }
+
+
+    //
 
 
     return (
@@ -118,6 +153,7 @@ export default function FormEditIMT({navigation,route}) {
           <View style={styles.marginTextInput}>
           <TextInput label="Berat Badan" 
             value={berat_badan}
+            maxLength={3}
             keyboardType="phone-pad"
             onChangeText={text => setBB(text) }
             placeholder="Berat Badan" placeholderColor="#c4c3cb" >
@@ -128,15 +164,16 @@ export default function FormEditIMT({navigation,route}) {
           <TextInput label="Tinggi Badan" 
             value={tinggi_badan}
             keyboardType="phone-pad"
+            maxLength={3}
             onChangeText={ text => setTB(text) }
+            onChange = {hitungIMT}
             placeholder="Tinggi  Badan" placeholderColor="#c4c3cb" >
             </TextInput>
           </View>
           <View style={styles.marginTextInput}>
           <TextInput label="IMT" 
-            value={imt}
+            value={`${imt}`}
             editable={false}
-            onChangeText={text => setIMT(text)}
             placeholder="IMT" placeholderColor="#c4c3cb" >
             </TextInput>
           </View>
@@ -145,7 +182,6 @@ export default function FormEditIMT({navigation,route}) {
           <TextInput label="Keterangan" 
             editable={false}
             value={keterangan}
-            onChangeText={text =>  setKet(text) }
             placeholder="IMT" placeholderColor="#c4c3cb" >
             </TextInput>
           </View>

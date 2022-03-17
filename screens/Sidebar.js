@@ -140,11 +140,9 @@ import { StyleSheet,
             <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.headerContent}>
-              <Image style={styles.avatar} source={{
-                uri:   `${imgUrl}` + '?time'  + new Date(),
-                key : `${imgUrl}` ,
-                cache: 'reload'  ,
-              }}/>
+          <Image style={styles.avatar} source={{
+                uri :   `${imgUrl}` + '?time'  + new Date(),
+          }}/>
               
               <Text style={styles.username}>{route.params.nama}</Text>
               <Text style={styles.username}>{route.params.jabatan}</Text>

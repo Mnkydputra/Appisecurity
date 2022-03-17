@@ -133,15 +133,6 @@ showLoad();
             </View>
             :
             <>
-            <View>
-              <TextInput
-                label="Email"
-                left={<TextInput.Icon name="email" />}
-                mode="flat"
-                style={{ margin: 10 }}
-              />
-            </View>
-
             <View  style={styles.headText} >
             <TouchableOpacity
                   onPress={() =>
