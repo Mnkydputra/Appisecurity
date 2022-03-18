@@ -116,30 +116,33 @@ export default function FormEditIMT({navigation,route}) {
     //hitung imt
     const hitungIMT = () => {
       
+
       const tinggi = tinggi_badan / 100 ;
       const h_tinggi = tinggi.toFixed(2) * tinggi.toFixed(2) ;
-      setIMT(h_tinggi.toFixed(3))
-      // if (imt > 27) {
-      //   setKet("Gemuk");
-      //   setIMT(imt);
-      //   // keterangan = "Gemuk, Kelebihan berat badan tingkat berat";
-      // } else if ((imt >= 25.1) & (imt <= 27)) {
-      //   setIMT(imt);
-      //   setKet("Gemuk");
-      //   // keterangan = "Gemuk, Kelebihan berat badan tingkat ringan";
-      // } else if ((imt >= 18.5) & (imt <= 25)) {
-      //   setIMT(imt);
-      //   setKet("Normal");
-      //   // keterangan = "Normal";
-      // } else if ((imt >= 17) & (imt <= 18.4)) {
-      //   setIMT(imt);
-      //   setKet("Kurus");
-      //   // keterangan = "Kurus, Kekurangan berat badan tingkat ringan";
-      // } else {
-      //   setIMT(imt);
-      //   setKet("Kurus");
-      //     // keterangan = "Kurus, Kekurangan berat badan tingkat berat";
-      // }
+      const imt =  60 *  parseFloat(tinggi * 2);
+      // setIMT( parseInt(imt))
+      
+      if (imt > 27) {
+        setKet("Gemuk, Kelebihan berat badan tingkat berat");
+        setIMT( parseInt(imt));
+        // keterangan = "Gemuk, Kelebihan berat badan tingkat berat";
+      } else if ((imt >= 25.1) & (imt <= 27)) {
+        setIMT( parseInt(imt));
+        setKet("Gemuk, Kelebihan berat badan tingkat ringan");
+        // keterangan = "Gemuk, Kelebihan berat badan tingkat ringan";
+      } else if ((imt >= 18.5) & (imt <= 25)) {
+        setIMT( parseInt(imt));
+        setKet("Normal");
+        // keterangan = "Normal";
+      } else if ((imt >= 17) & (imt <= 18.4)) {
+        setIMT( parseInt(imt));
+        setKet("Kurus, Kekurangan berat badan tingkat ringan");
+        // keterangan = "Kurus, Kekurangan berat badan tingkat ringan";
+      } else {
+        setIMT( parseInt(imt));
+        setKet("Kurus, Kekurangan berat badan tingkat berat");
+          // keterangan = "Kurus, Kekurangan berat badan tingkat berat";
+      }
     }
 
 

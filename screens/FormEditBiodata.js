@@ -253,6 +253,9 @@ export default function FormEditBiodata({navigation,route}) {
     container : {
         flex :2 , 
     } ,
+    marginTextInput : {
+      marginBottom: -9
+    },
     title: {
       textAlign: 'left',
       fontSize: 20,
@@ -260,12 +263,14 @@ export default function FormEditBiodata({navigation,route}) {
       fontWeight: 'bold',
     },
     datePickerStyle: {
-      width: windowWidth - 10 , 
+      width: windowWidth - 10 ,
+      margin:5 
     },
     text: {
       textAlign: 'left',
       width: 230,
       fontSize: 12,
-      color : "#948b73"
+      marginLeft : 8,
+      color : "#8c8685"
     }
 })

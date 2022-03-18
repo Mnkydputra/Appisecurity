@@ -22,7 +22,7 @@ export default function  Logout ({navigation,route}) {
 
   
     return (
-        <View style={{flex : 1 , justifyContent:'center' ,alignContent:'center' }}>
+        <View style={{flex : 1 , justifyContent:'center' ,alignItem:'center' }}>
            <Text>BYE</Text>
         </View>
     );

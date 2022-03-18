@@ -173,11 +173,16 @@ import { StyleSheet,
                   })}>
                   <View style={styles.box}>
                     {/* <Image style={styles.icon} source={{uri: item.image}}/> */}
-                    <Icon style={[styles.icon,{fontSize:10}]} name="edit"></Icon>
+                    <Icon style={[styles.icon,{fontSize:10}]} name={
+                      item.title === 'Logout' ? 
+                        'lock'
+                      :
+                        'edit'
+                    }></Icon>
                     <Text style={styles.title}>{item.title}</Text>
                     <Image style={styles.btn} source={{uri: "https://img.icons8.com/customer/office/40"}}/>
 
-                    {/* <Icon style={{marginTop:14}} name="chevron-right" ></Icon> */}
+                    <Icon style={{marginTop:14}} name="chevron-right" ></Icon>
                   </View>
                 </TouchableOpacity>
               )
