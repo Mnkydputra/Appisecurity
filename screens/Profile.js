@@ -8,7 +8,8 @@ import Header from "../src/component/Header";
 import Button from "../src/component/Button";
 import Paragraph from "../src/component/Paragraph";
 import { DataTable } from 'react-native-paper';
-import TextInput from '../src/component/TextInput';
+// import TextInput from '../src/component/TextInput';
+import { TextInput } from "react-native-paper";
 export default function Profile({navigation , route }) {
     const [biodata , setBiodata] = useState({npk: '', nama: '',ktp: '',kk: '',tempat_lahir: '',tanggal_lahir: '',email: '',no_hp: '',no_emergency: '',tinggi_badan: '',berat_badan: '',imt: '',keterangan: '',jl_ktp: '',rt_ktp: '',rw_ktp: '',kel_ktp: '',kec_ktp: '',kota_ktp: '',provinsi_ktp: '',jl_dom: '',rt_dom: '',rw_dom: '',kel_dom: '',kec_dom: '',kota_dom: '',provinsi_dom: '' })
     const [loading,setLoading] = useState(true)
@@ -72,100 +73,113 @@ export default function Profile({navigation , route }) {
             </View>
             :
           <ScrollView>
-          <DataTable.Row>
-            <DataTable.Cell>Nama</DataTable.Cell>
-            <DataTable.Cell>{biodata.nama}</DataTable.Cell>
-          </DataTable.Row>
+          <TextInput
+            style={styles.textINPUT}
+            label="Nama"
+            editable={false}
+            placeholder="Nama"
+            value={biodata.nama}
+          ></TextInput>
 
-          <DataTable.Row>
-            <DataTable.Cell>Npk</DataTable.Cell>
-            <DataTable.Cell>{biodata.npk}</DataTable.Cell>
-          </DataTable.Row>
+          <TextInput
+            style={styles.textINPUT}
+            label="NPK"
+            editable={false}
+            placeholder="NPK"
+            value={biodata.npk}
+          ></TextInput>
 
-          <DataTable.Row>
-            <DataTable.Cell>Tempat Lahir</DataTable.Cell>
-            <DataTable.Cell>{biodata.tempat_lahir}</DataTable.Cell>
-          </DataTable.Row>
+          <TextInput
+            style={styles.textINPUT}
+            label="Tempat Lahir"
+            editable={false}
+            placeholder="Tempat Lahir"
+            value={biodata.tempat_lahir}
+          ></TextInput>
 
-          <DataTable.Row>
-            <DataTable.Cell>Tanggal Lahir</DataTable.Cell>
-            <DataTable.Cell>{biodata.tanggal_lahir}</DataTable.Cell>
-          </DataTable.Row>
+          <TextInput
+            style={styles.textINPUT}
+            label="Tanggal Lahir"
+            editable={false}
+            placeholder="Tanggal Lahir"
+            value={biodata.tanggal_lahir}
+          ></TextInput>
 
-          <DataTable.Row>
-            <DataTable.Cell>Alamat KTP</DataTable.Cell>
-            <DataTable.Cell>{biodata.no_emergency}</DataTable.Cell>
-          </DataTable.Row>
+          <TextInput
+            style={styles.textINPUT}
+            label="Alamat KTP"
+            editable={false}
+            multiline={true}
+            numberOfLines={4}
+            placeholder="Alamat KTP"
+            value={ biodata.jl_ktp + "," + " Kelurahan " + biodata.kel_ktp  +  " RT " + biodata.rt_ktp + " RW " + biodata.rw_ktp + " Kecamatan "  + biodata.kec_ktp + " Kota "  + biodata.kota_ktp + " Provinsi "  + biodata.provinsi_ktp }
+          ></TextInput>
 
+         <TextInput
+            label="Alamat Domisili"
+            editable={false}
+            style={styles.textINPUT}
+            multiline={true}
+            numberOfLines={4}
+            placeholder="Alamat Domisili"
+            value={ biodata.jl_dom + "," + " Kelurahan " + biodata.kel_dom  +  " RT " + biodata.rt_dom + " RW " + biodata.rw_dom + " Kecamatan "  + biodata.kec_dom + " Kota "  + biodata.kota_dom + " Provinsi "  + biodata.provinsi_dom }
+          ></TextInput>
 
-          <DataTable.Row>
-            <DataTable.Cell>Alamat Domisili</DataTable.Cell>
-            <DataTable.Cell>{
-              biodata.jl_ktp + ' '  +
-              biodata.provinsi_ktp + ' '  +
-              biodata.kota_ktp + ' '  +
-              biodata.kec_ktp + ' '  +
-              biodata.kel_ktp + ' '  +
-              biodata.rw_ktp + ' '  +
-              biodata.rt_ktp + ' ' 
-            }</DataTable.Cell>
-          </DataTable.Row>
+        <TextInput
+            style={styles.textINPUT}
+            label="No Handphone"
+            editable={false}
+            placeholder="No Handphone"
+            value={biodata.no_hp}
+          ></TextInput>
 
-          {/* <TextInput>
-              { 
-                biodata.jl_ktp + ' ' + 
-                biodata.jl_ktp + ' ' + 
-                biodata.jl_ktp + ' ' + 
-                biodata.jl_ktp + ' ' 
-              }
-          </TextInput> */}
+          <TextInput
+            style={styles.textINPUT}
+            label="No Telepon Emergency"
+            editable={false}
+            placeholder="No Telepon Emergency"
+            value={biodata.no_emergency}
+          ></TextInput>
 
+          <TextInput
+            style={styles.textINPUT}
+            label="Email"
+            editable={false}
+            placeholder="Email"
+            value={biodata.email}
+          ></TextInput>
 
-          <DataTable.Row>
-            <DataTable.Cell>No Hp</DataTable.Cell>
-            <DataTable.Cell>{biodata.no_hp}</DataTable.Cell>
-          </DataTable.Row>
+          <TextInput
+            style={styles.textINPUT}
+            label="Tinggi Badan"
+            editable={false}
+            placeholder="Tinggi Badan"
+            value={biodata.tinggi_badan + " cm"}
+          ></TextInput>
 
+          <TextInput
+            style={styles.textINPUT}
+            label="Berat Badan"
+            editable={false}
+            placeholder="Berat Badan"
+            value={biodata.berat_badan + " kg"}
+          ></TextInput>
 
-          <DataTable.Row>
-            <DataTable.Cell>No Emergency</DataTable.Cell>
-            <DataTable.Cell>{biodata.no_emergency}</DataTable.Cell>
-          </DataTable.Row>
+          <TextInput
+            style={styles.textINPUT}
+            label="IMT"
+            editable={false}
+            placeholder="IMT"
+            value={biodata.imt}
+          ></TextInput>
 
-
-          <DataTable.Row>
-            <DataTable.Cell>Email</DataTable.Cell>
-            <DataTable.Cell>{biodata.email}</DataTable.Cell>
-          </DataTable.Row>
-
-          <DataTable.Row>
-            <DataTable.Cell>No Hp</DataTable.Cell>
-            <DataTable.Cell>{biodata.no_hp}</DataTable.Cell>
-          </DataTable.Row>
-
-
-          <DataTable.Row>
-            <DataTable.Cell>Tinggi Badan</DataTable.Cell>
-            <DataTable.Cell>{biodata.tinggi_badan + ' CM'}</DataTable.Cell>
-          </DataTable.Row>
-
-
-          <DataTable.Row>
-            <DataTable.Cell>Berat Badan</DataTable.Cell>
-            <DataTable.Cell>{biodata.berat_badan + ' KG'}</DataTable.Cell>
-          </DataTable.Row>
-
-          <DataTable.Row>
-            <DataTable.Cell>IMT</DataTable.Cell>
-            <DataTable.Cell>{biodata.imt}</DataTable.Cell>
-          </DataTable.Row>
-
-          <DataTable.Row>
-            <DataTable.Cell>Keterangan</DataTable.Cell>
-            <DataTable.Cell>{biodata.keterangan}</DataTable.Cell>
-          </DataTable.Row>
-
-         
+        <TextInput
+            style={styles.textINPUT}
+            label="Keterangan"
+            editable={false}
+            placeholder="Keterangan"
+            value={biodata.keterangan}
+          ></TextInput> 
         </ScrollView>
         }
       </>
@@ -187,6 +201,9 @@ export default function Profile({navigation , route }) {
         marginLeft : 2 ,
         flexWrap: 'wrap' ,
         backgroundColor : '#fff'
-    }  
+    } ,
+    textINPUT : {
+      backgroundColor :'#fff'
+    } 
   })
 

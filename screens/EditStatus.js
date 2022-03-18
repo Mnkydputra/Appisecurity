@@ -8,7 +8,7 @@ import Logo from "../src/component/Logo";
 import Header from "../src/component/Header";
 import Button from "../src/component/Button";
 // import TextInput from "../src/component/TextInput";
-import { TextInput } from "react-native-paper";
+import { TextInput  , TextInputMask} from "react-native-paper";
 import BackButton from "../src/component/BackButton";
 import { theme } from "../src/core/theme";
 import DatePicker from 'react-native-datepicker';
@@ -129,6 +129,12 @@ export default function EditProfile ({navigation,route}) {
               label="NO KTA" 
               value={kta}
               mode=""
+              // render={props =>
+              //   <TextInputMask
+              //     {...props}
+              //     mask="+[00] [000] [000] [000]"
+              //   />
+              // }
               // right={<TextInput.Icon name="email" />}
               onChangeText={date =>  setKta(date)}
               placeholder="NO KTA" placeholderColor="#c4c3cb"

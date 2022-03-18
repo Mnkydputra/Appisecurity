@@ -10,6 +10,9 @@ export default StyleSheet.create({
     // backgroundColor: "#87CEFA",
     backgroundColor: "#fff",
   },
+  scrollView: {
+    flex: 1,
+  },
   header: {
     backgroundColor: "#179bd4",
     width: "94%",

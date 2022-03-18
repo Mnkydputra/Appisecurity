@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button , Dimensions , TextInput , ActivityIndicator, BackHandler , Modal , Alert , Pressable , Image  } from 'react-native';
+import React, { useState, useEffect  ,useCallback} from 'react';
+import { Text, View, StyleSheet, Button , Dimensions , TextInput , ActivityIndicator, BackHandler , Modal , Alert , Pressable , Image ,RefreshControl , ScrollView  } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import * as Location from 'expo-location';
 import { getDistance, getPreciseDistance } from 'geolib';
@@ -25,6 +25,33 @@ export default function Absensi({navigation,route}) {
   const [errorMsg, setErrorMsg] = useState(null);
   const [msgBarcode , setMsgBarcode] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+
+
+  const [refreshing, setRefreshing] = useState(false);
+
+
+  //refresh screen home 
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    async ()=> {
+      //ambil posisi user 
+      let { statusLokasi } = await Location.requestForegroundPermissionsAsync();
+      //ijinkan mengakses lokasi user
+      hasPermissionLocation(statusLokasi === 'granted');
+
+      let position = await Location.getCurrentPositionAsync({});
+      //get longitude dan latitude user
+      setLokasi({latiUser : position.coords.latitude , longiUser : position.coords.longitude});
+    }
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+
   useEffect(() => {
     (async () => {
       let { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -289,14 +316,15 @@ export default function Absensi({navigation,route}) {
   }
     
 
-      {/* <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.textStyle}>Show Modal</Text>
-      </Pressable> */}
-
-      {/* <Text style={[styles.info ,{fontSize:20} ]} >Absen Security Guard ADM</Text> */}
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
+        >  
       <View>
       <ActivityIndicator
                 animating={loading}
@@ -340,6 +368,7 @@ export default function Absensi({navigation,route}) {
               <DataTable.Cell>{lokasi.latiUser + "," + lokasi.longiUser  }</DataTable.Cell>
         </DataTable.Row>
       </DataTable>
+    </ScrollView> 
     </View>
   );
 }

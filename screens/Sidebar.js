@@ -108,7 +108,7 @@ import { StyleSheet,
               if(json.message === 'success'){
                  setUploadLoad(false);
                  alert(json.message);
-                //  setImage(localUri);
+                 setImage(localUri);
                }else {
                  alert(json.message)
                }
@@ -198,7 +198,7 @@ import { StyleSheet,
 
 const styles = StyleSheet.create({
     header:{
-      backgroundColor: "#179bd4",
+      backgroundColor: "#2e7c94",
     },
     headerContent:{
       padding:20,

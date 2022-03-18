@@ -149,7 +149,7 @@ export default function FormEditBiodata({navigation,route}) {
               <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
             </View>
           :
-          <View style={{backgroundColor:'#fff'}}>
+          <View style={styles.container}>
               <View style={styles.marginTextInput}>
               <TextInput label="Tempat Lahir" 
                 value={tempat_lahir}
@@ -251,7 +251,8 @@ export default function FormEditBiodata({navigation,route}) {
 
   const styles = StyleSheet.create({
     container : {
-        flex :2 , 
+        flex :1 , 
+        backgroundColor:'#fff'
     } ,
     marginTextInput : {
       marginBottom: -9

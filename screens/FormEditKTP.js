@@ -140,7 +140,7 @@ export default function FormEditKTP({navigation,route}) {
   }
 
     return (
-      <View style={{backgroundColor:'#fff'}}>
+      <View style={styles.container}>
           <View style={styles.marginTextInput}>
             <TextInput label="Nama Jalan" 
               value={jl_ktp}
@@ -205,8 +205,8 @@ export default function FormEditKTP({navigation,route}) {
 
   const styles = StyleSheet.create({
     container : {
-        flex :2 , 
-        margin: 14 ,
+      flex :1 , 
+      backgroundColor:'#fff'
     } ,
     marginTextInput : {
         marginBottom:-17

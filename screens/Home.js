@@ -1,5 +1,5 @@
 import React, { useState ,Component  , useEffect , useCallback } from 'react';
-import { View, Text , TouchableOpacity , Image , Dimensions , Button , BackHandler ,  Alert , Linking , ActivityIndicator } from 'react-native';
+import { View, Text , TouchableOpacity , Image , Dimensions , Button , BackHandler ,  Alert , Linking , ActivityIndicator , RefreshControl , ScrollView} from 'react-native';
 import styles from '../src/component/styles.js';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -9,7 +9,20 @@ export default function  Home ({navigation,route}) {
   const [user , setUser] = useState({npk : '' , id_absen : '' , wilayah: '' , areaKerja : '' , jabatan: ''  , nama : ''})
   const [id_ , setId] = useState(null)
   const [loading,setLoading] = useState(true)
+  const [refreshing, setRefreshing] = useState(false);
 
+
+  //refresh screen home 
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    getParamsAbsensi();
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
 
 
     //ambil data diri anggota untuk akses absensi 
@@ -126,13 +139,25 @@ showLoad();
 
   
     return (
+      
       <View style={styles.container}>
         { loading ? 
             <View style={{flex : 1 , justifyContent : 'center'}}>
               <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
             </View>
             :
+            
             <>
+            <ScrollView
+            contentContainerStyle={styles.scrollView}
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}
+                />
+              }
+            >
+      
             <View  style={styles.headText} >
             <TouchableOpacity
                   onPress={() =>
@@ -238,9 +263,10 @@ showLoad();
                   </View>
                 </TouchableOpacity>
               </View>
-
-            </>
+              </ScrollView>
+              </>
         }
       </View>
+      
     );
   }
