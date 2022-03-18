@@ -206,7 +206,7 @@ showLoad();
               
               <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate("Pro", {
+                    navigation.navigate("Profiling", {
                       nama: "dasep",
                     })
                   }

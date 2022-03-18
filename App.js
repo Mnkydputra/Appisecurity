@@ -45,13 +45,12 @@ export default function App() {
           headerShown: false  , 
           
         }}  component={Login}></Stack.Screen>
-      <Stack.Screen name='Pro'  component={Pro}></Stack.Screen>
+      <Stack.Screen name='Profiling'  component={Pro}></Stack.Screen>
       <Stack.Screen name='Home'  
       options={{
           headerShown: false  , 
           
         }} component={Home}></Stack.Screen>
-      <Stack.Screen name='Profile' component={Profile}></Stack.Screen>
       <Stack.Screen name='Poto'  component={Poto}></Stack.Screen>
       <Stack.Screen name='Status' component={Status}></Stack.Screen>
       <Stack.Screen name='Absensi' component={Absensi}></Stack.Screen>

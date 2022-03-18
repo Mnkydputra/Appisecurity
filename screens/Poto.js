@@ -68,8 +68,8 @@ const [loading,setLoading] = useState(true)
             </View>
             :
             <View style={styles.container}>
-              <Image style={{height:450 ,width:400}} source={{
-                uri: `${imgUrl}`   + '?time'  + new Date(),
+              <Image  style={styles.poto} source={{
+                uri: `${imgUrl}`   + '?time='  + new Date(),
                 }}/>
             </View>
       }
@@ -79,9 +79,16 @@ const [loading,setLoading] = useState(true)
 
   const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center" ,
+        backgroundColor:'#fff'
     },  
+    poto : {
+      height:450 ,
+      width:400 ,
+      marginTop : 20 ,
+      borderRadius:15 
+    }
   })
 
