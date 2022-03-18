@@ -11,7 +11,7 @@ import { StyleSheet,
     import Icon from 'react-native-vector-icons/FontAwesome';
     import  AsyncStorage  from "@react-native-async-storage/async-storage";
     import * as ImagePicker from 'expo-image-picker';
-
+    import FastImage from 'react-native-fast-image'
 
     export default function Sidebar ({navigation,route}) {
 
@@ -141,10 +141,12 @@ import { StyleSheet,
             <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.headerContent}>
+        
           <Image style={styles.avatar} source={{
                 uri :   `${imgUrl}` ,
-          }}/>
-              
+             }} 
+             transition={false}
+          />
               <Text style={styles.username}>{route.params.nama}</Text>
               <Text style={styles.username}>{route.params.jabatan}</Text>
               <Button style={{backgroundColor:'red'}} title='Upload Poto' onPress={pickImage}></Button>

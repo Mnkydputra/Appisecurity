@@ -198,9 +198,20 @@ showLoad();
                     <Image style={styles.scanIMG} source={require("../src/img/scan.png")}></Image>
                     <Text style={{ fontSize: 20 }}>Absen</Text>
                   </View>
+                  <View style={{
+                    flex:1 ,
+                    position:'absolute' ,
+                    }}>
+                    <Image style={{
+                      width : 100 ,
+                      height : 100 , 
+                      marginLeft : 125  ,
+                      marginTop : -12
+                    }} source={require("../src/img/qr.png")}></Image>
+
+                  </View>
                 </TouchableOpacity>
               </View>
-
 
               <View style={styles.row}>
               
