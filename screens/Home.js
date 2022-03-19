@@ -196,7 +196,7 @@ showLoad();
                 >
                   <View style={styles.linkAbsen}>
                     <Image style={styles.scanIMG} source={require("../src/img/scan.png")}></Image>
-                    <Text style={{ fontSize: 20 }}>Absen</Text>
+                    <Text style={{ fontSize: 20  , color : '#1398c2'}}>Absen</Text>
                   </View>
                   <View style={{
                     flex:1 ,

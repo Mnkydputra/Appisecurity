@@ -127,6 +127,7 @@ export default function EditProfile ({navigation,route}) {
             
             <TextInput
               label="NO KTA" 
+              value={kta}
               onChangeText={date =>  setKta(date)}
               placeholder="NO KTA" placeholderColor="#c4c3cb"
               style={{ backgroundColor:'#fff',  }}>
