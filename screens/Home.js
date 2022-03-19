@@ -205,9 +205,9 @@ showLoad();
                     <Image style={{
                       width : 90 ,
                       height :90 , 
-                      marginLeft : '50%' ,
-                      // transform: [{ rotate: '-20deg'}]
-                    }} source={require("../src/img/scannn.png")}></Image>
+                      display : 'flex' ,
+                      marginLeft : '40%' ,
+                    }} source={require("../src/img/qr.png")}></Image>
 
                   </View>
                 </TouchableOpacity>
