@@ -43,18 +43,19 @@ export default function App() {
       <Stack.Screen name='Start' component={Start}></Stack.Screen>
       <Stack.Screen name='Login' options={{
           headerShown: false  , 
-          
         }}  component={Login}></Stack.Screen>
       <Stack.Screen name='Profiling'  component={Pro}></Stack.Screen>
       <Stack.Screen name='Home'  
-      options={{
+       options={{
           headerShown: false  , 
-          
         }} component={Home}></Stack.Screen>
       <Stack.Screen name='Poto'  component={Poto}></Stack.Screen>
       <Stack.Screen name='Status' component={Status}></Stack.Screen>
       <Stack.Screen name='Absensi' component={Absensi}></Stack.Screen>
-      <Stack.Screen name='View Absen' component={ViewAbsen}></Stack.Screen>
+      <Stack.Screen name='View Absen'
+      options={{
+          headerShown: false  , 
+        }}  component={ViewAbsen}></Stack.Screen>
       <Stack.Screen name='Laporan Absen'  component={LaporanAbsen}></Stack.Screen>
       <Stack.Screen name='Edit Profile' component={EditBiodata}></Stack.Screen>
       <Stack.Screen name='Edit Status' component={EditStatus}></Stack.Screen>
