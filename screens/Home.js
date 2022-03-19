@@ -203,8 +203,8 @@ showLoad();
                     position:'absolute' ,
                     }}>
                     <Image style={{
-                      width : 75 ,
-                      height :75 , 
+                      width : 90 ,
+                      height :90 , 
                       marginLeft : '50%' ,
                       // transform: [{ rotate: '-20deg'}]
                     }} source={require("../src/img/scannn.png")}></Image>
