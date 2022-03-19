@@ -28,12 +28,13 @@ export default StyleSheet.create({
     flexWrap: "wrap",
   },
   menuBox: {
-    width: 100,
-    height: 100,
+    width: 90,
+    height: 90,
     borderRadius: 25,
     alignItems: "center",
     justifyContent: "center",
-    margin: windowWidth /  25,
+    margin: windowWidth /  24,
+    // margin: windowWidth /  24,
   },
   linkAbsen: {
     backgroundColor: "#FFF",

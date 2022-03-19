@@ -46,8 +46,6 @@ export default function ViewAbsen ({navigation,route}) {
     
         getDataAbsensi();
         // end of ambil data absensi
-
-        setPage(0);
         const handleBackPress = () => {
           navigation.goBack();
           return true;
@@ -57,7 +55,7 @@ export default function ViewAbsen ({navigation,route}) {
     return () =>
     BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
 
-  }, [numberOfItemsPerPage]);
+  }, []);
 
 
 
