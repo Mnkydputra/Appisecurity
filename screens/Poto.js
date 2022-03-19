@@ -16,19 +16,28 @@ const [loading,setLoading] = useState(true)
 
         const getPoto = async () => {
             const  status = await  AsyncStorage.getItem('token');
-              console.log(status);
+            try {
               var urlAksi = 'https://isecuritydaihatsu.com/api/poto?id=' + status ;
-                fetch(urlAksi,{
-                    headers : {
-                        'keys-isecurity' : 'isecurity' ,
-                    } ,
-                })
-                .then((response) => response.json())
-                .then((json) => {
-                    setImgUrl(json.url);
-                    console.log(json.url)
-                })
-          }
+              fetch(urlAksi,{
+                  headers : {
+                      'keys-isecurity' : 'isecurity' ,
+                  } ,
+              })
+              .then((response) => response.json())
+              .then((json) => {
+                if(json === null){
+                  setImgUrl('https://png.pngtree.com/element_our/20200701/ourlarge/pngtree-vector-security-personnel-image_2277454.jpg');
+                }else {
+                  const url = json.url ;
+                  const poto = json.poto ;
+                  const img =url + poto ;
+                  setImgUrl(img);
+                }
+              })
+            }catch(error){
+              alert(error.message)
+            }
+        }
           getPoto();
 
           const handleBackPress = () => {
@@ -59,7 +68,9 @@ const [loading,setLoading] = useState(true)
             </View>
             :
             <View style={styles.container}>
-              <Image style={{height:450 ,width:400}} source={{uri: `${imgUrl}`}}/>
+              <Image  style={styles.poto} source={{
+                uri: `${imgUrl}`   + '?time='  + new Date(),
+                }}/>
             </View>
       }
     </>
@@ -68,10 +79,16 @@ const [loading,setLoading] = useState(true)
 
   const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
         alignItems: "center",
-        justifyContent: "center"
-      },
-      
+        justifyContent: "center" ,
+        backgroundColor:'#fff'
+    },  
+    poto : {
+      height:450 ,
+      width:400 ,
+      marginTop : 20 ,
+      borderRadius:15 
+    }
   })
 

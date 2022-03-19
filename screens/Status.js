@@ -1,9 +1,10 @@
 import React, { Component , useState , useEffect } from 'react';
-import { View, Text , StyleSheet ,ActivityIndicator , BackHandler} from 'react-native';
+import { View, Text , StyleSheet ,ActivityIndicator , BackHandler, ScrollView} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import BackButton from "../src/component/BackButton";
 import Background from "../src/component/Background";
 import Logo from "../src/component/Logo";
+import { TextInput } from "react-native-paper";
 import Header from "../src/component/Header";
 import Button from "../src/component/Button";
 import Paragraph from "../src/component/Paragraph";
@@ -78,19 +79,82 @@ export default function Status({navigation , route }) {
               <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
             </View>
             :
-        
-            <View>
-                <Text>NPK : {status.npk}</Text>
-                <Text>NO KTA : {status.no_kta}</Text>
-                <Text>EXPIRED KTA : {status.expired_kta}</Text>
-                <Text>JABATAN : {status.jabatan}</Text>
-                <Text>STATUS ANGGOTA : {status.status_anggota}</Text>
-                <Text>STATUS KTA : {status.status_kta}</Text>
-                <Text>AREA KERJA : {status.area_kerja}</Text>
-                <Text>WILAYAH : {status.wilayah}</Text>
-                <Text>TANGGAL MASUK SIGAP : {status.tgl_masuk_sigap}</Text>
-                <Text>TANGGAL MASUK ADM : {status.tgl_masuk_adm}</Text>
+        <ScrollView style={styles.textINPUT}>
+
+            <View >
+                <TextInput
+                  style={styles.textINPUT}
+                  label="NPK"
+                  editable={false}
+                  placeholder="NPK"
+                  value={status.npk}
+                ></TextInput>
+                <TextInput
+                  style={styles.textINPUT}
+                  label="NO KTA"
+                  editable={false}
+                  placeholder="NO KTA"
+                  value={status.no_kta}
+                ></TextInput>
+                <TextInput
+                  style={styles.textINPUT}
+                  label="EXPIRED KTA"
+                  editable={false}
+                  placeholder="EXPIRED KTA"
+                  value={status.expired_kta}
+                ></TextInput>
+                <TextInput
+                  style={styles.textINPUT}
+                  label="JABATAN"
+                  editable={false}
+                  placeholder="JABATAN"
+                  value={status.jabatan}
+                ></TextInput>
+                <TextInput
+                  style={styles.textINPUT}
+                  label="STATUS ANGGOTA"
+                  editable={false}
+                  placeholder="STATUS ANGGOTA"
+                  value={status.status_anggota}
+                ></TextInput>
+                <TextInput
+                  style={styles.textINPUT}
+                  label="STATUS KTA"
+                  editable={false}
+                  placeholder="STATUS KTA"
+                  value={status.status_kta}
+                ></TextInput>
+                <TextInput
+                  style={styles.textINPUT}
+                  label="AREA KERJA"
+                  editable={false}
+                  placeholder="AREA KERJA"
+                  value={status.area_kerja}
+                ></TextInput>
+                <TextInput
+                  style={styles.textINPUT}
+                  label="WILAYAH"
+                  editable={false}
+                  placeholder="WILAYAH"
+                  value={status.wilayah}
+                ></TextInput>
+                <TextInput
+                  style={styles.textINPUT}
+                  label="TANGGAL MASUK SIGAP"
+                  editable={false}
+                  placeholder="TANGGAL MASUK SIGAP"
+                  value={status.tgl_masuk_sigap}
+                ></TextInput>
+                <TextInput
+                  style={styles.textINPUT}
+                  label="TANGGAL MASUK ADM"
+                  editable={false}
+                  placeholder="TANGGAL MASUK ADM"
+                  value={status.tgl_masuk_adm}
+                ></TextInput>
         </View>
+        </ScrollView>
+
       }
       </>
 
@@ -104,6 +168,9 @@ export default function Status({navigation , route }) {
         alignItems: "center",
         justifyContent: "center"
       },
+      textINPUT : {
+        backgroundColor :'#fff'
+      } ,
     btn : {
         alignItems: "center",
         justifyContent: "center" ,

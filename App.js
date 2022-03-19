@@ -12,12 +12,13 @@ import Status from './screens/Status';
 import Start from './screens/StartScreen';
 import LaporanAbsen from './screens/LaporanAbsen' ;
 import ViewAbsen from './screens/ViewAbsen' ;
-import EditProfile from './screens/EditProfile' ;
+import EditBiodata from './screens/EditBiodata' ;
 import EditStatus from './screens/EditStatus' ;
 import Poto from './screens/Poto' ;
 import Sidebar from './screens/Sidebar' ;
 import Logout from './screens/Logout' ;
 import Pro from './screens/Pro' ;
+import Splash from './screens/Splash' ;
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
@@ -28,7 +29,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName='Login' 
+        initialRouteName='Splash' 
         options = {{
           headerStyle: {
             backgroundColor: '#f4511e',
@@ -40,23 +41,31 @@ export default function App() {
         }}
       >
       <Stack.Screen name='Start' component={Start}></Stack.Screen>
-      <Stack.Screen name='Login'  component={Login}></Stack.Screen>
-      <Stack.Screen name='Pro'  component={Pro}></Stack.Screen>
-      <Stack.Screen name='Home'  
-      options={{
+      <Stack.Screen name='Login' options={{
           headerShown: false  , 
-          
+        }}  component={Login}></Stack.Screen>
+      <Stack.Screen name='Profiling'  component={Pro}></Stack.Screen>
+      <Stack.Screen name='Home'  
+       options={{
+          headerShown: false  , 
         }} component={Home}></Stack.Screen>
-      <Stack.Screen name='Profile' component={Profile}></Stack.Screen>
       <Stack.Screen name='Poto'  component={Poto}></Stack.Screen>
       <Stack.Screen name='Status' component={Status}></Stack.Screen>
       <Stack.Screen name='Absensi' component={Absensi}></Stack.Screen>
-      <Stack.Screen name='View Absen' component={ViewAbsen}></Stack.Screen>
+      <Stack.Screen name='View Absen'
+      options={{
+          headerShown: false  , 
+        }}  component={ViewAbsen}></Stack.Screen>
       <Stack.Screen name='Laporan Absen'  component={LaporanAbsen}></Stack.Screen>
-      <Stack.Screen name='Edit Profile' component={EditProfile}></Stack.Screen>
+      <Stack.Screen name='Edit Profile' component={EditBiodata}></Stack.Screen>
       <Stack.Screen name='Edit Status' component={EditStatus}></Stack.Screen>
       <Stack.Screen name='Akun' component={Sidebar}></Stack.Screen>
-      <Stack.Screen name='Logout' component={Logout}></Stack.Screen>
+      <Stack.Screen options={{
+          headerShown: false  , 
+        }} name='Splash' component={Splash}></Stack.Screen>
+      <Stack.Screen name='Logout'  options={{
+          headerShown: false  ,  
+        }}   component={Logout}></Stack.Screen>
       </Stack.Navigator>
 
     </NavigationContainer>

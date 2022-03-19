@@ -10,12 +10,8 @@ import { StyleSheet,
     FlatList, Button} from 'react-native';
     import Icon from 'react-native-vector-icons/FontAwesome';
     import  AsyncStorage  from "@react-native-async-storage/async-storage";
-    import DocumentPicker from "react-native-document-picker";
-    import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-
-
-    import ImagePicker from 'expo-images-picker';
-
+    import * as ImagePicker from 'expo-image-picker';
+    import FastImage from 'react-native-fast-image'
 
     export default function Sidebar ({navigation,route}) {
 
@@ -25,11 +21,41 @@ import { StyleSheet,
         {id:3, title:"Logout" , link : 'Logout'},
     ])
     const [loading,setLoading] = useState(true)
-    const [imgUrl , setImgUrl ] = useState('');
+    const [imgUrl , setImgUrl ] = useState(null);
     const [filePath, setFilePath] = useState({});
-
     const [image, setImage] = useState(null);
+    const [loadUpload , setUploadLoad ] = useState(false);
 
+    const getPoto = async () => {
+      const  id_akun = await  AsyncStorage.getItem('token');
+        // console.log(id_akun);
+        try {
+          var urlAksi = 'https://isecuritydaihatsu.com/api/poto?id=' + id_akun ;
+            fetch(urlAksi,{
+                headers : {
+                    'keys-isecurity' : 'isecurity' ,
+                } ,
+            })
+            .then((response) => response.json())
+            .then((json) => {
+              if(json === null || json.poto === null){
+                setImgUrl('https://png.pngtree.com/element_our/20200701/ourlarge/pngtree-vector-security-personnel-image_2277454.jpg');
+              }else {
+                const url = json.url ;
+                const poto = json.poto ;
+                const img = url + poto  + '?time=' + new Date();
+                setImgUrl(img);
+                console.log(img)
+                // setImgUrl(poto);
+              }
+            })
+        }catch(error){
+          alert(error.message)
+        }
+      }
+      getPoto();
+    //
+    
     useEffect(() => {
       const handleBackPress = () => {
         navigation.goBack();
@@ -40,23 +66,59 @@ import { StyleSheet,
       BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
     },[])
 
-
     const pickImage = async () => {
-        try {
-          const result = await ImagePicker.launchImageLibraryAsync();
-
-          // Explore the result
-          console.log(result);
-
-          if (result.cancelled === false) {
-              setPickedImagePath(result.uri);
-              console.log(result.uri);
+      const id_akun = await AsyncStorage.getItem('id_akun');
+      // No permissions request is necessary for launching the image library
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 6],
+        quality: 1,
+      });
+  
+      // console.log(result);
+  
+      if (!result.cancelled) {
+        setUploadLoad(true);
+        let localUri = result.uri;
+        let filename = localUri.split('/').pop();
+  
+        // Infer the type of the image
+        let match = /\.(\w+)$/.exec(filename);
+        let type = match ? `image/${match[1]}` : `image`;
+        
+        // Upload the image using the fetch and FormData APIs
+          let formData = new FormData();
+          // Assume "photo" is the name of the form field the server expects
+          formData.append('image', { uri: localUri, name: filename, type } );
+          formData.append('id_akun' , id_akun );
+  
+          const url = "https://isecuritydaihatsu.com/api/uploadImage" ;
+          try{
+            fetch(url, {
+              method: 'POST',
+              body: formData,
+              headers: {
+                'content-type'     : 'multipart/form-data',
+                'keys-isecurity'   : 'isecurity'
+              },
+            })
+            .then((response) => response.json())
+            .then((json) => {
+              if(json.message === 'success'){
+                 setUploadLoad(false);
+                 alert(json.message);
+                 setImage(localUri);
+               }else {
+                 alert(json.message)
+               }
+            })
+            // console.log(localUri)
+          }catch(error){
+            alert(error.message)
           }
-        } catch (error) {
-            alert('Error Occur: ' + error.message)
-            // closeSheet()
-        }
-  };
+      }
+    };
 
 
     const showLoad = () => {
@@ -66,47 +128,7 @@ import { StyleSheet,
     }
     showLoad();
 
-    const getPoto = async () => {
-      const  id_akun = await  AsyncStorage.getItem('token');
-        // console.log(id_akun);
-        var urlAksi = 'https://isecuritydaihatsu.com/api/poto?id=' + id_akun ;
-          fetch(urlAksi,{
-              headers : {
-                  'keys-isecurity' : 'isecurity' ,
-              } ,
-          })
-          .then((response) => response.json())
-          .then((json) => {
-              setImgUrl(json.url);
-          })
-    }
-    getPoto();
 
-
-    //
-    const options = {
-      title: 'Select Image',
-      type: 'library',
-      options: {
-        maxHeight: 200,
-        maxWidth: 200,
-        selectionLimit: 1,
-        mediaType: 'photo',
-        includeBase64: false,
-      }
-    }
-
-  const openGallery =  () => {
-    ImagePicker.openPicker({
-      width: 300,
-      height: 400,
-      cropping: true
-    }).then(image => {
-      console.log(image);
-    });
-  }
-
-    //
 
     return (
 
@@ -119,10 +141,22 @@ import { StyleSheet,
             <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.headerContent}>
-              <Image style={styles.avatar} source={{uri: `${imgUrl}`}}/>
-              <Text style={styles.name}>{route.params.nama}</Text>
-              <Text style={styles.name}>{route.params.npk}</Text>
-              <Button title='Upload Poto' onPress={openGallery}></Button>
+        
+          <Image style={styles.avatar} source={{
+                uri :   `${imgUrl}` ,
+             }} 
+             transition={false}
+          />
+              <Text style={styles.username}>{route.params.nama}</Text>
+              <Text style={styles.username}>{route.params.jabatan}</Text>
+              <Button style={{backgroundColor:'red'}} title='Upload Poto' onPress={pickImage}></Button>
+              {
+                loadUpload ? 
+                 <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
+                :
+                null
+              }
+                
           </View>
         </View>
 
@@ -141,7 +175,12 @@ import { StyleSheet,
                   })}>
                   <View style={styles.box}>
                     {/* <Image style={styles.icon} source={{uri: item.image}}/> */}
-                    <Icon style={[styles.icon,{fontSize:10}]} name="edit"></Icon>
+                    <Icon style={[styles.icon,{fontSize:10}]} name={
+                      item.title === 'Logout' ? 
+                        'lock'
+                      :
+                        'edit'
+                    }></Icon>
                     <Text style={styles.title}>{item.title}</Text>
                     <Image style={styles.btn} source={{uri: "https://img.icons8.com/customer/office/40"}}/>
 
@@ -161,10 +200,10 @@ import { StyleSheet,
 
 const styles = StyleSheet.create({
     header:{
-      backgroundColor: "#EE82EE",
+      backgroundColor: "#2e7c94",
     },
     headerContent:{
-      padding:30,
+      padding:20,
       alignItems: 'center',
     },
     avatar: {
@@ -199,16 +238,16 @@ const styles = StyleSheet.create({
       marginBottom:3,
       backgroundColor: '#FFFFFF',
       flexDirection: 'row',
-    //   shadowColor: 'black',
-    //   shadowOpacity: .2,
-    //   shadowOffset: {
-    //     height:1,
-    //     width:-2
-    //   },
+      shadowColor: 'black',
+      shadowOpacity: .2,
+      shadowOffset: {
+        height:1,
+        width:-2
+      },
       elevation:2
     },
     username:{
-      color: "#20B2AA",
+      color: "#FFF",
       fontSize:22,
       alignSelf:'center',
       marginLeft:10

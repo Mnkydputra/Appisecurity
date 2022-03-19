@@ -1,24 +1,29 @@
-import React, { useState ,Component  , useEffect  } from 'react';
-import { View, Text , TouchableOpacity , Image , Dimensions , Button , BackHandler ,  Alert , Linking , ActivityIndicator } from 'react-native';
+import React, { useState ,Component  , useEffect , useCallback } from 'react';
+import { View, Text , TouchableOpacity , Image , Dimensions , Button , BackHandler ,  Alert , Linking , ActivityIndicator , RefreshControl , ScrollView} from 'react-native';
 import styles from '../src/component/styles.js';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { TextInput } from "react-native-paper";
 
 export default function  Home ({navigation,route}) {
   const [user , setUser] = useState({npk : '' , id_absen : '' , wilayah: '' , areaKerja : '' , jabatan: ''  , nama : ''})
   const [id_ , setId] = useState(null)
   const [loading,setLoading] = useState(true)
-  const backAction = () => {
-    Alert.alert("Perhatian!", "Keluar Aplikasi ?", [
-      {
-        text: "Batal",
-        onPress: () => null,
-        style: "cancel"
-      },
-      { text: "Iya", onPress: () => BackHandler.exitApp() }
-    ]);
-    return true;
-  };
+  const [refreshing, setRefreshing] = useState(false);
+
+
+  //refresh screen home 
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    getParamsAbsensi();
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
 
     //ambil data diri anggota untuk akses absensi 
     const getParamsAbsensi = async () => {
@@ -52,16 +57,15 @@ export default function  Home ({navigation,route}) {
     const tokenLogin = async () => {
       const value = await AsyncStorage.getItem("token");
       const id = await AsyncStorage.getItem("id_akun");
-      // if (value === null) {
-      //   navigation.navigate("Login");
-      // }else if(value !== null){
-      //   console.log(value);
-      // }
+      if (value === null) {
+        navigation.navigate("Login");
+      }else if(value !== null){
+        // console.log(value);
+      }
     };
 
   useEffect(() => {
     let unmounted = false
-
     tokenLogin();
     //end
     getParamsAbsensi();
@@ -132,17 +136,19 @@ const showLoad = () => {
 }
 showLoad();
 //
+
   
     return (
       <View style={styles.container}>
-        { loading ? 
-            <View style={{flex : 1 , justifyContent : 'center'}}>
-              <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
-            </View>
-            :
-            <>
-            <View  style={styles.headText} >
-            <TouchableOpacity
+        {loading ? (
+          <View style={{ flex: 1, justifyContent: "center" }}>
+            <ActivityIndicator size="large" color="red"></ActivityIndicator>
+          </View>
+        ) : (
+          <>
+            <ScrollView contentContainerStyle={styles.scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+              <View style={styles.headText}>
+                <TouchableOpacity
                   onPress={() =>
                     navigation.navigate("Akun", {
                       nama: user.nama,
@@ -154,16 +160,11 @@ showLoad();
                     })
                   }
                 >
-
-              <Text style={{fontWeight:'bold'}}>
-              <Icon
-                name="user-circle"
-                backgroundColor="#3b5998" 
-                style={{fontSize:25 , marginTop:2}}
-              ></Icon>  Hai , <Text style={{textDecorationLine: 'underline'}}>{user.nama}</Text> 
-              </Text>
+                  <Text style={{ fontWeight: "bold" }}>
+                    <Icon name="user-circle" backgroundColor="#3b5998" style={{ fontSize: 25, marginTop: 2 }}></Icon> Hai , <Text style={{ textDecorationLine: "underline" }}>{user.nama}</Text>
+                  </Text>
                 </TouchableOpacity>
-            </View>
+              </View>
               <View style={styles.header}>
                 <TouchableOpacity
                   onPress={() =>
@@ -179,17 +180,30 @@ showLoad();
                 >
                   <View style={styles.linkAbsen}>
                     <Image style={styles.scanIMG} source={require("../src/img/scan.png")}></Image>
-                    <Text style={{ fontSize: 20 }}>Absen</Text>
+                    <Text style={{ fontSize: 20, color: "#1398c2" }}>Absen</Text>
+                  </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      position: "absolute",
+                    }}
+                  >
+                    <Image
+                      style={{
+                        width: 75,
+                        height: 75,
+                        marginLeft: "50%",
+                      }}
+                      source={require("../src/img/qr.png")}
+                    ></Image>
                   </View>
                 </TouchableOpacity>
               </View>
 
-
               <View style={styles.row}>
-              
-              <TouchableOpacity
+                <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate("Pro", {
+                    navigation.navigate("Profiling", {
                       nama: "dasep",
                     })
                   }
@@ -200,7 +214,8 @@ showLoad();
                   </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() =>
+                <TouchableOpacity
+                  onPress={() =>
                     navigation.navigate("Laporan Absen", {
                       nama: user.nama,
                       npk: user.npk,
@@ -209,7 +224,8 @@ showLoad();
                       area_kerja: user.areaKerja,
                       jabatan: user.jabatan,
                     })
-                  }>
+                  }
+                >
                   <View style={[styles.menuBox, { backgroundColor: "#a6f081" }]}>
                     <Image style={styles.icon} source={require("../src/img/absensi.png")} />
                     <Text style={styles.info}>Absensi</Text>
@@ -222,8 +238,6 @@ showLoad();
                     <Text style={styles.info}>Inbox</Text>
                   </View>
                 </TouchableOpacity>
-
-                
 
                 <TouchableOpacity onPress={patrol}>
                   <View style={[styles.menuBox, { backgroundColor: "#ff6600" }]}>
@@ -245,11 +259,10 @@ showLoad();
                     <Text style={styles.info}>Course</Text>
                   </View>
                 </TouchableOpacity>
-
               </View>
-              
-            </>
-        }
+            </ScrollView>
+          </>
+        )}
       </View>
     );
   }
