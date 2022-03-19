@@ -203,11 +203,12 @@ showLoad();
                     position:'absolute' ,
                     }}>
                     <Image style={{
-                      width : 100 ,
-                      height : 100 , 
-                      marginLeft : 125  ,
-                      marginTop : -12
-                    }} source={require("../src/img/qr.png")}></Image>
+                      width : 140 ,
+                      height :140 , 
+                      marginLeft : 83 ,
+                      marginTop : -52.8 ,
+                      // transform: [{ rotate: '-20deg'}]
+                    }} source={require("../src/img/scannn.png")}></Image>
 
                   </View>
                 </TouchableOpacity>
@@ -217,13 +218,13 @@ showLoad();
               
               <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate("Profiling", {
+                    navigation.navigate("Profile", {
                       nama: "dasep",
                     })
                   }
                 >
-                  <View style={[styles.menuBox, { backgroundColor: "#f0db81" }]}>
-                    <Image style={styles.icon} source={require("../src/img/policeman.png")} />
+                  <View style={[styles.menuBox, { backgroundColor: "#789dec" }]}>
+                    <Image style={styles.icon} source={require("../src/img/security-man.png")} />
                     <Text style={styles.info}>Profile</Text>
                   </View>
                 </TouchableOpacity>
@@ -238,15 +239,15 @@ showLoad();
                       jabatan: user.jabatan,
                     })
                   }>
-                  <View style={[styles.menuBox, { backgroundColor: "#a6f081" }]}>
-                    <Image style={styles.icon} source={require("../src/img/absensi.png")} />
+                  <View style={[styles.menuBox, { backgroundColor: "#926c67" }]}>
+                    <Image style={styles.icon} source={require("../src/img/clock.png")} />
                     <Text style={styles.info}>Absensi</Text>
                   </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={informasi}>
-                  <View style={[styles.menuBox, { backgroundColor: "#f09981" }]}>
-                    <Image style={styles.icon} source={require("../src/img/inbox.png")} />
+                  <View style={[styles.menuBox, { backgroundColor: "#0f8c74" }]}>
+                    <Image style={styles.icon} source={require("../src/img/mail-box.png")} />
                     <Text style={styles.info}>Inbox</Text>
                   </View>
                 </TouchableOpacity>
@@ -254,21 +255,21 @@ showLoad();
                 
 
                 <TouchableOpacity onPress={patrol}>
-                  <View style={[styles.menuBox, { backgroundColor: "#ff6600" }]}>
-                    <Image style={styles.icon} source={require("../src/img/security-guard.png")} />
+                  <View style={[styles.menuBox, { backgroundColor: "#e75876" }]}>
+                    <Image style={styles.icon} source={require("../src/img/guard(1).png")} />
                     <Text style={styles.info}>I-Patrol</Text>
                   </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={informasi}>
                   <View style={[styles.menuBox, { backgroundColor: "#a64dff" }]}>
-                    <Image style={styles.icon} source={require("../src/img/night-shift.png")} />
+                    <Image style={styles.icon} source={require("../src/img/permit.png")} />
                     <Text style={styles.info}>Ijin</Text>
                   </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={informasi}>
-                  <View style={[styles.menuBox, { backgroundColor: "#ff80d5" }]}>
+                  <View style={[styles.menuBox, { backgroundColor: "#324eec" }]}>
                     <Image style={styles.icon} source={require("../src/img/online-course.png")} />
                     <Text style={styles.info}>Course</Text>
                   </View>

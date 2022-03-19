@@ -15,9 +15,10 @@ export default StyleSheet.create({
   },
   header: {
     backgroundColor: "#179bd4",
+    // backgroundColor: "#efa01f",
     width: "94%",
     height: "15%",
-    borderRadius: 15,
+    borderRadius: 6,
     alignItems: "center",
     justifyContent: "center",
     margin: 10,
