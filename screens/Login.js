@@ -110,8 +110,6 @@ export default function Login({ navigation }) {
                   Alert.alert("Perhatian!", "AKUN TIDAK TERDAFTAR", [
                     { text: "YA", onPress: () => setLoading(false) },
                   ]);
-                  // alert("akun tidak terdaftar ");
-                  
                 }
               }
             }
@@ -126,24 +124,10 @@ export default function Login({ navigation }) {
 
   return (
     <Background>
-      {/* <BackButton goBack={navigation.goBack} /> */}
       <Logo />
-      <Header>Welcome  </Header>
-      <TextInput 
-        label="NPK" 
-        onChangeText={(value) => setNPK(value)}
-        placeholder="NPK" 
-        placeholderColor="#c4c3cb" 
-        style={styles.loginFormTextInput} 
-        keyboardType="phone-pad"
-       />
-      <TextInput 
-        label="Password" 
-        onChangeText={(value) => setPassword(value)} 
-        placeholder="PASSWORD" 
-        placeholderColor="#c4c3cb" 
-        style={styles.loginFormTextInput} 
-        secureTextEntry={true} />
+      <Header>Welcome</Header>
+      <TextInput label="NPK" onChangeText={(value) => setNPK(value)} placeholder="NPK" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
+      <TextInput label="Password" onChangeText={(value) => setPassword(value)} placeholder="PASSWORD" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true} />
       <Button mode="contained" onPress={onLoginPress}>
         {loading ? 
             <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>

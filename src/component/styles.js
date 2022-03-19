@@ -30,11 +30,10 @@ export default StyleSheet.create({
   menuBox: {
     width: 90,
     height: 90,
-    borderRadius: 25,
+    borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
-    margin: windowWidth /  24,
-    // margin: windowWidth /  24,
+    margin: windowWidth / 25,
   },
   linkAbsen: {
     backgroundColor: "#FFF",
@@ -43,14 +42,14 @@ export default StyleSheet.create({
     justifyContent: "center",
     borderRadius: 20,
     height: 50,
-    marginTop:  windowHeight / 250,
+    marginTop: windowHeight / 250,
     marginLeft: -120,
     flexDirection: "row",
     flexWrap: "wrap",
   },
   icon: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
   },
   scanIMG: {
     width: 30,
@@ -58,13 +57,12 @@ export default StyleSheet.create({
     height: 30,
   },
   info: {
-    fontSize: 14,
-    color: "#fff",
+    fontSize: 17,
+    color: "#000000",
   },
-  headText : {
-    margin : 15 ,
-    fontSize : 26 ,
-    fontWeight : 'bold' ,
-
+  headText: {
+    margin: 15,
+    fontSize: 26,
+    fontWeight: "bold",
   },
 });

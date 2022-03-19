@@ -139,27 +139,16 @@ showLoad();
 
   
     return (
-      
       <View style={styles.container}>
-        { loading ? 
-            <View style={{flex : 1 , justifyContent : 'center'}}>
-              <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
-            </View>
-            :
-            
-            <>
-            <ScrollView
-            contentContainerStyle={styles.scrollView}
-              refreshControl={
-                <RefreshControl
-                  refreshing={refreshing}
-                  onRefresh={onRefresh}
-                />
-              }
-            >
-      
-            <View  style={styles.headText} >
-            <TouchableOpacity
+        {loading ? (
+          <View style={{ flex: 1, justifyContent: "center" }}>
+            <ActivityIndicator size="large" color="red"></ActivityIndicator>
+          </View>
+        ) : (
+          <>
+            <ScrollView contentContainerStyle={styles.scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+              <View style={styles.headText}>
+                <TouchableOpacity
                   onPress={() =>
                     navigation.navigate("Akun", {
                       nama: user.nama,
@@ -171,16 +160,11 @@ showLoad();
                     })
                   }
                 >
-
-              <Text style={{fontWeight:'bold'}}>
-              <Icon
-                name="user-circle"
-                backgroundColor="#3b5998" 
-                style={{fontSize:25 , marginTop:2}}
-              ></Icon>  Hai , <Text style={{textDecorationLine: 'underline'}}>{user.nama}</Text> 
-              </Text>
+                  <Text style={{ fontWeight: "bold" }}>
+                    <Icon name="user-circle" backgroundColor="#3b5998" style={{ fontSize: 25, marginTop: 2 }}></Icon> Hai , <Text style={{ textDecorationLine: "underline" }}>{user.nama}</Text>
+                  </Text>
                 </TouchableOpacity>
-            </View>
+              </View>
               <View style={styles.header}>
                 <TouchableOpacity
                   onPress={() =>
@@ -196,7 +180,7 @@ showLoad();
                 >
                   <View style={styles.linkAbsen}>
                     <Image style={styles.scanIMG} source={require("../src/img/scan.png")}></Image>
-                    <Text style={{ fontSize: 20  , color : '#1398c2'}}>Absen</Text>
+                    <Text style={{ fontSize: 20, color: "#1398c2" }}>Absen</Text>
                   </View>
                   <View style={{
                     flex:1 ,
@@ -214,8 +198,7 @@ showLoad();
               </View>
 
               <View style={styles.row}>
-              
-              <TouchableOpacity
+                <TouchableOpacity
                   onPress={() =>
                     navigation.navigate("Profile", {
                       nama: "dasep",
@@ -228,7 +211,8 @@ showLoad();
                   </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() =>
+                <TouchableOpacity
+                  onPress={() =>
                     navigation.navigate("Laporan Absen", {
                       nama: user.nama,
                       npk: user.npk,
@@ -237,8 +221,9 @@ showLoad();
                       area_kerja: user.areaKerja,
                       jabatan: user.jabatan,
                     })
-                  }>
-                  <View style={[styles.menuBox, { backgroundColor: "#926c67" }]}>
+                  }
+                >
+                  <View style={[styles.menuBox, { backgroundColor: "#a6f081" }]}>
                     <Image style={styles.icon} source={require("../src/img/clock.png")} />
                     <Text style={styles.info}>Absensi</Text>
                   </View>
@@ -250,8 +235,6 @@ showLoad();
                     <Text style={styles.info}>Inbox</Text>
                   </View>
                 </TouchableOpacity>
-
-                
 
                 <TouchableOpacity onPress={patrol}>
                   <View style={[styles.menuBox, { backgroundColor: "#e75876" }]}>
@@ -274,10 +257,9 @@ showLoad();
                   </View>
                 </TouchableOpacity>
               </View>
-              </ScrollView>
-              </>
-        }
+            </ScrollView>
+          </>
+        )}
       </View>
-      
     );
   }
