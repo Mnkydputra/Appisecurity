@@ -39,22 +39,13 @@ export default function ViewAbsen ({navigation,route}) {
         alert(error.message)
       }
     }
-    // end`
+    // end` 
 
-
-    // 
-    const numberOfItemsPerPageList = [2, 3, 4];
-    const [page, setPage] = useState(0);
-    const [numberOfItemsPerPage, onItemsPerPageChange] = useState(numberOfItemsPerPageList[0]);
-    const from = page * numberOfItemsPerPage;
-    const to = Math.min((page + 1) * numberOfItemsPerPage, dataAbsen.length);
     // 
     useEffect(() => {
     
         getDataAbsensi();
         // end of ambil data absensi
-
-        setPage(0);
         const handleBackPress = () => {
           navigation.goBack();
           return true;
@@ -64,7 +55,7 @@ export default function ViewAbsen ({navigation,route}) {
     return () =>
     BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
 
-  }, [numberOfItemsPerPage]);
+  }, []);
 
 
 

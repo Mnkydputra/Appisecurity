@@ -7,7 +7,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Home from './screens/Home';
 import Absensi from './screens/Absensi';
 import Login from './screens/Login';
-import Profile from './screens/Profile';
+import DataDiri from './screens/DataDiri';
 import Status from './screens/Status';
 import Start from './screens/StartScreen';
 import LaporanAbsen from './screens/LaporanAbsen' ;
@@ -17,7 +17,7 @@ import EditStatus from './screens/EditStatus' ;
 import Poto from './screens/Poto' ;
 import Sidebar from './screens/Sidebar' ;
 import Logout from './screens/Logout' ;
-import Pro from './screens/Pro' ;
+import Profile from './screens/Profile' ;
 import Splash from './screens/Splash' ;
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -44,14 +44,17 @@ export default function App() {
       <Stack.Screen name='Login' options={{
           headerShown: false  , 
         }}  component={Login}></Stack.Screen>
-      <Stack.Screen name='Profiling'  component={Pro}></Stack.Screen>
+      <Stack.Screen name='Profile'  component={Profile}></Stack.Screen>
       <Stack.Screen name='Home'  
        options={{
           headerShown: false  , 
         }} component={Home}></Stack.Screen>
       <Stack.Screen name='Poto'  component={Poto}></Stack.Screen>
       <Stack.Screen name='Status' component={Status}></Stack.Screen>
-      <Stack.Screen name='Absensi' component={Absensi}></Stack.Screen>
+      <Stack.Screen name='Absensi'
+      options={{
+          headerShown: false  , 
+        }}  component={Absensi}></Stack.Screen>
       <Stack.Screen name='View Absen'
       options={{
           headerShown: false  , 
