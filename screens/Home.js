@@ -227,7 +227,7 @@ showLoad();
                   }
                 >
                   <View style={[styles.menuBox, { backgroundColor: "#a6f081" }]}>
-                    <Image style={styles.icon} source={require("../src/img/absensi.png")} />
+                    <Image style={styles.icon} source={require("../src/img/clock.png")} />
                     <Text style={styles.info}>Absensi</Text>
                   </View>
                 </TouchableOpacity>
