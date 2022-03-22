@@ -187,9 +187,9 @@ showLoad();
                     position:'absolute' ,
                     }}>
                     <Image style={{
-                      width : 90 ,
-                      height :90 , 
-                      display : 'flex' ,
+                      width : 85 ,
+                      height :85 , 
+                      marginTop : -20 , 
                       marginLeft : '40%' ,
                     }} source={require("../src/img/qr.png")}></Image>
 
@@ -223,7 +223,7 @@ showLoad();
                     })
                   }
                 >
-                  <View style={[styles.menuBox, { backgroundColor: "#a6f081" }]}>
+                  <View style={[styles.menuBox, { backgroundColor: "#274c67" }]}>
                     <Image style={styles.icon} source={require("../src/img/clock.png")} />
                     <Text style={styles.info}>Absensi</Text>
                   </View>
@@ -256,6 +256,13 @@ showLoad();
                     <Text style={styles.info}>Course</Text>
                   </View>
                 </TouchableOpacity>
+
+                <Button onPress={() => {
+                  navigation.navigate('InputOT')
+                }} style={{marginRight:40}} title='KIRIM NOTIFIKASI'>
+
+                </Button>
+
               </View>
             </ScrollView>
           </>

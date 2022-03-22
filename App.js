@@ -19,6 +19,7 @@ import Sidebar from './screens/Sidebar' ;
 import Logout from './screens/Logout' ;
 import Profile from './screens/Profile' ;
 import Splash from './screens/Splash' ;
+import InputOT from './screens/InputOT' ;
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
@@ -69,6 +70,9 @@ export default function App() {
       <Stack.Screen name='Logout'  options={{
           headerShown: false  ,  
         }}   component={Logout}></Stack.Screen>
+
+      <Stack.Screen name='InputOT'  component={InputOT}></Stack.Screen>
+
       </Stack.Navigator>
 
     </NavigationContainer>

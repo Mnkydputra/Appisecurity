@@ -58,7 +58,7 @@ export default StyleSheet.create({
   },
   info: {
     fontSize: 17,
-    color: "#000000",
+    color: "#FFF",
   },
   headText: {
     margin: 15,
