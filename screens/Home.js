@@ -213,7 +213,7 @@ showLoad();
 
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate("Laporan Absen", {
+                    navigation.navigate("Absen", {
                       nama: user.nama,
                       npk: user.npk,
                       id_akun: user.id_absen,
@@ -257,11 +257,11 @@ showLoad();
                   </View>
                 </TouchableOpacity>
 
-                <Button onPress={() => {
+                {/* <Button onPress={() => {
                   navigation.navigate('InputOT')
                 }} style={{marginRight:40}} title='KIRIM NOTIFIKASI'>
 
-                </Button>
+                </Button> */}
 
               </View>
             </ScrollView>

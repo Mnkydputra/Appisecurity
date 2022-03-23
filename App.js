@@ -20,6 +20,7 @@ import Logout from './screens/Logout' ;
 import Profile from './screens/Profile' ;
 import Splash from './screens/Splash' ;
 import InputOT from './screens/InputOT' ;
+import Absen from './screens/Absen'
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
@@ -71,7 +72,8 @@ export default function App() {
           headerShown: false  ,  
         }}   component={Logout}></Stack.Screen>
 
-      <Stack.Screen name='InputOT'  component={InputOT}></Stack.Screen>
+      <Stack.Screen name='Input Overtime'  component={InputOT}></Stack.Screen>
+      <Stack.Screen name='Absen'  component={Absen}></Stack.Screen>
 
       </Stack.Navigator>
 

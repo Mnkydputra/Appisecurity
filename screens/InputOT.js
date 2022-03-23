@@ -4,7 +4,7 @@ import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Picker} from '@react-native-picker/picker';
-import { TextInput , Headline} from "react-native-paper";
+import { TextInput , Headline, Card} from "react-native-paper";
 import DatePicker from 'react-native-datepicker';
 import Button from "../src/component/Button";
 const windowWidth = Dimensions.get('window').width;
@@ -23,6 +23,7 @@ export default function InputOT ({navigation , route}){
     const responseListener = useRef();
 
     const [korlap, setkorlap] = useState();
+    const [jamOT, setJamOT] = useState();
 
     //   datetime
       const [date ,setDate ] = useState(new Date());
@@ -147,8 +148,10 @@ export default function InputOT ({navigation , route}){
     }
     return (
       <View style={styles.container}>
-        {/* <Headline>Form Pengajuan Lembur</Headline> */}
 
+        <Card style={{backgroundColor:'red'}}>
+        
+        </Card>
         <Text style={styles.text}>Tanggal Overtime</Text>
               <DatePicker
                 style={styles.datePickerStyle}
@@ -215,7 +218,7 @@ export default function InputOT ({navigation , route}){
             style={{ backgroundColor:'#fff', }}
           />
           </TouchableOpacity>
-            
+
           <Text style={[styles.text, {marginTop:10}]}>Pilih Korlap</Text>
           <Picker
             style={{
@@ -227,8 +230,8 @@ export default function InputOT ({navigation , route}){
             onValueChange={(itemValue, itemIndex) =>
               setkorlap(itemValue)
             }>
-            <Picker.Item  label="Alfa Rizky" value="java" />
-            <Picker.Item label="Sahrudin" value="js" />
+            <Picker.Item  label="Alfa Rizky" value="Alfa Rizky" />
+            <Picker.Item label="Sahrudin" value="Sahrudin" />
           </Picker>
 
           <Button mode="contained"  onPress={sendMessage}>
@@ -265,14 +268,13 @@ export default function InputOT ({navigation , route}){
   const styles = StyleSheet.create({
       container : {
           flex : 1 ,
-          margin:20 ,
-          marginTop : 50
+          backgroundColor:'#fff'
           // justifyContent : 'center' ,
           // alignItems : 'center'
       } ,
       
       datePickerStyle: {
-        width: windowWidth - 40 , 
+        width: windowWidth  , 
       },
       text: {
         textAlign: 'left',
