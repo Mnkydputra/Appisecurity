@@ -7,8 +7,21 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "src/img/icon_app.png",
+          "color": "#ffffff"
+        }
+      ]
+    ],
     "android": {
-      "package": "com.dasep12.isecurity"
+      "package": "com.dasep12.isecurity" ,
+      "adaptiveIcon": {
+        "foregroundImage": "src/img/icon_app.png",
+        "backgroundColor": "#50dbb6"
+      }
     }
   },
   "name": "isecurity"

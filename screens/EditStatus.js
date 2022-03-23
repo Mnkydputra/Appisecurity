@@ -162,6 +162,7 @@ export default function EditProfile ({navigation,route}) {
                   },
                   dateText: {
                     fontSize: 17,
+                    marginLeft: 14
                   }
                 }}
                 onDateChange={(date) => {
