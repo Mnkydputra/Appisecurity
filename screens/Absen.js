@@ -46,11 +46,11 @@ export default function Absen ({navigation,route}) {
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.card , {backgroundColor:'#637ab0'} ]} onPress={() => alert("tes")}>
+            <TouchableOpacity style={[styles.card , {backgroundColor:'#637ab0'} ]} >
               <Image style={styles.image} source={require("../src/img/hourglass.png")}/>
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{'Status Overtime'}</Text>
-                <TouchableOpacity style={styles.followButton} onPress={()=> this.clickEventListener(item)}>
+                <TouchableOpacity style={styles.followButton} onPress={() => alert("tes")} >
                   <Text style={styles.followButtonText}>View</Text>  
                 </TouchableOpacity>
               </View>

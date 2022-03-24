@@ -3,10 +3,13 @@ import { View, Text , StyleSheet , TouchableOpacity , Platform  , Dimensions} fr
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Picker} from '@react-native-picker/picker';
+import {Picker ,} from '@react-native-picker/picker';
 import { TextInput , Headline, Card} from "react-native-paper";
 import DatePicker from 'react-native-datepicker';
 import Button from "../src/component/Button";
+import SelectPicker from 'react-native-form-select-picker';
+
+const options = ["Apple", "Banana", "Orange"];
 const windowWidth = Dimensions.get('window').width;
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -22,8 +25,11 @@ export default function InputOT ({navigation , route}){
     const notificationListener = useRef();
     const responseListener = useRef();
 
-    const [korlap, setkorlap] = useState();
+    const [npkKorlap, setNPKkorlap] = useState();
+    const [daftarKorlap , setLisKorlap] = useState([]);
     const [jamOT, setJamOT] = useState();
+
+    const [addressToken , setAddressToken ] = useState()
 
     //   datetime
       const [date ,setDate ] = useState(new Date());
@@ -34,6 +40,29 @@ export default function InputOT ({navigation , route}){
       const [mulai ,setMulai ] = useState('00:00:00');
       const [selesai ,setSelesai ] = useState('00:00:00');
     //
+
+    // get token korlap for send notification approval
+      const listKorlap = async () => {
+          // let wil = route.params.wilayah 
+          try {
+            var urlAksi = 'https://isecuritydaihatsu.com/api/tokenKorlap?wilayah=WIL2';
+            // var urlAksi = 'https://isecuritydaihatsu.com/api/tokenKorlap?wilayah=' + wil;
+            fetch(urlAksi,{
+                headers : {
+                    'keys-isecurity' : 'isecurity' ,
+                } ,
+            })
+            .then((response) => response.json())
+            .then((json) => {
+              const hasil =  json.result;
+              setLisKorlap(hasil)
+              // console.log(hasil)
+            })
+          }catch(error){
+            alert(error.message)
+          }
+      }
+    // 
     useEffect(() => {
       // 
       let tempDate = new Date();
@@ -44,6 +73,10 @@ export default function InputOT ({navigation , route}){
       setMulai(fTime);
       setSelesai(fTime);
       // 
+
+      // 
+        listKorlap();
+      // 
         registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
     
         notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
@@ -51,8 +84,7 @@ export default function InputOT ({navigation , route}){
         });
     
         responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-          // console.log(response);
-            navigation.navigate("Absensi");
+          console.log(response);
         });
     
         return () => {
@@ -74,7 +106,7 @@ export default function InputOT ({navigation , route}){
             return;
           }
           token = (await Notifications.getExpoPushTokenAsync()).data;
-          console.log(token);
+          // console.log(token);
         } else {
           alert('Must use physical device for Push Notifications');
         }
@@ -128,32 +160,73 @@ export default function InputOT ({navigation , route}){
     // 
 
     const sendMessage = async (token) => {
-        fetch('https://exp.host/--/api/v2/push/send',{
-            method : 'POST' ,
+      console.log(npkKorlap);
+      try {
+        var urlAksi = 'https://isecuritydaihatsu.com/api/ambilToken?npk=' + npkKorlap;
+        fetch(urlAksi,{
             headers : {
-                Accept : 'application/json' ,
-                'Accept-encoding' : 'gzip, deflate' ,
-                'Content-Type' : 'application/json'
-            },
-            body : JSON.stringify(
-                { 
-                    to : 'ExponentPushToken[2epmKsI76XouHdEs-ba9xx]' , 
-                    title : 'Approval Lemburan' ,
-                    body  : 'Dasep Depiyawan AGT (HO) Mengajukan Lembur' ,
-                    data : {data : 'goes here'} ,
-                    _displayInForeground : false 
-                }
-            ),
+                'keys-isecurity' : 'isecurity' ,
+            } ,
         })
+        .then((response) => response.json())
+        .then((json) => {
+              fetch('https://exp.host/--/api/v2/push/send',{
+                method : 'POST' ,
+                headers : {
+                    Accept : 'application/json' ,
+                    'Accept-encoding' : 'gzip, deflate' ,
+                    'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify(
+                    { 
+                        to : json.result.token , 
+                        title : 'Approval Lemburan' ,
+                        body  : 'Dasep Depiyawan AGT (HO) Mengajukan Lembur' ,
+                        data : {data : 'goes here'} ,
+                        _displayInForeground : false 
+                    }
+                ),
+            })
+        })
+      }catch(error){
+        alert(error.message)
+      }
+       
     }
-    return (
-      <View style={styles.container}>
 
-        <Card style={{backgroundColor:'red'}}>
-        
-        </Card>
+
+    const showKorlap = () => {
+
+      if(daftarKorlap == undefined || daftarKorlap === ''){
+        console.log("Sabar dulu")
+      }else {
+        return (
+          <Picker
+              style={{
+                borderColor : "#b3abab",
+                borderBottom : 1 , 
+                alignItems: "flex-start",
+                borderWidth: 1,
+              }}
+              selectedValue={npkKorlap}
+              onValueChange={(itemValue, itemIndex) =>
+                setNPKkorlap(itemValue)
+           }>
+               {
+                  daftarKorlap.map((item) =>
+                  <Picker.Item label={`${item.nama}`} value={`${item.npk}`} key={item.npk} />
+                  )
+               }
+            </Picker>
+        )
+      }
+    }
+  
+    return (
+
+      <View style={styles.container}>
         <Text style={styles.text}>Tanggal Overtime</Text>
-              <DatePicker
+              {/* <DatePicker
                 style={styles.datePickerStyle}
                 date={date}
                 mode="date"
@@ -187,8 +260,9 @@ export default function InputOT ({navigation , route}){
                 onDateChange={(date) => {
                   setTglLembur(date);
                 }}
-              />
+              /> */}
 
+              
         <TouchableOpacity style={{marginBottom:5}} onPress={() => showMode('time')}>
           <TextInput
             label='Jam Mulai Overtime'
@@ -220,23 +294,13 @@ export default function InputOT ({navigation , route}){
           </TouchableOpacity>
 
           <Text style={[styles.text, {marginTop:10}]}>Pilih Korlap</Text>
-          <Picker
-            style={{
-              borderColor : "#b3abab",
-              alignItems: "flex-start",
-              borderWidth: 1,
-            }}
-            selectedValue={korlap}
-            onValueChange={(itemValue, itemIndex) =>
-              setkorlap(itemValue)
-            }>
-            <Picker.Item  label="Alfa Rizky" value="Alfa Rizky" />
-            <Picker.Item label="Sahrudin" value="Sahrudin" />
-          </Picker>
+          {showKorlap()}
 
+          
           <Button mode="contained"  onPress={sendMessage}>
            <Text style={{color:'#fff'}}>AJUKAN LEMBUR</Text>   
           </Button>
+
 
       {show.date1 && (
         <DateTimePicker
@@ -268,7 +332,8 @@ export default function InputOT ({navigation , route}){
   const styles = StyleSheet.create({
       container : {
           flex : 1 ,
-          backgroundColor:'#fff'
+          backgroundColor:'#fff' ,
+          margin:2 
           // justifyContent : 'center' ,
           // alignItems : 'center'
       } ,
