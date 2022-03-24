@@ -24,6 +24,7 @@ export default function InputOT ({navigation , route}){
     const [notification, setNotification] = useState(false);
     const notificationListener = useRef();
     const responseListener = useRef();
+    const [loading, setLoading] = useState(false);
 
     const [npkKorlap, setNPKkorlap] = useState();
     const [daftarKorlap , setLisKorlap] = useState([]);
@@ -161,6 +162,7 @@ export default function InputOT ({navigation , route}){
 
     const sendMessage = async (token) => {
       console.log(npkKorlap);
+      setLoading(true);
       try {
         var urlAksi = 'https://isecuritydaihatsu.com/api/ambilToken?npk=' + npkKorlap;
         fetch(urlAksi,{
@@ -187,6 +189,7 @@ export default function InputOT ({navigation , route}){
                     }
                 ),
             })
+            setLoading(false);
         })
       }catch(error){
         alert(error.message)
@@ -298,7 +301,11 @@ export default function InputOT ({navigation , route}){
 
           
           <Button mode="contained"  onPress={sendMessage}>
+          {loading ? 
+            <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>
+         : 
            <Text style={{color:'#fff'}}>AJUKAN LEMBUR</Text>   
+          }
           </Button>
 
 
