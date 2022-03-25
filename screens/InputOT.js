@@ -1,5 +1,5 @@
 import React, { Component , useState , useEffect , useRef } from 'react';
-import { View, Text , StyleSheet , TouchableOpacity , Platform  , Dimensions} from 'react-native';
+import { View, Text , StyleSheet , TouchableOpacity , Platform  , Dimensions ,Alert ,BackHandler} from 'react-native';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -34,12 +34,13 @@ export default function InputOT ({navigation , route}){
 
     //   datetime
       const [date ,setDate ] = useState(new Date());
-      const [tglLembur , setTglLembur] = useState(new Date())
+      const [tglLembur , setTglLembur] = useState('')
       const [mode, setMode ] = useState('time');
       const [show ,setShow ] = useState({date1 : false , date2 : false });
       const [text ,setText ] = useState({time1 : '' , time2 : ''});
       const [mulai ,setMulai ] = useState('00:00:00');
       const [selesai ,setSelesai ] = useState('00:00:00');
+      const [alasan ,setAlasan ] = useState();
     //
 
     // get token korlap for send notification approval
@@ -87,8 +88,15 @@ export default function InputOT ({navigation , route}){
         responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
           console.log(response);
         });
+
+        const handleBackPress = () => {
+          navigation.goBack();
+          return true;
+        };
+        BackHandler.addEventListener('hardwareBackPress', handleBackPress);
     
         return () => {
+          BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
           Notifications.removeNotificationSubscription(notificationListener.current);
           Notifications.removeNotificationSubscription(responseListener.current);
         };
@@ -161,40 +169,75 @@ export default function InputOT ({navigation , route}){
     // 
 
     const sendMessage = async (token) => {
-      console.log(npkKorlap);
-      setLoading(true);
-      try {
-        var urlAksi = 'https://isecuritydaihatsu.com/api/ambilToken?npk=' + npkKorlap;
-        fetch(urlAksi,{
-            headers : {
+
+      if(tglLembur === '' || tglLembur == null){
+        Alert.alert("Perhatian!", 'isi tanggal overtime', [
+          { text: "OK", onPress: () => null },
+        ]);
+      }else if(alasan === ''){
+        Alert.alert("Perhatian!", 'isi alasan overtime', [
+          { text: "OK", onPress: () => null },
+        ]);
+      }else {
+        try {
+          var urlAksi = 'https://isecuritydaihatsu.com/api/ambilToken?npk=' + npkKorlap;
+          fetch(urlAksi,{
+              headers : {
+                  'keys-isecurity' : 'isecurity' ,
+              } ,
+          })
+          .then((response) => response.json())
+          .then((json1) => {
+  
+            const tokenDevice = json1.result.token ;
+            //kirim data pengajuan lembur 
+            fetch('https://isecuritydaihatsu.com/api/ajukanLembur',{
+              method : 'POST'  ,
+              headers : {
+                'Content-Type' : 'application/x-www-form-urlencoded'  ,
                 'keys-isecurity' : 'isecurity' ,
-            } ,
-        })
-        .then((response) => response.json())
-        .then((json) => {
-              fetch('https://exp.host/--/api/v2/push/send',{
-                method : 'POST' ,
-                headers : {
-                    Accept : 'application/json' ,
-                    'Accept-encoding' : 'gzip, deflate' ,
-                    'Content-Type' : 'application/json'
-                },
-                body : JSON.stringify(
-                    { 
-                        to : json.result.token , 
-                        title : 'Approval Lemburan' ,
-                        body  : 'Dasep Depiyawan AGT (HO) Mengajukan Lembur' ,
-                        data : {data : 'goes here'} ,
-                        _displayInForeground : false 
-                    }
-                ),
+              } ,
+              body : "npk=" + route.params.npk  + "&tanggal_lembur=" + tglLembur + "&jam_mulai=" + mulai + "&jam_selesai=" + selesai + "&alasan_lembur=" + alasan 
             })
-            setLoading(false);
-        })
-      }catch(error){
-        alert(error.message)
-      }
-       
+            .then((response) => response.json() )
+            .then((json) => {
+              console.log(json.data)
+              if(json.status === 'failed'){
+                alert(json.message);
+                Alert.alert("Gagal!", json.message, [
+                  { text: "OK", onPress: () => setLoading(false) },
+                ]);
+                
+              }else {
+                setLoading(false);
+                fetch('https://exp.host/--/api/v2/push/send',{
+                  method : 'POST' ,
+                  headers : {
+                      Accept : 'application/json' ,
+                      'Accept-encoding' : 'gzip, deflate' ,
+                      'Content-Type' : 'application/json'
+                  },
+                  body : JSON.stringify(
+                      { 
+                          to : tokenDevice, 
+                          title : 'Approval Lemburan' ,
+                          body  : route.params.nama + ' AGT ' + route.params.area_kerja + ' Mengajukan Lembur , Segera Cek ISECURITY anda' ,
+                          data : {data : 'goes here'} ,
+                          _displayInForeground : false 
+                      }
+                  ),
+                })
+                Alert.alert("Berhasil!", json.message, [
+                  { text: "OK", onPress: () => navigation.navigate('Home') },
+                ]);
+                
+              }
+            })
+          })
+        }catch(error){
+          alert(error.message)
+        }
+      } 
     }
 
 
@@ -229,12 +272,11 @@ export default function InputOT ({navigation , route}){
 
       <View style={styles.container}>
         <Text style={styles.text}>Tanggal Overtime</Text>
-              {/* <DatePicker
+              <DatePicker
                 style={styles.datePickerStyle}
-                date={date}
+                date={tglLembur}
                 mode="date"
-                value = ""
-                placeholder="select date"
+                placeholder="Pilih Tanggal"
                 format="YYYY-MM-DD"
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
@@ -252,8 +294,9 @@ export default function InputOT ({navigation , route}){
                     borderBottomWidth: 1,
                   },
                   placeholderText: {
-                    fontSize: 17,
-                    color: "gray"
+                    fontSize: 12,
+                    color: "gray" ,
+                    marginLeft : 10 
                   },
                   dateText: {
                     fontSize: 17,
@@ -261,9 +304,9 @@ export default function InputOT ({navigation , route}){
                   }
                 }}
                 onDateChange={(date) => {
-                  setTglLembur(date);
+                   setTglLembur(date);
                 }}
-              /> */}
+              />
 
               
         <TouchableOpacity style={{marginBottom:5}} onPress={() => showMode('time')}>
@@ -295,6 +338,15 @@ export default function InputOT ({navigation , route}){
             style={{ backgroundColor:'#fff', }}
           />
           </TouchableOpacity>
+
+          <TextInput
+            style={{backgroundColor:'#fff'}}
+            label="Alasan Overtime"
+            multiline={true}
+            numberOfLines={2}
+            value={ alasan }
+            onChangeText={text =>  setAlasan(text)}
+          ></TextInput>
 
           <Text style={[styles.text, {marginTop:10}]}>Pilih Korlap</Text>
           {showKorlap()}
@@ -341,8 +393,6 @@ export default function InputOT ({navigation , route}){
           flex : 1 ,
           backgroundColor:'#fff' ,
           margin:2 
-          // justifyContent : 'center' ,
-          // alignItems : 'center'
       } ,
       
       datePickerStyle: {

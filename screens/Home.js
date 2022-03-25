@@ -196,7 +196,8 @@ showLoad();
                   </View>
                 </TouchableOpacity>
               </View>
-
+              
+              <View>
               <View style={styles.row}>
                 <TouchableOpacity
                   onPress={() =>
@@ -262,7 +263,7 @@ showLoad();
                 }} style={{marginRight:40}} title='KIRIM NOTIFIKASI'>
 
                 </Button> */}
-
+                </View>
               </View>
             </ScrollView>
           </>

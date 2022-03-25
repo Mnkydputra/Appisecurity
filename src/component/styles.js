@@ -26,6 +26,7 @@ export default StyleSheet.create({
   row: {
     flexDirection: "row",
     flexWrap: "wrap",
+    marginLeft: 9
   },
   menuBox: {
     width: 90,
@@ -33,7 +34,7 @@ export default StyleSheet.create({
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
-    margin: windowWidth / 25,
+    margin: windowWidth / 22,
   },
   linkAbsen: {
     backgroundColor: "#FFF",

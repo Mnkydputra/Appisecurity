@@ -39,7 +39,7 @@ export default function Absen ({navigation,route}) {
                     npk: route.params.npk,
                     id_akun: route.params.id_absen,
                     wilayah: route.params.wilayah,
-                    area_kerja: route.params.areaKerja,
+                    area_kerja: route.params.area_kerja,
                     jabatan: route.params.jabatan,
                 })}>
                   <Text style={styles.followButtonText}>View</Text>  
