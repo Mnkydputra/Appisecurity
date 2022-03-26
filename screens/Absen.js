@@ -27,14 +27,25 @@ export default function Absen ({navigation,route}) {
       return () =>
       BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
     }, []);
+
+
+    //
+    const goTostatus = () => {
+      if(route.params.jabatan === 'ANGGOTA'){
+        Alert.alert('Perhatian' , 'Hanya bisa di akses Korlap dan PIC');
+      }else {
+        Alert.alert('Perhatian', 'Oops sistem masih dalam pengembangan')
+        // navigation.navigate('Send SKTA')
+      }
+    }
     return (
         <View style={styles.container}>
 
-            <TouchableOpacity style={[styles.card , {backgroundColor:'#20ba46'} ]}>
-              <Image style={styles.image} source={ require('../src/img/workaholic.png')}/>
+            <TouchableOpacity style={[styles.card , {backgroundColor:'#0968a2'} ]}>
+              <Image style={styles.image} source={ require('../src/img/article.png')}/>
               <View style={styles.cardContent}>
-                <Text style={styles.name}>{'Input Overtime'}</Text>
-                <TouchableOpacity style={styles.followButton} onPress={()=> navigation.navigate('Input Overtime' , {
+                <Text style={styles.name}>{'Pengajuan (OT & SKTA)'}</Text>
+                <TouchableOpacity style={styles.followButton} onPress={()=> navigation.navigate('Pengajuan' , {
                     nama: route.params.nama,
                     npk: route.params.npk,
                     id_akun: route.params.id_absen,
@@ -46,16 +57,16 @@ export default function Absen ({navigation,route}) {
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.card , {backgroundColor:'#637ab0'} ]} >
+            <TouchableOpacity style={[styles.card , {backgroundColor:'#0e9ff7'} ]} >
               <Image style={styles.image} source={require("../src/img/hourglass.png")}/>
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{'Status Overtime'}</Text>
-                <TouchableOpacity style={styles.followButton} onPress={() => alert("tes")} >
+                <TouchableOpacity style={styles.followButton} onPress={ goTostatus   } >
                   <Text style={styles.followButtonText}>View</Text>  
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.card , {backgroundColor:'#45857e'} ]} >
+            <TouchableOpacity style={[styles.card , {backgroundColor:'#04314d'} ]} >
               <Image style={styles.image} source={ require('../src/img/absen2.png')}/>
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{'History Absensi'}</Text>
@@ -92,8 +103,8 @@ export default function Absen ({navigation,route}) {
       image:{
         width:85,
         height:85,
-        borderRadius:45,
-        borderWidth:2,
+        // borderRadius:20,
+        // borderWidth:2,
         borderColor:"#ebf0f7"
       },
     
@@ -138,7 +149,7 @@ export default function Absen ({navigation,route}) {
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius:30,
-        backgroundColor: "#2d8a8a",
+        backgroundColor: "#1000ff",
         borderWidth:1,
         borderColor:"#dcdcdc",
       },

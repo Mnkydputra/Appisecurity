@@ -20,7 +20,8 @@ import Logout from './screens/Logout' ;
 import Profile from './screens/Profile' ;
 import Splash from './screens/Splash' ;
 import InputOT from './screens/InputOT' ;
-import Absen from './screens/Absen'
+import Absen from './screens/Absen';
+import Pengajuan from './screens/Pengajuan';
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
@@ -42,38 +43,40 @@ export default function App() {
           },
         }}
       >
-      <Stack.Screen name='Start' component={Start}></Stack.Screen>
-      <Stack.Screen name='Login' options={{
-          headerShown: false  , 
-        }}  component={Login}></Stack.Screen>
-      <Stack.Screen name='Profile'  component={Profile}></Stack.Screen>
-      <Stack.Screen name='Home'  
-       options={{
-          headerShown: false  , 
-        }} component={Home}></Stack.Screen>
-      <Stack.Screen name='Poto'  component={Poto}></Stack.Screen>
-      <Stack.Screen name='Status' component={Status}></Stack.Screen>
-      <Stack.Screen name='Absensi'
-      options={{
-          headerShown: false  , 
-        }}  component={Absensi}></Stack.Screen>
-      <Stack.Screen name='View Absen'
-      options={{
-          headerShown: false  , 
-        }}  component={ViewAbsen}></Stack.Screen>
-      <Stack.Screen name='Laporan Absen'  component={LaporanAbsen}></Stack.Screen>
-      <Stack.Screen name='Edit Profile' component={EditBiodata}></Stack.Screen>
-      <Stack.Screen name='Edit Status' component={EditStatus}></Stack.Screen>
-      <Stack.Screen name='Akun' component={Sidebar}></Stack.Screen>
-      <Stack.Screen options={{
-          headerShown: false  , 
-        }} name='Splash' component={Splash}></Stack.Screen>
-      <Stack.Screen name='Logout'  options={{
-          headerShown: false  ,  
-        }}   component={Logout}></Stack.Screen>
+        {/* login screen */}
+          <Stack.Screen name='Login' options={{ headerShown: false  , }}  component={Login}></Stack.Screen>
+        {/* end */}
 
-      <Stack.Screen name='Input Overtime'  component={InputOT}></Stack.Screen>
-      <Stack.Screen name='Absen'  component={Absen}></Stack.Screen>
+        {/* home screen */}
+          <Stack.Screen name='Home' options={{headerShown: false  , }} component={Home}></Stack.Screen>
+        {/* end */}
+
+        {/* splash screen */}
+          <Stack.Screen name='Start' component={Start}></Stack.Screen>
+          <Stack.Screen options={{ headerShown: false  ,  }} name='Splash' component={Splash}></Stack.Screen>
+        {/* end */}
+
+        {/* lihat profile status dan poto */}
+          <Stack.Screen name='Profile'  component={Profile}></Stack.Screen>
+          <Stack.Screen name='Poto'  component={Poto}></Stack.Screen>
+          <Stack.Screen name='Status' component={Status}></Stack.Screen>
+        {/* end */}
+
+        {/* edit poto profile dan status dan logout */}
+          <Stack.Screen name='Edit Status' component={EditStatus}></Stack.Screen>
+          <Stack.Screen name='Edit Profile' component={EditBiodata}></Stack.Screen>
+          <Stack.Screen name='Akun' component={Sidebar}></Stack.Screen>
+          <Stack.Screen name='Logout'  options={{ headerShown: false  , }} component={Logout}></Stack.Screen>
+        {/* end */}
+
+        {/* menu absensi  */}
+          <Stack.Screen name='Absen'  component={Absen}></Stack.Screen>
+          <Stack.Screen name='Input Overtime'  component={InputOT}></Stack.Screen>
+          <Stack.Screen name='Pengajuan'  component={Pengajuan}></Stack.Screen>
+          <Stack.Screen name='Absensi' options={{ headerShown: false  ,}}  component={Absensi}></Stack.Screen>
+          <Stack.Screen name='View Absen' options={{ headerShown: false  , }}  component={ViewAbsen}></Stack.Screen>
+          <Stack.Screen name='Laporan Absen'  component={LaporanAbsen}></Stack.Screen>
+        {/* end */}
 
       </Stack.Navigator>
 

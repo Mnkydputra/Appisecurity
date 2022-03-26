@@ -81,7 +81,7 @@ export default function Profile({navigation , route }) {
     }
 
     return (
-      <View style={{flex:1}}>
+      <View style={{flex:1 , backgroundColor:'#fff'}}>
       { loading ? 
           <View style={{flex : 1 , justifyContent : 'center'}}>
               <ActivityIndicator size="large" color = 'red'></ActivityIndicator>

@@ -14,7 +14,7 @@ export default StyleSheet.create({
     flex: 1,
   },
   header: {
-    backgroundColor: "#179bd4",
+    backgroundColor: "#ff8f00",
     // backgroundColor: "#efa01f",
     width: "94%",
     height: "15%",
