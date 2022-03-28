@@ -22,6 +22,7 @@ import Splash from './screens/Splash' ;
 import InputOT from './screens/InputOT' ;
 import Absen from './screens/Absen';
 import Pengajuan from './screens/Pengajuan';
+import Register from './screens/Register';
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
@@ -45,6 +46,7 @@ export default function App() {
       >
         {/* login screen */}
           <Stack.Screen name='Login' options={{ headerShown: false  , }}  component={Login}></Stack.Screen>
+          <Stack.Screen name='Register' options={{ headerShown: false  , }}  component={Register}></Stack.Screen>
         {/* end */}
 
         {/* home screen */}

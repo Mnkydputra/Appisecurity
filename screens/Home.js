@@ -4,7 +4,7 @@ import styles from '../src/component/styles.js';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { TextInput } from "react-native-paper";
-
+import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 export default function  Home ({navigation,route}) {
   const [user , setUser] = useState({npk : '' , id_absen : '' , wilayah: '' , areaKerja : '' , jabatan: ''  , nama : ''})
   const [id_ , setId] = useState(null)
@@ -136,7 +136,22 @@ const showLoad = () => {
 }
 showLoad();
 //
-
+  const  _renderItem  = ({item, index}, parallaxProps) =>  {
+    return (
+        <View style={styles.item}>
+            <ParallaxImage
+                source={{ uri: item.thumbnail }}
+                containerStyle={styles.imageContainer}
+                style={styles.image}
+                parallaxFactor={0.4}
+                {...parallaxProps}
+            />
+            <Text style={styles.title} numberOfLines={2}>
+                { item.title }
+            </Text>
+        </View>
+    );
+}
   
     return (
       <View style={styles.container}>

@@ -192,7 +192,7 @@ export default function InputOT ({navigation , route}){
             const tokenDevice = json1.result.token ;
             //kirim data pengajuan lembur  
             const link = 'https://isecuritydaihatsu.com/api/ajukanLembur' ;
-            fetch('http://192.168.8.197:8090/api/ajukanLembur',{
+            fetch(link,{
               method : 'POST'  ,
               headers : {
                 'Content-Type' : 'application/x-www-form-urlencoded'  ,

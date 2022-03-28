@@ -135,6 +135,14 @@ export default function Login({ navigation }) {
           <Text style={{color:'#fff'}}>Login </Text>   
         }
       </Button>
+
+        <TouchableOpacity onPress={() => {
+          navigation.navigate('Register');
+        }}>
+          <Text >
+            Belum punya akun ?  REGISTER
+          </Text>
+        </TouchableOpacity>
     </Background>
   );
 }
@@ -157,4 +165,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: theme.colors.primary,
   },
+  register : {
+    fontSize:12 
+  }
 });
