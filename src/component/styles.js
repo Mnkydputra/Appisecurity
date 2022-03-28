@@ -1,6 +1,7 @@
 import { StyleSheet , Dimensions } from "react-native";
 const windowWidth = Dimensions.get('window').width;
 const  windowHeight = Dimensions.get('window').height;
+const { width, height } = Dimensions.get("window");
 export default StyleSheet.create({
   container: {
     flex: 1,
@@ -26,15 +27,23 @@ export default StyleSheet.create({
   row: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginLeft: 9
+    marginLeft: 9,
   },
   menuBox: {
-    width: 90,
-    height: 90,
-    borderRadius: 15,
+    // width: 80,
+    // height: 85,
+    // borderRadius: 15,
+    // alignItems: "center",
+    // justifyContent: "center",
+    // margin: windowWidth / 22,
+    
+    //update screen responsive
+    width: width * 0.28, // 80% of screen's width
+    height: height * 0.13, // 20% of screen's height
     alignItems: "center",
-    justifyContent: "center",
-    margin: windowWidth / 22,
+    borderRadius: 15,
+    justifyContent : "center",
+    margin: windowWidth /  65,
   },
   linkAbsen: {
     backgroundColor: "#FFF",
