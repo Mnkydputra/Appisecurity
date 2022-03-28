@@ -103,17 +103,6 @@ export default function EditProfile ({navigation,route}) {
       },3000)
     }
     showLoad();
-    //
-
-    
-    //date
-
-    //
-
-
-
-
-
     return (
       <View style={{flex:1}}>
           {loading ? 
