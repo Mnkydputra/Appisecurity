@@ -4,6 +4,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import * as Location from 'expo-location';
 import { getDistance, getPreciseDistance } from 'geolib';
 import { DataTable } from 'react-native-paper';
+const { width, height } = Dimensions.get("window");
 const windowWidth = Dimensions.get('window').width;
 const  windowHeight = Dimensions.get('window').height;
 export default function Absensi({navigation,route}) {
@@ -25,6 +26,10 @@ export default function Absensi({navigation,route}) {
   const [errorMsg, setErrorMsg] = useState(null);
   const [msgBarcode , setMsgBarcode] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const leftTop = { borderLeftWidth: 5, borderTopWidth: 5, borderColor: "#000" };
+  const leftBottom = { borderLeftWidth: 5, borderBottomWidth: 5, borderColor: "#000" };
+  const RightTop = { borderRightWidth: 5, borderTopWidth: 5, borderColor: "#000" };
+  const rightBottom = { borderBottomWidth: 5, borderRightWidth: 5, borderColor: "#000" };
 
 
   const [refreshing, setRefreshing] = useState(false);
@@ -224,9 +229,6 @@ export default function Absensi({navigation,route}) {
   } else if (lokasi) {
     posisiUser = JSON.stringify(lokasi);
   }
-
-
-
     let image = require('../src/img/cancel.png') ;
     if(informasi.gambar === 'fail'){
      image =  require('../src/img/cancel.png') ;
@@ -236,178 +238,178 @@ export default function Absensi({navigation,route}) {
     console.log(informasi.gambar);
 
   return (
-  
-  <View style={[styles.container , {backgroundColor:'#a6f081'}]} >
-  {
-    msgBarcode ? 
-    <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText2}>Perhatian</Text>
-            
-            <Image source={ require('../src/img/warning.png') } style={{width: 80, height: 80 , marginBottom:12}}></Image>
-            <DataTable style={{fontSize:8 }}>
-              <DataTable.Row  >
-                    <DataTable.Cell style={{width:40}}>Nama</DataTable.Cell>
-                    <DataTable.Cell>{user.nama} </DataTable.Cell>
-              </DataTable.Row>
-              <DataTable.Row>
-                    <DataTable.Cell>NPK</DataTable.Cell>
-                    <DataTable.Cell>{user.npk}</DataTable.Cell>
-              </DataTable.Row>
-              <DataTable.Row>
-                    <DataTable.Cell>Status</DataTable.Cell>
-                    <DataTable.Cell>GAGAL</DataTable.Cell>
-              </DataTable.Row>
-              <DataTable.Row>
-                    <DataTable.Cell>Ket</DataTable.Cell>
-                    <DataTable.Cell>Barcode Invalid</DataTable.Cell>
-              </DataTable.Row>
-            </DataTable>
+    <View style={[styles.container, { backgroundColor: "#ffffff" }]}>
+      {msgBarcode ? (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText2}>Perhatian</Text>
 
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible) }
-            >
-              <Text style={styles.textStyle}>Tutup</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
-    :
-    <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText2}>{titleModal}</Text>
-            
-            <Image source={ image } style={{width: 80, height: 80 , marginBottom:12}}></Image>
-            <View style={{flex : 1}}>
-              <Text>Nama             : {user.nama} </Text>
-              <Text>NPK                : {user.npk} </Text>
-              <Text>Status            : {informasi.info} </Text>
-              <Text>Waktu            : {informasi.waktu}</Text>
-              <Text >Keterangan    : {informasi.keterangan} </Text>
+              <Image source={require("../src/img/warning.png")} style={{ width: 80, height: 80, marginBottom: 12 }}></Image>
+              <DataTable style={{ fontSize: 8 }}>
+                <DataTable.Row>
+                  <DataTable.Cell style={{ width: 40 }}>Nama</DataTable.Cell>
+                  <DataTable.Cell>{user.nama} </DataTable.Cell>
+                </DataTable.Row>
+                <DataTable.Row>
+                  <DataTable.Cell>NPK</DataTable.Cell>
+                  <DataTable.Cell>{user.npk}</DataTable.Cell>
+                </DataTable.Row>
+                <DataTable.Row>
+                  <DataTable.Cell>Status</DataTable.Cell>
+                  <DataTable.Cell>GAGAL</DataTable.Cell>
+                </DataTable.Row>
+                <DataTable.Row>
+                  <DataTable.Cell>Ket</DataTable.Cell>
+                  <DataTable.Cell>Barcode Invalid</DataTable.Cell>
+                </DataTable.Row>
+              </DataTable>
+
+              <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyle}>Tutup</Text>
+              </Pressable>
             </View>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.textStyle}>Tutup</Text>
-            </Pressable>
           </View>
-        </View>
-      </Modal> 
-  }
-    
+        </Modal>
+      ) : (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText2}>{titleModal}</Text>
 
+              <Image source={image} style={{ width: 100, height: 100, marginBottom: 12 }}></Image>
+              <View style={{ flex: 1 }}>
+                <Text>Nama : {user.nama} </Text>
+                <Text>NPK : {user.npk} </Text>
+                <Text>Status : {informasi.info} </Text>
+                <Text>Waktu : {informasi.waktu}</Text>
+                <Text>Keterangan : {informasi.keterangan} </Text>
+              </View>
+              <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyle}>Tutup</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+      )}
       <ScrollView
         contentContainerStyle={styles.scrollView}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-            />
-          }
-        >  
-      <View>
-      <ActivityIndicator
-                animating={loading}
-                color ='red' 
-                size = 'large'
-            ></ActivityIndicator>
-      </View>
-      <View style={styles.barcodebox}>
-      <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={{height : 850 , width : 800 }} 
-      />
-      </View>
-      {scanned && <Button style={{color:'tomato' }} title={'ULANGI SCAN'} onPress={() => setScanned(false)} />}
-
-      <DataTable>
-        <DataTable.Row>
-              <DataTable.Cell>NPK</DataTable.Cell>
-              <DataTable.Cell>{user.npk }</DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-              <DataTable.Cell>Wilayah</DataTable.Cell>
-              <DataTable.Cell>{user.wilayah}</DataTable.Cell>
-        </DataTable.Row>
-
-        {
-          user.jabatan == 'KORLAP' ? 
-           null
-          :
-          <DataTable.Row>
-                <DataTable.Cell>Area Kerja</DataTable.Cell>
-                <DataTable.Cell>{ user.areaKerja }</DataTable.Cell>
-          </DataTable.Row>
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            style={{
+              flex: 1,
+              flexDirection: "column",
+              justifyContent: "flex-end",
+            }}
+          />
         }
-        <DataTable.Row>
-              <DataTable.Cell>Jabatan</DataTable.Cell>
-              <DataTable.Cell>{user.jabatan }</DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-              <DataTable.Cell>Titik Koordinat</DataTable.Cell>
-              <DataTable.Cell>{lokasi.latiUser + "," + lokasi.longiUser  }</DataTable.Cell>
-        </DataTable.Row>
-      </DataTable>
-    </ScrollView> 
+      >
+        <View>
+          <ActivityIndicator animating={loading} color="red" size="large"></ActivityIndicator>
+        </View>
+        <View style={styles.barcodebox}>
+          <BarCodeScanner onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} style={[StyleSheet.absoluteFillObject, styles.container]}>
+            <View style={{ width: width / 2, height: width / 2}}>
+              <View style={{ flex: 1, flexDirection: "row",  }}>
+                <View style={{ flex: 1, ...leftTop }} />
+                <View style={{ flex: 1 }} />
+                <View style={{ flex: 1, ...RightTop }} />
+              </View>
+              <View style={{ flex: 1 }} />
+              <View style={{ flex: 1, flexDirection: "row", }}>
+                <View style={{ flex: 1, ...leftBottom }} />
+                <View style={{ flex: 1 }} />
+                <View style={{ flex: 1,  ...rightBottom }} />
+              </View>
+            </View>
+            
+          </BarCodeScanner>
+        </View>
+        {scanned && <Button style={{ color: "tomato" }} title={"ULANGI SCAN"} onPress={() => setScanned(false)} />}
+
+        <DataTable>
+          {user.jabatan == "KORLAP" ? null : (
+            <DataTable.Row>
+              <DataTable.Cell>Area Kerja</DataTable.Cell>
+              <DataTable.Cell>{user.areaKerja}</DataTable.Cell>
+            </DataTable.Row>
+          )}
+          <DataTable.Row>
+            <DataTable.Cell>Titik Koordinat</DataTable.Cell>
+            <DataTable.Cell>{lokasi.latiUser + "," + lokasi.longiUser}</DataTable.Cell>
+          </DataTable.Row>
+        </DataTable>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    // alignItems: "center",
+    // width: "100%", // 80% of screen's width
+    // height: "100%", // 20% of screen's height
+    // justifyContent: "center",
+    // margin: windowWidth / 75,
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ecf0f1",
+    padding: 5,
   },
-  textInput : {
-    backgroundColor : 'red' ,
-    color : '#fff' ,
-    borderRadius:3 ,
-    marginBottom : 4 ,
-    height : 40 ,
-    width : 400
-} ,
-  barcodebox : {
-    backgroundColor : '#fff' ,
-    alignItems : 'center' ,
-    justifyContent : 'center' ,
-    width : 420 ,
-    height : 450 ,
-    overflow : 'hidden' ,
-    marginBottom:6
+  textInput: {
+    backgroundColor: "red",
+    color: "#fff",
+    borderRadius: 3,
+    marginBottom: 4,
+    height: 40,
+    width: 400,
+  },
+  description: {
+    fontSize: width * 0.09,
+    marginTop: "10%",
+    textAlign: "center",
+    width: "70%",
+    color: "white",
+  },
+  barcodebox: {
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 350,
+    height: 560,
+    overflow: "hidden",
+    marginBottom: 5,
     // borderRadius : 30 ,
   },
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 20 ,
-   
+    marginTop: 20,
   },
   modalView: {
     margin: 40,
-    height : 450 ,
-    width : 400 ,
+    height: 450,
+    width: 400,
     backgroundColor: "white",
     borderRadius: 10,
     padding: 40,
@@ -415,37 +417,37 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 14
+      height: 14,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 10
+    elevation: 10,
   },
   button: {
     borderRadius: 15,
     padding: 10,
-    elevation: 2 ,
-    marginTop:12 
+    elevation: 2,
+    marginTop: 12,
   },
   buttonOpen: {
     backgroundColor: "#F194FF",
   },
   buttonClose: {
     backgroundColor: "#2196F3",
-    width : 100 , 
+    width: 100,
   },
   textStyle: {
     color: "white",
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
   },
   modalText: {
     marginBottom: 15,
-    textAlign: "center"
+    textAlign: "center",
   },
   modalText2: {
     marginBottom: 15,
-    textAlign: "center" ,
-    fontSize : 30
-  }
-})
+    textAlign: "center",
+    fontSize: 30,
+  },
+});
