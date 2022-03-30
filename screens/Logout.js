@@ -4,25 +4,31 @@ import  AsyncStorage  from "@react-native-async-storage/async-storage";
 
 export default function  Logout ({navigation,route}) {
 
-    const [loading,setLoading] = useState(true)
+    const [loading,setLoading] = useState(true);
 
-  useEffect(() => {
     const  logout = async() => {
-      const st = await AsyncStorage.removeItem('token');
-      await AsyncStorage.removeItem("id_akun");
-      await AsyncStorage.removeItem("patrol");
-      await AsyncStorage.removeItem("token_patrol");
-      if(st == null) {
-        navigation.navigate('Login')
+      try {
+        await AsyncStorage.removeItem('id_token');
+        await AsyncStorage.removeItem("token");
+        await AsyncStorage.removeItem("id_akun");
+        await AsyncStorage.removeItem("patrol");
+        await AsyncStorage.removeItem("token_patrol");
+        await AsyncStorage.removeItem("token_device");
+        navigation.navigate('Login');
+        return true;
+      }
+      catch(exception) {
+        return false;
       }
     }
-    logout();
+  useEffect(() => {
+    //logout();
   }, []);
   
 
   
     return (
-        <View style={{flex : 1 , justifyContent:'center' ,alignItem:'center' }}>
+        <View style={{flex : 1 , justifyContent:'center' }}>
            <Text>BYE</Text>
         </View>
     );

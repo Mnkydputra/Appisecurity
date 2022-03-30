@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 // import { TouchableOpacity, StyleSheet, View, BackHandler  } from "react-native";
-import { Alert, Image, Keyboard, KeyboardAvoidingView,   TouchableWithoutFeedback, Pressable, StyleSheet,  ActivityIndicator , BackHandler , TouchableOpacity } from "react-native";
+import { Alert, Image, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, Pressable, StyleSheet,  ActivityIndicator , BackHandler , TouchableOpacity } from "react-native";
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
 import { Text } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Background from "../src/component/Background";
@@ -17,6 +19,7 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
   const [id_akun, setIdAkun] = useState("");
   const [loading, setLoading] = useState(false);
+  const [deviceToken, setdeviceToken] = useState("");
 
   const backAction = () => {
     Alert.alert("Perhatian!", "Keluar Aplikasi ?", [
@@ -48,6 +51,10 @@ export default function Login({ navigation }) {
     };
     tokenLogin();
     //end
+
+    // 
+    registerForPushNotificationsAsync()
+    // 
     BackHandler.addEventListener("hardwareBackPress", backAction);
 
     return function cleanup() {
@@ -57,6 +64,42 @@ export default function Login({ navigation }) {
 
 
   }, []);
+
+
+  // 
+  async function registerForPushNotificationsAsync() {
+    let token;
+    if (Constants.isDevice) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(token);
+      setdeviceToken(token)
+    } else {
+      alert('Must use physical device for Push Notifications');
+    }
+  
+    if (Platform.OS === 'android') {
+      Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
+    }
+  
+    return token;
+  }
+  // 
+
 
   //jika di tekan tombol login  maka jalankan fungsi ini
   const onLoginPress = async () => {
@@ -72,6 +115,7 @@ export default function Login({ navigation }) {
           { text: "YA", onPress: () => setLoading(false) },
         ]);
       }else {
+        // var urlAksi = "http://192.168.94.33:8090/api/cekAkun";
         var urlAksi = "https://isecuritydaihatsu.com/api/cekAkun";
         fetch(urlAksi, {
           method: "POST",
@@ -79,7 +123,7 @@ export default function Login({ navigation }) {
             "Content-Type": "application/x-www-form-urlencoded",
             "keys-isecurity": "isecurity",
           },
-          body: "npk=" + npk + "&password=" + password,
+          body: "npk=" + npk + "&password=" + password + "&token="  + deviceToken,
         })
           .then((response) => response.json())
           .then((json) => {
@@ -91,9 +135,13 @@ export default function Login({ navigation }) {
                 Alert.alert("Perhatian!", "AKUN TIDAK TERDAFTAR", [
                   { text: "YA", onPress: () => setLoading(false) },
                 ]);
-              } else {
+              } else if(json.status == false){
+                Alert.alert("Perhatian!", json.message, [
+                  { text: "YA", onPress: () => setLoading(false) },
+                ]);
+              }else {
                 const hasil = json.result[0];
-                console.log(hasil)
+                // console.log(json)
                 if (npk === hasil.npk) {
                   setNPK(hasil.npk);
                   setIdAkun(hasil.id_akun);
@@ -104,6 +152,7 @@ export default function Login({ navigation }) {
                   AsyncStorage.setItem("id_akun", id_user);
                   AsyncStorage.setItem("patrol", patrol);
                   AsyncStorage.setItem("token_patrol",patrol_w);
+                  AsyncStorage.setItem("token_device",json.token);
                   navigation.navigate("Splash");
                   setLoading(false);
                 } else {

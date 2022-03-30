@@ -8,13 +8,6 @@ export default function Splash({navigation,route})  {
     setTimeout(() => {
       navigation.dispatch(StackActions.replace('Home'))
     },3000)
-    // const handleBackPress = () => {
-    //   navigation.goBack();
-    //   return true;
-    // };
-    // BackHandler.addEventListener('hardwareBackPress', handleBackPress);
-    // return () =>
-    // BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
   },[])
 
 

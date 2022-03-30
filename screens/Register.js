@@ -91,14 +91,43 @@ export default function Register({ navigation }) {
     }
   
     return token;
-}
+  }
 
   //jika di tekan tombol login  maka jalankan fungsi ini
   const onRegisterPress = async () => {
     setLoading(true);
-        if(npk === '' || npk === null){
-                Alert.alert('Perhatian')
+    if(npk === '' || npk === null){
+        Alert.alert('Perhatian', 'ISI NPK')
+        setLoading(false);
+    }else {
+        try {
+
+            // var urlAksi = "http://192.168.94.33:8090/api/registerDevice";
+            var urlAksi = "https://isecuritydaihatsu.com/api/registerDevice";
+            fetch(urlAksi, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "keys-isecurity": "isecurity",
+            },
+            body: "npk=" + npk + "&token=" + deviceToken,
+            })
+            .then((response) => response.json())
+            .then((json) => {
+              // console.log(json)
+                if(json.status == false){
+                    Alert.alert('Perhatian', json.message)
+                    setLoading(false);
+                }else {
+                    Alert.alert("Berhasil !", json.message , [
+                      { text: "YA", onPress: () => navigation.navigate('Login') },
+                    ]);
+                }
+            })
+        }catch(error){
+            alert(error.message)
         }
+    }
   };
   //end login
 
@@ -106,8 +135,10 @@ export default function Register({ navigation }) {
     <Background>
       <Logo />
       <Header>REGISTER YOUR DEVICE</Header>
+      <TextInput label="Token Device" value={deviceToken} onChangeText={(value) => setdeviceToken(value)} placeholder="Token Device" placeholderColor="#c4c3cb" style={styles.loginFormTextInput}  editable={false} />
+
       <TextInput label="NPK" onChangeText={(value) => setNPK(value)} placeholder="NPK" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
-      <TextInput label="Token Device" value={deviceToken} onChangeText={(value) => setdeviceToken(value)} placeholder="Token Device" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true} editable={false} />
+      
       <Button mode="contained" onPress={onRegisterPress}>
         {loading ? 
             <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>

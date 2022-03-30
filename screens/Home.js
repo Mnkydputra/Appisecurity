@@ -42,7 +42,7 @@ export default function  Home ({navigation,route}) {
             .then((response) => response.json())
             .then((json) => {
               const hasil =  json.result ;
-              // console.log(hasil)
+              console.log(hasil)
               setUser({npk :  hasil.npk , id_absen : hasil.id_biodata , wilayah: hasil.wilayah , areaKerja : hasil.area_kerja , jabatan: hasil.jabatan , nama : hasil.nama })
             })
         }
@@ -56,11 +56,10 @@ export default function  Home ({navigation,route}) {
     //jika token login ada isinya maka program redirect ke Home
     const tokenLogin = async () => {
       const value = await AsyncStorage.getItem("token");
-      const id = await AsyncStorage.getItem("id_akun");
-      if (value === null) {
+      if (value == null || value === '') {
         navigation.navigate("Login");
-      }else if(value !== null){
-        // console.log(value);
+      }else if(value != null){
+        console.log(value);
       }
     };
 
@@ -136,22 +135,7 @@ const showLoad = () => {
 }
 showLoad();
 //
-  const  _renderItem  = ({item, index}, parallaxProps) =>  {
-    return (
-        <View style={styles.item}>
-            <ParallaxImage
-                source={{ uri: item.thumbnail }}
-                containerStyle={styles.imageContainer}
-                style={styles.image}
-                parallaxFactor={0.4}
-                {...parallaxProps}
-            />
-            <Text style={styles.title} numberOfLines={2}>
-                { item.title }
-            </Text>
-        </View>
-    );
-}
+
   
     return (
       <View style={styles.container}>
@@ -272,12 +256,6 @@ showLoad();
                     <Text style={styles.info}>Course</Text>
                   </View>
                 </TouchableOpacity>
-
-                {/* <Button onPress={() => {
-                  navigation.navigate('InputOT')
-                }} style={{marginRight:40}} title='KIRIM NOTIFIKASI'>
-
-                </Button> */}
                 </View>
               </View>
             </ScrollView>
