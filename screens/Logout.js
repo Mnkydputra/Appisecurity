@@ -12,7 +12,7 @@ export default function  Logout ({navigation,route}) {
         await AsyncStorage.removeItem("id_akun");
         await AsyncStorage.removeItem("patrol");
         await AsyncStorage.removeItem("token_patrol");
-        await AsyncStorage.removeItem("token_device");
+        // await AsyncStorage.removeItem("token_device");
         navigation.navigate('Login');
     }
   useEffect(() => {

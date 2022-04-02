@@ -61,7 +61,16 @@ export default function Absen ({navigation,route}) {
               <Image style={styles.image} source={require("../src/img/hourglass.png")}/>
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{'Status Overtime'}</Text>
-                <TouchableOpacity style={styles.followButton} onPress={ goTostatus   } >
+                <TouchableOpacity style={styles.followButton} onPress={ () => {
+                  navigation.navigate('Approve Overtime' , {
+                    nama: route.params.nama,
+                    npk: route.params.npk,
+                    id_akun: route.params.id_absen,
+                    wilayah: route.params.wilayah,
+                    area_kerja: route.params.area_kerja,
+                    jabatan: route.params.jabatan,
+                })
+                }}>
                   <Text style={styles.followButtonText}>View</Text>  
                 </TouchableOpacity>
               </View>

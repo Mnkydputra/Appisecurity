@@ -3,26 +3,16 @@
     "name": "isecurity",
     "slug": "isecurity",
     "version": "1.0.0",
-    "icon" : "src/img/app_js.png" ,
+    "icon": "src/img/icon_app.png",
     "assetBundlePatterns": [
       "**/*"
     ],
-    "plugins": [
-      [
-        "expo-notifications",
-        {
-          "icon": "src/img/app_js.png",
-          "color": "#ffffff"
-        }
-      ]
-    ],
     "android": {
+      "googleServicesFile": "./google-services.json" ,
+      "permissions": ["NOTIFICATIONS"],
       "package": "com.dasep12.isecurity" ,
-      "adaptiveIcon": {
-        "foregroundImage": "src/img/app_js.png",
-        "backgroundColor": "#50dbb6"
-      }
+      "useNextNotificationsApi": true
     }
   },
-  "name": "isecurity"
+  "name": "isecurity" 
 }

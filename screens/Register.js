@@ -12,7 +12,7 @@ import Button from "../src/component/Button";
 import TextInput from "../src/component/TextInput";
 import BackButton from "../src/component/BackButton";
 import { theme } from "../src/core/theme";
-
+import * as Device from 'expo-device';
 
 export default function Register({ navigation }) {
   const [npk, setNPK] = useState("");
@@ -32,66 +32,16 @@ export default function Register({ navigation }) {
     return true;
   };
 
-  useEffect(() => {
-    let unmounted = false
-    registerForPushNotificationsAsync();
-    //jika token login ada isinya maka program redirect ke Home
-    const tokenLogin = async () => {
-      const value = await AsyncStorage.getItem("token");
-      const id = await AsyncStorage.getItem("id_akun");
-      if(!unmounted){
-        if (value !== null) {
-          navigation.navigate("Home", {
-            id_user: id,
-          });
-        }else if(value === null){
-          // console.log(value);
-        }
-      }
-    };
-    tokenLogin();
-    //end
-    BackHandler.addEventListener("hardwareBackPress", backAction);
 
+  useEffect(() => {
+    setdeviceToken(Device.osInternalBuildId)
+    BackHandler.addEventListener("hardwareBackPress", backAction);
     return function cleanup() {
       BackHandler.removeEventListener("hardwareBackPress", backAction);
-      unmounted = false ;
     }
-
-
   }, []);
 
-  async function registerForPushNotificationsAsync() {
-    let token;
-    if (Constants.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
-        return;
-      }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
-      setdeviceToken(token)
-    } else {
-      alert('Must use physical device for Push Notifications');
-    }
   
-    if (Platform.OS === 'android') {
-      Notifications.setNotificationChannelAsync('default', {
-        name: 'default',
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: '#FF231F7C',
-      });
-    }
-  
-    return token;
-  }
 
   //jika di tekan tombol login  maka jalankan fungsi ini
   const onRegisterPress = async () => {
@@ -100,8 +50,8 @@ export default function Register({ navigation }) {
         Alert.alert('Perhatian', 'ISI NPK')
         setLoading(false);
     }else {
+      // alert(deviceToken)
         try {
-
             // var urlAksi = "http://192.168.94.33:8090/api/registerDevice";
             var urlAksi = "https://isecuritydaihatsu.com/api/registerDevice";
             fetch(urlAksi, {
@@ -134,8 +84,8 @@ export default function Register({ navigation }) {
   return (
     <Background>
       <Logo />
-      <Header>REGISTER YOUR DEVICE</Header>
-      <TextInput label="Token Device" value={deviceToken} onChangeText={(value) => setdeviceToken(value)} placeholder="Token Device" placeholderColor="#c4c3cb" style={styles.loginFormTextInput}  editable={false} />
+      <Header>REGISTER DEVICE</Header>
+      <TextInput label="ID Device" value={deviceToken} onChangeText={(value) => setdeviceToken(value)} placeholder="Token Device" placeholderColor="#c4c3cb" style={styles.loginFormTextInput}  editable={false} />
 
       <TextInput label="NPK" onChangeText={(value) => setNPK(value)} placeholder="NPK" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
       

@@ -45,10 +45,10 @@ export default function InputOT ({navigation , route}){
 
     // get token korlap for send notification approval
       const listKorlap = async () => {
-          // let wil = route.params.wilayah 
+          let wil = route.params.wilayah 
           try {
-            var urlAksi = 'https://isecuritydaihatsu.com/api/tokenKorlap?wilayah=WIL2';
-            // var urlAksi = 'https://isecuritydaihatsu.com/api/tokenKorlap?wilayah=' + wil;
+            // var urlAksi = 'https://isecuritydaihatsu.com/api/tokenKorlap?wilayah=WIL2';
+            var urlAksi = 'https://isecuritydaihatsu.com/api/tokenKorlap?wilayah=' + wil;
             fetch(urlAksi,{
                 headers : {
                     'keys-isecurity' : 'isecurity' ,
@@ -115,7 +115,7 @@ export default function InputOT ({navigation , route}){
             return;
           }
           token = (await Notifications.getExpoPushTokenAsync()).data;
-          // console.log(token);
+          console.log(token);
         } else {
           alert('Must use physical device for Push Notifications');
         }
@@ -128,7 +128,6 @@ export default function InputOT ({navigation , route}){
             lightColor: '#FF231F7C',
           });
         }
-      
         return token;
     }
 
@@ -202,7 +201,7 @@ export default function InputOT ({navigation , route}){
             })
             .then((response) => response.json() )
             .then((json) => {
-              console.log(json.data)
+              // console.log(json.data)
               if(json.status === 'failed'){
                 alert(json.message);
                 Alert.alert("Gagal!", json.message, [
@@ -243,7 +242,7 @@ export default function InputOT ({navigation , route}){
 
 
     const showKorlap = () => {
-
+      console.log(daftarKorlap)
       if(daftarKorlap == undefined || daftarKorlap === ''){
         console.log("Sabar dulu")
       }else {

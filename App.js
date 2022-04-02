@@ -23,6 +23,7 @@ import InputOT from './screens/InputOT' ;
 import Absen from './screens/Absen';
 import Pengajuan from './screens/Pengajuan';
 import Register from './screens/Register';
+import ApproveLembur from './screens/Approve Lembur';
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
@@ -78,6 +79,7 @@ export default function App() {
           <Stack.Screen name='Absensi' options={{ headerShown: false  ,}}  component={Absensi}></Stack.Screen>
           <Stack.Screen name='View Absen' options={{ headerShown: false  , }}  component={ViewAbsen}></Stack.Screen>
           <Stack.Screen name='Laporan Absen'  component={LaporanAbsen}></Stack.Screen>
+          <Stack.Screen name='Approve Overtime'  component={ApproveLembur}></Stack.Screen>
         {/* end */}
 
       </Stack.Navigator>
