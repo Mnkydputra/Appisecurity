@@ -59,8 +59,6 @@ export default function Login({ navigation }) {
       BackHandler.removeEventListener("hardwareBackPress", backAction);
       unmounted = false ;
     }
-
-
   }, []);
 
 
