@@ -1,5 +1,5 @@
 import React, { Component, useState ,useEffect } from 'react';
-import { View, Text  , FlatList , StyleSheet , Dimensions} from 'react-native';
+import { View, Text  , FlatList , StyleSheet , Dimensions , Alert} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { DataTable } from 'react-native-paper';
 import * as Device from 'expo-device';
@@ -19,7 +19,7 @@ const [data , setData] = useState('');
         .then((response) => response.json())
         .then((json) => {
             if(json.status === 'failed'){
-                setData(NULL)
+                setData('')
             }else {
                 const hasil =  json.result ;
                 // console.log(hasil)
@@ -29,8 +29,12 @@ const [data , setData] = useState('');
     }
 
 
-    const approve = () => {
+    const approve = async (id) => {
+       
+    }
 
+    const reject = async (id) => {
+       console.log(id)
     }
 
     //fungsi untuk menampilkan data absen karyawan
@@ -45,13 +49,71 @@ const [data , setData] = useState('');
                     <DataTable.Cell>{item.over_time_start}</DataTable.Cell>
                     <DataTable.Cell>{item.over_time_end}</DataTable.Cell>
                     <DataTable.Cell>
-                        <TouchableOpacity>
-                            <Text>Accept</Text>
+                        <TouchableOpacity onPress={ () => 
+                        Alert.alert("INFORMASI",  'Approve Lemburan', [
+                            {text : 'BATAL' , onPress : () => null
+                            } ,
+                            {text : 'YA' , onPress : () => fetch('https://isecuritydaihatsu.com/api/ApproveLembur',{
+                                    headers : {
+                                        'keys-isecurity' : 'isecurity' ,
+                                        'Content-Type': 'application/json' , 
+                                    } ,
+                                    method : 'PUT' , 
+                                    body : JSON.stringify({
+                                        "id" : item.id,
+                                        "status_approve" : '1'
+                                    })
+                                })
+                                .then((response) => response.json())
+                                .then((json) => {
+                                if(json.status === 'fail'){
+                                    Alert.alert("GAGAL", json.result, [
+                                        { text: "YA", onPress: () => daftarLembur },
+                                    ]);
+                                }else {
+                                    Alert.alert("Berhasil!", json.result, [
+                                        { text: "YA", onPress: () => daftarLembur },
+                                    ]);
+                                }
+                            })}
+                        ])
+                            
+                        }>
+                            <Text style={{color:'cyan' , backgroundColor:'black' , borderRadius:4 }} >Accept</Text>
                         </TouchableOpacity>
                     </DataTable.Cell>
                     <DataTable.Cell>
-                        <TouchableOpacity>
-                            <Text>Reject</Text>
+                        <TouchableOpacity  onPress={() => 
+                        Alert.alert("INFORMASI",  'Tolak Lemburan', [
+                             { text: "TIDAK", onPress: () => null },
+                             {text : 'YA' , onPress : () => 
+                                fetch('https://isecuritydaihatsu.com/api/ApproveLembur',{
+                                            headers : {
+                                                'keys-isecurity' : 'isecurity' ,
+                                                'Content-Type': 'application/json' , 
+                                            } ,
+                                            method : 'PUT' , 
+                                            body : JSON.stringify({
+                                                "id" : item.id,
+                                                "status_approve" : '0'
+                                            })
+                                    })
+                                    .then((response) => response.json())
+                                    .then((json) => {
+                                        if(json.status === 'fail'){
+                                            Alert.alert("INFORMASI", json.result, [
+                                                { text: "YA", onPress: () => daftarLembur() },
+                                            ]);
+                                        }else {
+                                            Alert.alert("Berhasil!", json.result, [
+                                                { text: "YA", onPress: () => daftarLembur() },
+                                            ]);
+                                        }
+                                    })
+                                }
+                        ])
+                        } >
+                            <Text style={{color:'#fff' ,backgroundColor:'black' , borderRadius:4}}>Reject</Text>
                         </TouchableOpacity>
                     </DataTable.Cell>
                 </DataTable.Row>
@@ -63,7 +125,7 @@ const [data , setData] = useState('');
 
     useEffect(() => {
         daftarLembur();
-        console.log(Device.osBuildId);
+        // console.log(Device.osBuildId);
     },[])
 
 

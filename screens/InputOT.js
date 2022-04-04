@@ -38,9 +38,11 @@ export default function InputOT ({navigation , route}){
       const [mode, setMode ] = useState('time');
       const [show ,setShow ] = useState({date1 : false , date2 : false });
       const [text ,setText ] = useState({time1 : '' , time2 : ''});
-      const [mulai ,setMulai ] = useState('00:00:00');
-      const [selesai ,setSelesai ] = useState('00:00:00');
+      const [mulai ,setMulai ] = useState('');
+      const [selesai ,setSelesai ] = useState('');
       const [alasan ,setAlasan ] = useState();
+      const[masukKerja , setMasukKerja] = useState('');
+      const[pulangKerja , setPulangKerja] = useState('');
     //
 
     // get token korlap for send notification approval
@@ -79,7 +81,6 @@ export default function InputOT ({navigation , route}){
       // 
         listKorlap();
       // 
-        registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
     
         notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
           setNotification(notification);
@@ -101,36 +102,6 @@ export default function InputOT ({navigation , route}){
           Notifications.removeNotificationSubscription(responseListener.current);
         };
       }, []);
-    async function registerForPushNotificationsAsync() {
-        let token;
-        if (Constants.isDevice) {
-          const { status: existingStatus } = await Notifications.getPermissionsAsync();
-          let finalStatus = existingStatus;
-          if (existingStatus !== 'granted') {
-            const { status } = await Notifications.requestPermissionsAsync();
-            finalStatus = status;
-          }
-          if (finalStatus !== 'granted') {
-            alert('Failed to get push token for push notification!');
-            return;
-          }
-          token = (await Notifications.getExpoPushTokenAsync()).data;
-          console.log(token);
-        } else {
-          alert('Must use physical device for Push Notifications');
-        }
-      
-        if (Platform.OS === 'android') {
-          Notifications.setNotificationChannelAsync('default', {
-            name: 'default',
-            importance: Notifications.AndroidImportance.MAX,
-            vibrationPattern: [0, 250, 250, 250],
-            lightColor: '#FF231F7C',
-          });
-        }
-        return token;
-    }
-
     // timer 
       const onChange = (event,selectDate) => {
         const currentDate = selectDate ||  date 
@@ -210,23 +181,23 @@ export default function InputOT ({navigation , route}){
                 setLoading(false);
               }else {
                 setLoading(false);
-                fetch('https://exp.host/--/api/v2/push/send',{
-                  method : 'POST' ,
-                  headers : {
-                      Accept : 'application/json' ,
-                      'Accept-encoding' : 'gzip, deflate' ,
-                      'Content-Type' : 'application/json'
-                  },
-                  body : JSON.stringify(
-                      { 
-                          to : tokenDevice, 
-                          title : 'Approval Lemburan' ,
-                          body  : route.params.nama + ' AGT ' + route.params.area_kerja + ' Mengajukan Lembur , Segera Cek ISECURITY anda' ,
-                          data : {data : 'goes here'} ,
-                          _displayInForeground : false 
-                      }
-                  ),
-                })
+                // fetch('https://exp.host/--/api/v2/push/send',{
+                //   method : 'POST' ,
+                //   headers : {
+                //       Accept : 'application/json' ,
+                //       'Accept-encoding' : 'gzip, deflate' ,
+                //       'Content-Type' : 'application/json'
+                //   },
+                //   body : JSON.stringify(
+                //       { 
+                //           to : tokenDevice, 
+                //           title : 'Approval Lemburan' ,
+                //           body  : route.params.nama + ' AGT ' + route.params.area_kerja + ' Mengajukan Lembur , Segera Cek ISECURITY anda' ,
+                //           data : {data : 'goes here'} ,
+                //           _displayInForeground : false 
+                //       }
+                //   ),
+                // })
                 Alert.alert("Berhasil!", json.message, [
                   { text: "OK", onPress: () => navigation.navigate('Home') },
                 ]);
@@ -304,10 +275,63 @@ export default function InputOT ({navigation , route}){
                   }
                 }}
                 onDateChange={(date) => {
-                   setTglLembur(date);
+                  var urlAksi = 'https://isecuritydaihatsu.com/api/detail_absen?wilayah=' + route.params.wilayah + '&npk=' + route.params.npk + '&tanggal=' + date;
+                  fetch(urlAksi,{
+                      headers : {
+                          'keys-isecurity' : 'isecurity' ,
+                      } ,
+                  })
+                  .then((response) => response.json())
+                  .then((json) => {
+                    console.log(json)
+                      if(json.status === 'success'){
+                          const hasil = json.result ;
+                          setMasukKerja(hasil.in_time);
+                          setPulangKerja(hasil.out_time);
+                      }else {
+                          setMasukKerja('');
+                          setPulangKerja('');
+                      }
+                  })
+                   setTglLembur(date)
                 }}
               />
 
+        <TextInput
+            label='Jam Masuk'
+            mode="flat"
+            value= {masukKerja}
+            editable={false}
+            onChangeText={ onChange }
+            style={{ backgroundColor:'#fff',  }}
+            customStyles = {{
+              TextValue : {
+                marginLeft: 20 ,
+                fontSize : 14 
+              } , 
+              label : {
+                marginLeft : 20 ,
+              }
+            }}
+          />
+        <TextInput
+            label='Jam Pulang'
+            mode="flat"
+            value= {pulangKerja}
+            editable={false}
+            onChangeText={ onChange }
+            style={{ backgroundColor:'#fff',  }}
+            customStyles = {{
+              TextValue : {
+                marginLeft: 20 ,
+                fontSize : 14 
+              } , 
+              label : {
+                marginLeft : 20 ,
+                fontSize: 10 
+              }
+            }}
+          />
               
         <TouchableOpacity style={{marginBottom:5}} onPress={() => showMode('time')}>
           <TextInput
@@ -315,7 +339,7 @@ export default function InputOT ({navigation , route}){
             value={`${mulai}`}
             mode="flat"
             editable={false}
-            onChangeText={onChange }
+            onChangeText={ onChange }
             style={{ backgroundColor:'#fff',  }}
             customStyles = {{
               TextValue : {
