@@ -2,15 +2,16 @@ import React, { Component, useState ,useEffect } from 'react';
 import { View, Text  , FlatList , StyleSheet , Dimensions , Alert} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { DataTable } from 'react-native-paper';
+// import DataTable2 from "react-data-table-component";
 import * as Device from 'expo-device';
 
 const  windowHeight = Dimensions.get('window').height;
 
-export default function Approve ({navigation , route}) {
+export default function ApproveSKTA ({navigation , route}) {
 const [data , setData] = useState('');
 
-    const daftarLembur = () => {
-        var urlAksi = 'https://isecuritydaihatsu.com/api/daftarLembur?wilayah=' + route.params.wilayah
+    const daftarLembur = async () => {
+        var urlAksi = 'https://isecuritydaihatsu.com/api/daftarSKTA?wilayah=' + route.params.wilayah
         fetch(urlAksi,{
             headers : {
                 'keys-isecurity' : 'isecurity' ,
@@ -29,14 +30,6 @@ const [data , setData] = useState('');
     }
 
 
-    const approve = async (id) => {
-       
-    }
-
-    const reject = async (id) => {
-       console.log(id)
-    }
-
     //fungsi untuk menampilkan data absen karyawan
     const showData = () => {
         return (
@@ -46,14 +39,15 @@ const [data , setData] = useState('');
                 <DataTable.Row>
                     <DataTable.Cell>{item.nama}</DataTable.Cell>
                     <DataTable.Cell>{item.area}</DataTable.Cell>
-                    <DataTable.Cell>{item.over_time_start}</DataTable.Cell>
-                    <DataTable.Cell>{item.over_time_end}</DataTable.Cell>
+                    <DataTable.Cell>{item.date_in}</DataTable.Cell>
+                    <DataTable.Cell>{item.in_time}</DataTable.Cell>
+                    <DataTable.Cell>{item.out_time}</DataTable.Cell>
                     <DataTable.Cell>
                         <TouchableOpacity onPress={ () => 
-                        Alert.alert("INFORMASI",  'Approve Lemburan', [
+                        Alert.alert("",  'Approve SKTA', [
                             {text : 'BATAL' , onPress : () => null
                             } ,
-                            {text : 'YA' , onPress : () => fetch('https://isecuritydaihatsu.com/api/ApproveLembur',{
+                            {text : 'YA' , onPress : () => fetch('https://isecuritydaihatsu.com/api/ApproveSKTA',{
                                     headers : {
                                         'keys-isecurity' : 'isecurity' ,
                                         'Content-Type': 'application/json' , 
@@ -61,21 +55,22 @@ const [data , setData] = useState('');
                                     method : 'PUT' , 
                                     body : JSON.stringify({
                                         "id" : item.id,
-                                        "status_approve" : '1'
+                                        "status_approve" : '1' ,
+                                        "id_absen"  : route.params.id_akun
                                     })
                                 })
                                 .then((response) => response.json())
                                 .then((json) => {
-                                if(json.status === 'fail'){
-                                    Alert.alert("GAGAL", json.result, [
-                                        { text: "YA", onPress: () => daftarLembur() },
-                                    ]);
-                                }else {
-                                    Alert.alert("Berhasil!", json.result, [
-                                        { text: "YA", onPress: () => daftarLembur() },
-                                    ]);
-                                }
-                                daftarLembur();
+                                    if(json.status === 'fail'){
+                                        Alert.alert("GAGAL", json.result, [
+                                            { text: "YA", onPress: () => daftarLembur() },
+                                        ]);
+                                    }else {
+                                        Alert.alert("Berhasil!", json.result, [
+                                            { text: "YA", onPress: () => daftarLembur() },
+                                        ]);
+                                    }
+                                    daftarLembur();
                             })}
                         ])
                             
@@ -85,10 +80,10 @@ const [data , setData] = useState('');
                     </DataTable.Cell>
                     <DataTable.Cell>
                         <TouchableOpacity  onPress={() => 
-                        Alert.alert("INFORMASI",  'Tolak Lemburan', [
+                        Alert.alert("",  'Tolak SKTA', [
                              { text: "TIDAK", onPress: () => null },
                              {text : 'YA' , onPress : () => 
-                                fetch('https://isecuritydaihatsu.com/api/ApproveLembur',{
+                                fetch('https://isecuritydaihatsu.com/api/ApproveSKTA',{
                                             headers : {
                                                 'keys-isecurity' : 'isecurity' ,
                                                 'Content-Type': 'application/json' , 
@@ -96,7 +91,8 @@ const [data , setData] = useState('');
                                             method : 'PUT' , 
                                             body : JSON.stringify({
                                                 "id" : item.id,
-                                                "status_approve" : '0'
+                                                "status_approve" : '0' ,
+                                                "id_absen"  : route.params.id_akun
                                             })
                                     })
                                     .then((response) => response.json())
@@ -138,8 +134,9 @@ const [data , setData] = useState('');
                 <DataTable.Row>
                     <DataTable.Cell>Nama</DataTable.Cell>
                     <DataTable.Cell>Area</DataTable.Cell>
-                    <DataTable.Cell>Start</DataTable.Cell>
-                    <DataTable.Cell>End</DataTable.Cell>
+                    <DataTable.Cell>Tanggal</DataTable.Cell>
+                    <DataTable.Cell>IN</DataTable.Cell>
+                    <DataTable.Cell>OUT</DataTable.Cell>
                     <DataTable.Cell>Approve</DataTable.Cell>
                     <DataTable.Cell>Reject</DataTable.Cell>
                 </DataTable.Row>
@@ -158,7 +155,6 @@ const [data , setData] = useState('');
         height : windowHeight
       },
       HeadStyle: { 
-       
         backgroundColor: '#ffe0f0'
       },
       // TableText: { 

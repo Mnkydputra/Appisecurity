@@ -34,8 +34,14 @@ export default function Absen ({navigation,route}) {
       if(route.params.jabatan === 'ANGGOTA'){
         Alert.alert('Perhatian' , 'Hanya bisa di akses Korlap dan PIC');
       }else {
-        Alert.alert('Perhatian', 'Oops sistem masih dalam pengembangan')
-        // navigation.navigate('Send SKTA')
+          navigation.navigate('Approval' , {
+            nama: route.params.nama,
+            npk: route.params.npk,
+            id_akun: route.params.id_akun,
+            wilayah: route.params.wilayah,
+            area_kerja: route.params.area_kerja,
+            jabatan: route.params.jabatan,
+        })
       }
     }
     return (
@@ -48,7 +54,7 @@ export default function Absen ({navigation,route}) {
                 <TouchableOpacity style={styles.followButton} onPress={()=> navigation.navigate('Pengajuan' , {
                     nama: route.params.nama,
                     npk: route.params.npk,
-                    id_akun: route.params.id_absen,
+                    id_akun: route.params.id_akun,
                     wilayah: route.params.wilayah,
                     area_kerja: route.params.area_kerja,
                     jabatan: route.params.jabatan,
@@ -60,17 +66,8 @@ export default function Absen ({navigation,route}) {
             <TouchableOpacity style={[styles.card , {backgroundColor:'#0e9ff7'} ]} >
               <Image style={styles.image} source={require("../src/img/hourglass.png")}/>
               <View style={styles.cardContent}>
-                <Text style={styles.name}>{'Status Overtime'}</Text>
-                <TouchableOpacity style={styles.followButton} onPress={ () => {
-                  navigation.navigate('Approve Overtime' , {
-                    nama: route.params.nama,
-                    npk: route.params.npk,
-                    id_akun: route.params.id_absen,
-                    wilayah: route.params.wilayah,
-                    area_kerja: route.params.area_kerja,
-                    jabatan: route.params.jabatan,
-                })
-                }}>
+                <Text style={styles.name}>{'Approve OT & SKTA'}</Text>
+                <TouchableOpacity style={styles.followButton} onPress={ goTostatus }>
                   <Text style={styles.followButtonText}>View</Text>  
                 </TouchableOpacity>
               </View>
