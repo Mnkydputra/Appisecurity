@@ -1,7 +1,7 @@
 import { registerRootComponent } from 'expo';
 
 import App from './App';
-// import App from './Notif';
+// import App from './screens/Sample';
 
 import {
     // en,

@@ -1,37 +1,15 @@
-import React, { Component , useState , useEffect, useCallback } from 'react';
-import { View, Text , StyleSheet , TouchableOpacity ,FlatList , Alert, Dimensions , Image  ,RefreshControl , ScrollView , ActivityIndicator } from 'react-native';
+import React, { Component , useState , useEffect } from 'react';
+import { View, Text , StyleSheet , TouchableOpacity ,FlatList , Alert, Dimensions , Image } from 'react-native';
 import Button from 'react-native-flat-button'
 import { Card, Title, Paragraph } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 const windowWidth = Dimensions.get('window').width;
 const  windowHeight = Dimensions.get('window').height;
-export default function Approve({navigation, route}) {
+export default function Sample({navigation, route}) {
     const [data , setData] = useState('');
-    const [refreshing, setRefreshing] = useState(false);
-    const [loading,setLoading] = useState(true)
-    //refresh screen home 
-    const wait = (timeout) => {
-        return new Promise(resolve => setTimeout(resolve, timeout));
-    }
-
-
-    const onRefresh = useCallback(() => {
-        setRefreshing(true);
-        daftarLembur();
-        wait(2000).then(() => setRefreshing(false));
-    }, []);
-
-    //fungsi loading 
-    const showLoad = () => {
-        setTimeout(() => {
-          setLoading(false);
-        },3000)
-      }
-    showLoad();
-
     const daftarLembur = () => {
-        var urlAksi = 'https://isecuritydaihatsu.com/api/daftarLembur?wilayah=' + route.params.wilayah
-        // var urlAksi = 'https://isecuritydaihatsu.com/api/daftarLembur?wilayah=wil2'
+        // var urlAksi = 'https://isecuritydaihatsu.com/api/daftarLembur?wilayah=' + route.params.wilayah
+        var urlAksi = 'https://isecuritydaihatsu.com/api/daftarLembur?wilayah=wil2'
         fetch(urlAksi,{
             headers : {
                 'keys-isecurity' : 'isecurity' ,
@@ -122,12 +100,12 @@ export default function Approve({navigation, route}) {
                <Image style={{width:350 ,height:350}} source={ require('../src/img/notfound.jpg')}></Image>
             )
         }else {
-
-           return data.map((item)=> {
-                console.log(item.alasan_lembur)
-                return (
-                    <View   key={item.toString()} >
-                    <Card style={styles.cardKonten}>
+            return(
+                <FlatList 
+                    data={data}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem = {({item}) => (
+                        <Card style={styles.cardKonten}>
                             <Card.Content>
                             <Paragraph style={styles.colorText} >{item.nama} - {item.npk}</Paragraph>
                             <View>
@@ -160,20 +138,13 @@ export default function Approve({navigation, route}) {
                                    <Icon style={{fontWeight:'normal'}} name="check" ></Icon> Approve Overtime
                                 </Button>
                                 </TouchableOpacity>
+                               
                             </View>
                             </Card.Content>
                         </Card>
-                    </View>
-
-                )
-            })
-                // <FlatList 
-                //     data={data}
-                //     keyExtractor={(item, index) => index.toString()}
-                //     renderItem = {({item}) => (
-                        
-                //     )}
-                // /> 
+                    )}
+                />   
+            )
         }     
     }
 
@@ -183,20 +154,11 @@ export default function Approve({navigation, route}) {
         },[])
 
     return (
-        <>
-        {
-            loading ? 
-            <View style={{flex : 1 , justifyContent : 'center'}}>
-              <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
-            </View>
-            :
-            <ScrollView contentContainerStyle={styles.container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-                <View style={styles.container}>
-                        {showData()}
-                </View>
-            </ScrollView> 
-        }
-        </>
+      <View style={styles.container} >
+        <View style={{marginTop:'20%'}}>
+            {showData()}
+        </View>
+      </View>
     );
   }
 
@@ -204,8 +166,7 @@ export default function Approve({navigation, route}) {
         container : {
             flex: 1,
             alignContent:'center' ,
-            alignItems:'center' ,
-            backgroundColor :'#fff'
+            alignItems:'center'
         } ,
         buttonContainer: {
             width: 150,
@@ -217,7 +178,6 @@ export default function Approve({navigation, route}) {
           cardKonten : {
             backgroundColor:'#254079', 
             borderRadius:12 ,
-            marginTop:3 ,
             width : windowWidth - 10
           },
           content : {
