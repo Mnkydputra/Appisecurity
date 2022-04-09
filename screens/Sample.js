@@ -1,12 +1,11 @@
-import React, { Component , useState , useEffect,useCallback } from 'react';
-import { View, Text , StyleSheet , TouchableOpacity ,FlatList , Alert, Dimensions , Image,RefreshControl , ScrollView , ActivityIndicator } from 'react-native';
+import React, { Component , useState , useEffect, useCallback } from 'react';
+import { View, Text , StyleSheet , TouchableOpacity ,FlatList , Alert, Dimensions , Image  ,RefreshControl , ScrollView , ActivityIndicator } from 'react-native';
 import Button from 'react-native-flat-button'
-import { Card, Title, Paragraph , Badge  } from 'react-native-paper';
+import { Card, Title, Paragraph } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 const windowWidth = Dimensions.get('window').width;
 const  windowHeight = Dimensions.get('window').height;
-
-export default function Sample({navigation, route}) {
+export default function Sample() {
     const [data , setData] = useState('');
     const [refreshing, setRefreshing] = useState(false);
     const [loading,setLoading] = useState(true)
@@ -29,9 +28,10 @@ export default function Sample({navigation, route}) {
         },3000)
     }
     showLoad();
+
     const daftarLembur = () => {
         // var urlAksi = 'https://isecuritydaihatsu.com/api/daftarLembur?wilayah=' + route.params.wilayah
-        var urlAksi = 'https://isecuritydaihatsu.com/api/statusLembur?npk=228572'
+        var urlAksi = 'https://isecuritydaihatsu.com/api/daftarSKTA?wilayah=wil2'
         fetch(urlAksi,{
             headers : {
                 'keys-isecurity' : 'isecurity' ,
@@ -41,7 +41,6 @@ export default function Sample({navigation, route}) {
         .then((json) => {
             if(json.status === 'failed'){
                 setData('')
-                console.log(json.status)
             }else {
                 const hasil =  json.result ;
                 console.log(hasil)
@@ -50,54 +49,126 @@ export default function Sample({navigation, route}) {
         })
     }
 
-   function renderSwitch(param) {
-        switch(param) {
-          case '1':
-            return (
-                <>
-                    <Badge style={[styles.infoBTN , {backgroundColor: '#6BCB77',color:'#fff'}]}>Accept</Badge> 
-                </>
-            )
-            case '2':
-            return (
-                <>
-                    <Badge style={[styles.infoBTN, {color:'#fff'}]}>Ditolak</Badge> 
-                </>
-            )
-          default:
-            return (
-                <>
-                    <Badge style={[styles.infoBTN,{backgroundColor: '#4D96FF' , color:'#fff'}]}>Menunggu Approval</Badge> 
-                </>
-            )
-        }
-      }
+
+    //reject lemburan
+    const reject = (id) => {
+        Alert.alert("Perhatian",  'Tolak SKTA', [
+            { text: "TIDAK", onPress: () => null },
+            {text : 'YA' , onPress : () => 
+               fetch('https://isecuritydaihatsu.com/api/ApproveSKTA',{
+                           headers : {
+                               'keys-isecurity' : 'isecurity' ,
+                               'Content-Type': 'application/json' , 
+                           } ,
+                           method : 'PUT' , 
+                           body : JSON.stringify({
+                               "id" : id,
+                               "status_approve" : '0' ,
+                               "id_absen"  : "AGT-228572"
+                           })
+                   })
+                   .then((response) => response.json())
+                   .then((json) => {
+                       if(json.status === 'fail'){
+                           Alert.alert("INFORMASI", json.result, [
+                               { text: "YA", onPress: () => daftarLembur() },
+                           ]);
+                       }else {
+                           Alert.alert("Berhasil!", json.result, [
+                               { text: "YA", onPress: () => daftarLembur() },
+                           ]);
+                       }
+                       daftarLembur();
+                   })
+               }
+       ])
+    }
+
+    //approve lemburan
+    const approve = (id) => {
+        Alert.alert("Perhatian",  'Approve SKTA', [
+            {text : 'BATAL' , onPress : () => null
+            } ,
+            {text : 'YA' , onPress : () => fetch('https://isecuritydaihatsu.com/api/ApproveSKTA',{
+                    headers : {
+                        'keys-isecurity' : 'isecurity' ,
+                        'Content-Type': 'application/json' , 
+                    } ,
+                    method : 'PUT' , 
+                    body : JSON.stringify({
+                        "id" : id,
+                        "status_approve" : '1' ,
+                        "id_absen"  : "AGT-228572"
+                    })
+                })
+                .then((response) => response.json())
+                .then((json) => {
+                    console.log(json)
+                if(json.status === 'fail'){
+                    Alert.alert("GAGAL", json.result, [
+                        { text: "YA", onPress: () => daftarLembur() },
+                    ]);
+                }else {
+                    Alert.alert("Berhasil!", json.result, [
+                        { text: "YA", onPress: () => daftarLembur() },
+                    ]);
+                }
+                daftarLembur();
+            })}
+        ])
+    }
+
     const showData = () => {
+
         if(data === '' || data == null){
             return(
                <Image style={{width:350 ,height:350}} source={ require('../src/img/notfound.jpg')}></Image>
             )
         }else {
-            return data.map((item)=> {
+
+           return data.map((item)=> {
+                console.log(item.alasan_lembur)
                 return (
-                    <View key={item.id} >
-                        <Card style={styles.cardStyle} >
+                    <View key={item.id.toString()} >
+                    <Card style={styles.cardKonten}>
                             <Card.Content>
-                            <Title style={{fontSize:12}}>Pengajuan Overtime</Title>
-                            <View style={styles.layout}>
-                            <View style={{width:'60%'}}>
-                                <Text style={styles.textT}>{item.alasan_lembur} </Text>
-                                <Text style={styles.textT}>{item.date_lembur} {item.over_time_start}-{item.over_time_end}</Text>
-                            </View>
+                            <Paragraph style={styles.colorText} >{item.nama} - {item.npk}</Paragraph>
                             <View>
-                            {
-                                renderSwitch(item.status_lembur) 
-                            }
+                                <Text style={styles.colorText}>Tanggal : {item.date_in}</Text>
+                                <Text style={styles.colorText}>Jam Masuk : {item.in_time}</Text>
+                                <Text style={styles.colorText}>Jam Pulang : {item.out_time}</Text>
+                                <Text style={styles.colorText}>Keterangan  : {item.keterangan}</Text>
                             </View>
+                            <View style={{ 
+                                flexDirection: "row",
+                                flexWrap: "wrap"
+                            }}>
+                               <TouchableOpacity>
+                                <Button
+                                    type="negative"
+                                    onPress={() => reject(item.id)}
+                                    containerStyle={styles.buttonContainer}
+                                    contentStyle={styles.content}
+                                >
+                                     <Icon style={{fontWeight:'normal'}} name="close" ></Icon> Reject
+                                </Button>
+                                </TouchableOpacity>
+    
+                                <TouchableOpacity>
+                                <Button
+                                type="positive"
+                                onPress={() => approve(item.id)}
+                                containerStyle={styles.buttonContainer}
+                                contentStyle={styles.content}
+                                >
+                                   <Icon style={{fontWeight:'normal'}} name="check" ></Icon> Approve SKTA
+                                </Button>
+                                </TouchableOpacity>
                             </View>
                             </Card.Content>
                         </Card>
                     </View>
+
                 )
             })
         }     
@@ -110,14 +181,14 @@ export default function Sample({navigation, route}) {
     return (
         <>
         {
-          loading ? 
+            loading ? 
             <View style={{flex : 1 , justifyContent : 'center'}}>
               <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
             </View>
             :
             <ScrollView contentContainerStyle={styles.container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                 <View style={styles.container}>
-                    {showData()}
+                        {showData()}
                 </View>
             </ScrollView> 
         }
@@ -126,48 +197,32 @@ export default function Sample({navigation, route}) {
   }
 
   const styles = StyleSheet.create({
-    container : {
-        flex: 1,
-    } ,
-    buttonContainer: {
-        width: 150,
-        height: 30,
-        fontSize : 3 ,
-        margin:3 ,
-        borderRadius : 3 
-      },
-      cardStyle : {
-        borderStartColor:'blue', 
-        borderStartWidth: 3 ,
-        marginTop:5 , 
-        margin:5 
-      },
-      cardKonten : {
-        backgroundColor:'#254079', 
-        borderRadius:12 ,
-        marginTop:3 ,
-        width : windowWidth - 10
-      },
-      content : {
-        fontSize:13,
-        fontWeight: 'normal' ,
-        color : '#fff'
-      } ,
-      colorText : {
-          color :'#fff'
-      } ,
-      textT : {
-          color:'#000',
-          fontSize:10
-       } ,
-       layout : {
-            flexDirection: "row",
-            flexWrap: "wrap"
-       } ,
-       infoBTN : {
-           fontSize:14,
-           height:30,
-           width:'100%'
-        }
+        container : {
+            flex: 1,
+            alignContent:'center' ,
+            alignItems:'center' ,
+            backgroundColor :'#fff'
+        } ,
+        buttonContainer: {
+            width: 150,
+            height: 30,
+            fontSize : 3 ,
+            margin:3 ,
+            borderRadius : 3 
+          },
+          cardKonten : {
+            backgroundColor:'#254079', 
+            borderRadius:12 ,
+            marginTop:3 ,
+            width : windowWidth - 10
+          },
+          content : {
+            fontSize:13,
+            fontWeight: 'normal' ,
+            color : '#fff'
+          } ,
+          colorText : {
+              color :'#fff'
+          }
 
   });

@@ -8,6 +8,7 @@ const  windowHeight = Dimensions.get('window').height;
 
 export default function StatusOT({navigation, route}) {
     const [data , setData] = useState('');
+    const [skta , setDataSKTA] = useState('');
     const [refreshing, setRefreshing] = useState(false);
     const [loading,setLoading] = useState(true)
     //refresh screen home 
@@ -18,6 +19,7 @@ export default function StatusOT({navigation, route}) {
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         daftarLembur();
+        daftarSKTA();
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
@@ -28,6 +30,7 @@ export default function StatusOT({navigation, route}) {
         },3000)
     }
     showLoad();
+
     const daftarLembur = () => {
         var urlAksi = 'https://isecuritydaihatsu.com/api/statusLembur?npk=' + route.params.npk
         // var urlAksi = 'https://isecuritydaihatsu.com/api/statusLembur?npk=228572'
@@ -46,6 +49,27 @@ export default function StatusOT({navigation, route}) {
                 const hasil =  json.result ;
                 console.log(hasil)
                 setData(hasil)
+            }
+        })
+    }
+
+    const daftarSKTA = () => {
+        var urlAksi = 'https://isecuritydaihatsu.com/api/statusSKTA?npk=' + route.params.npk
+        // var urlAksi = 'https://isecuritydaihatsu.com/api/statusLembur?npk=228572'
+        fetch(urlAksi,{
+            headers : {
+                'keys-isecurity' : 'isecurity' ,
+            } ,
+        })
+        .then((response) => response.json())
+        .then((json) => {
+            if(json.status === 'failed'){
+                setDataSKTA('')
+                console.log(json.status)
+            }else {
+                const hasil =  json.result ;
+                console.log(hasil)
+                setDataSKTA(hasil)
             }
         })
     }
@@ -72,10 +96,34 @@ export default function StatusOT({navigation, route}) {
             )
         }
       }
+
+      function renderSKTA(param) {
+        switch(param) {
+          case '1':
+            return (
+                <>
+                    <Badge style={[styles.infoBTN , {backgroundColor: '#6BCB77',color:'#fff'}]}>SKTA Diterima</Badge> 
+                </>
+            )
+            case '2':
+            return (
+                <>
+                    <Badge style={[styles.infoBTN, {color:'#fff'}]}>SKTA Ditolak</Badge> 
+                </>
+            )
+          default:
+            return (
+                <>
+                    <Badge style={[styles.infoBTN,{backgroundColor: '#4D96FF' , color:'#fff'}]}>Menunggu Approval</Badge> 
+                </>
+            )
+        }
+      }
+
     const showData = () => {
         if(data === '' || data == null){
             return(
-               <Image style={{width:350 ,height:350}} source={ require('../src/img/notfound.jpg')}></Image>
+               <Text></Text>
             )
         }else {
             return data.map((item)=> {
@@ -103,8 +151,42 @@ export default function StatusOT({navigation, route}) {
         }     
     }
 
+    const showDataSKTA = () => {
+        if(skta === '' || skta == null){
+            return(
+                <Text></Text>
+            )
+        }else {
+            return skta.map((item)=> {
+                return (
+                    <View key={item.id} >
+                        <Card style={styles.cardStyle} >
+                            <Card.Content>
+                            <Title style={{fontSize:12}}>Pengajuan SKTA</Title>
+                            <View style={styles.layout}>
+                            <View style={{width:'60%'}}>
+                                <Text style={styles.textT}>{item.date_in} </Text>
+                                <Text style={styles.textT}>{item.in_time}-{item.out_time}</Text>
+                            </View>
+                            <View>
+                            {
+                                renderSKTA(item.status) 
+                            }
+                            </View>
+                            </View>
+                            </Card.Content>
+                        </Card>
+                    </View>
+                )
+            })
+        }     
+    }
+
+
+
         useEffect(() => {
             daftarLembur();
+            daftarSKTA();
             console.log(route.params.npk)
         },[])
 
@@ -119,6 +201,9 @@ export default function StatusOT({navigation, route}) {
             <ScrollView contentContainerStyle={styles.container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                 <View style={styles.container}>
                     {showData()}
+                    {showDataSKTA()}
+
+                    
                 </View>
             </ScrollView> 
         }
