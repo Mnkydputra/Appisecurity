@@ -44,6 +44,7 @@ public class MainApplication extends Application implements ReactApplication {
       // packages.add(new MyReactNativePackage());
       packages.add(new RNFirebaseAppPackage());
       packages.add(new RNFirebaseMessagingPackage());
+      
       return packages;
     }
 

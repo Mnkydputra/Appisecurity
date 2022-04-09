@@ -26,7 +26,7 @@ export default function Approve({navigation, route}) {
         setTimeout(() => {
           setLoading(false);
         },3000)
-      }
+    }
     showLoad();
 
     const daftarLembur = () => {
@@ -126,7 +126,7 @@ export default function Approve({navigation, route}) {
            return data.map((item)=> {
                 console.log(item.alasan_lembur)
                 return (
-                    <View   key={item.toString()} >
+                    <View key={item.id.toString()} >
                     <Card style={styles.cardKonten}>
                             <Card.Content>
                             <Paragraph style={styles.colorText} >{item.nama} - {item.npk}</Paragraph>
@@ -167,13 +167,6 @@ export default function Approve({navigation, route}) {
 
                 )
             })
-                // <FlatList 
-                //     data={data}
-                //     keyExtractor={(item, index) => index.toString()}
-                //     renderItem = {({item}) => (
-                        
-                //     )}
-                // /> 
         }     
     }
 

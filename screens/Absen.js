@@ -88,6 +88,23 @@ export default function Absen ({navigation,route}) {
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
+
+            <TouchableOpacity style={[styles.card , {backgroundColor:'#04314d'} ]} >
+              <Image style={styles.image} source={ require('../src/img/absen2.png')}/>
+              <View style={styles.cardContent}>
+                <Text style={styles.name}>{'Status Pengajuan'}</Text>
+                <TouchableOpacity style={styles.followButton} onPress={ () => navigation.navigate('Status Pengajuan' , {
+                    nama: route.params.nama,
+                    npk: route.params.npk,
+                    id_akun: route.params.id_absen,
+                    wilayah: route.params.wilayah,
+                    area_kerja: route.params.areaKerja,
+                    jabatan: route.params.jabatan,
+                })}>
+                  <Text style={styles.followButtonText}>View</Text>  
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
       </View>
     );
   }

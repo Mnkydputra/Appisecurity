@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const windowWidth = Dimensions.get('window').width;
 const  windowHeight = Dimensions.get('window').height;
 
-export default function Sample({navigation, route}) {
+export default function StatusOT({navigation, route}) {
     const [data , setData] = useState('');
     const [refreshing, setRefreshing] = useState(false);
     const [loading,setLoading] = useState(true)
@@ -14,7 +14,6 @@ export default function Sample({navigation, route}) {
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     }
-
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -30,8 +29,8 @@ export default function Sample({navigation, route}) {
     }
     showLoad();
     const daftarLembur = () => {
-        // var urlAksi = 'https://isecuritydaihatsu.com/api/daftarLembur?wilayah=' + route.params.wilayah
-        var urlAksi = 'https://isecuritydaihatsu.com/api/statusLembur?npk=228572'
+        var urlAksi = 'https://isecuritydaihatsu.com/api/statusLembur?npk=' + route.params.npk
+        // var urlAksi = 'https://isecuritydaihatsu.com/api/statusLembur?npk=228572'
         fetch(urlAksi,{
             headers : {
                 'keys-isecurity' : 'isecurity' ,
@@ -39,6 +38,7 @@ export default function Sample({navigation, route}) {
         })
         .then((response) => response.json())
         .then((json) => {
+            console.log(route.params.npk)
             if(json.status === 'failed'){
                 setData('')
                 console.log(json.status)
@@ -55,13 +55,13 @@ export default function Sample({navigation, route}) {
           case '1':
             return (
                 <>
-                    <Badge style={[styles.infoBTN , {backgroundColor: '#6BCB77',color:'#fff'}]}>Accept</Badge> 
+                    <Badge style={[styles.infoBTN , {backgroundColor: '#6BCB77',color:'#fff'}]}>Overtime Diterima</Badge> 
                 </>
             )
             case '2':
             return (
                 <>
-                    <Badge style={[styles.infoBTN, {color:'#fff'}]}>Ditolak</Badge> 
+                    <Badge style={[styles.infoBTN, {color:'#fff'}]}>Overtime Ditolak</Badge> 
                 </>
             )
           default:
@@ -105,6 +105,7 @@ export default function Sample({navigation, route}) {
 
         useEffect(() => {
             daftarLembur();
+            console.log(route.params.npk)
         },[])
 
     return (

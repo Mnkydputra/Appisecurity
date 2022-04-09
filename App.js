@@ -27,6 +27,7 @@ import Register from './screens/Register';
 import ApproveLembur from './screens/Approve Lembur';
 import ApproveSKTA from './screens/Approve SKTA';
 import Approval from './screens/Approval';
+import StatusOT from './screens/Status OT';
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
@@ -85,7 +86,8 @@ export default function App() {
           <Stack.Screen name='Laporan Absen'  component={LaporanAbsen}></Stack.Screen>
           <Stack.Screen name='Approve Overtime'  component={ApproveLembur}></Stack.Screen>
           <Stack.Screen name='Approve SKTA'  component={ApproveSKTA}></Stack.Screen>
-          <Stack.Screen name='Approval'  component={Approval}></Stack.Screen>
+          <Stack.Screen name='Approval' component={Approval}></Stack.Screen>
+          <Stack.Screen name='Status Pengajuan' component={StatusOT}></Stack.Screen>
         {/* end */}
 
       </Stack.Navigator>
