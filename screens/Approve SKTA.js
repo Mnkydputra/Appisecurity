@@ -5,7 +5,7 @@ import { Card, Title, Paragraph } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 const windowWidth = Dimensions.get('window').width;
 const  windowHeight = Dimensions.get('window').height;
-export default function Sample() {
+export default function ApproveSKTA({navigation,route}) {
     const [data , setData] = useState('');
     const [refreshing, setRefreshing] = useState(false);
     const [loading,setLoading] = useState(true)
