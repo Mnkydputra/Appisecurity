@@ -41,7 +41,7 @@ export default function Absen ({navigation,route}) {
     return (
         <View style={styles.container}>
 
-            <TouchableOpacity style={[styles.card , {backgroundColor:'#0968a2'} ]}>
+            <TouchableOpacity style={styles.card}>
               <Image style={styles.image} source={ require('../src/img/article.png')}/>
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{'Pengajuan (OT & SKTA)'}</Text>
@@ -57,7 +57,7 @@ export default function Absen ({navigation,route}) {
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.card , {backgroundColor:'#0e9ff7'} ]} >
+            <TouchableOpacity style={styles.card} >
               <Image style={styles.image} source={require("../src/img/hourglass.png")}/>
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{'Status Overtime'}</Text>
@@ -66,7 +66,7 @@ export default function Absen ({navigation,route}) {
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.card , {backgroundColor:'#04314d'} ]} >
+            <TouchableOpacity style={styles.card} >
               <Image style={styles.image} source={ require('../src/img/absen2.png')}/>
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{'History Absensi'}</Text>
@@ -91,7 +91,7 @@ export default function Absen ({navigation,route}) {
     container:{
         flex:1,
         marginTop:20,
-        backgroundColor:"#ebf0f7"
+        backgroundColor:"#50C4DE"
       },
       contentList:{
         flex:1,
@@ -103,8 +103,6 @@ export default function Absen ({navigation,route}) {
       image:{
         width:85,
         height:85,
-        // borderRadius:20,
-        // borderWidth:2,
         borderColor:"#ebf0f7"
       },
     
@@ -131,7 +129,7 @@ export default function Absen ({navigation,route}) {
         fontSize:18,
         flex:1,
         alignSelf:'center',
-        color:"#fff",
+        color:"#000",
         fontWeight:'bold'
       },
       count:{
@@ -155,7 +153,7 @@ export default function Absen ({navigation,route}) {
       },
       followButtonText:{
         color: "#FFF",
-        fontSize:12,
+        fontSize:18,
       },
   
   })

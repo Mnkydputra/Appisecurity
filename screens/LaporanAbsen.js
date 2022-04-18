@@ -2,14 +2,7 @@ import React, { Component , useState , useEffect } from 'react';
 import { View, Text , StyleSheet , BackHandler , FlatList , TouchableOpacity , Dimensions , ActivityIndicator , Image } from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import BackButton from "../src/component/BackButton";
-import Background from "../src/component/Background";
-import Logo from "../src/component/Logo";
-import Header from "../src/component/Header";
-import Button from "../src/component/Button";
-import Paragraph from "../src/component/Paragraph";
-const windowWidth = Dimensions.get('window').width;
-const  windowHeight = Dimensions.get('window').height;
+const { width, height } = Dimensions.get("window");
 export default function Profile({navigation , route }) {
 
 
@@ -64,12 +57,9 @@ export default function Profile({navigation , route }) {
                       wilayah : route.params.wilayah 
                     })} >
           <View style={styles.row}>
-            <View>
+            <View style={styles.headerViewAbsen}>
               <View style={styles.nameContainer}>
                 <Text style={styles.nameTxt} numberOfLines={1} ellipsizeMode="tail">{item.bulan}</Text>
-                <Text style={styles.mblTxt}>
-                </Text>
-                <Icon style={styles.mblTxt} name="chevron-right" ></Icon>
               </View>
               <View style={styles.msgContainer}>
                 {/* <Text style={styles.msgTxt}>{item.status}</Text> */}
@@ -81,7 +71,7 @@ export default function Profile({navigation , route }) {
     }
 
     return (
-      <View style={{flex:1 , backgroundColor:'#fff'}}>
+      <View style={{flex:1 , backgroundColor:'#50C4DE'}}>
       { loading ? 
           <View style={{flex : 1 , justifyContent : 'center'}}>
               <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
@@ -104,12 +94,9 @@ export default function Profile({navigation , route }) {
 
   const styles = StyleSheet.create({
     row: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      borderColor: '#DCDCDC',
-      backgroundColor: '#fff',
-      borderBottomWidth: 1,
-      padding: 10,
+      flex: 1, 
+      margin:10,
+      backgroundColor: "#50C4DE",
     },
     pic: {
       borderRadius: 30,
@@ -117,16 +104,20 @@ export default function Profile({navigation , route }) {
       height: 60,
     },
     nameContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      width: 280,
+    width: width * 0.95, // 80% of screen's width
+    height: height * 0.08, // 20% of screen's height
+    alignItems: "center",
+    borderRadius: 15,
+    padding:5,
+    backgroundColor:"#fff",
+    
     },
     nameTxt: {
-      marginLeft: 15,
-      fontWeight: '600',
+      fontWeight: 'bold',
+      alignItems: "center",
+      padding:15,
       color: '#222',
       fontSize: 18,
-      width:170,
     },
     mblTxt: {
       fontWeight: '200',
@@ -145,8 +136,5 @@ export default function Profile({navigation , route }) {
       fontSize: 12,
       marginLeft: 15,
     },
-
-
-
   })
 

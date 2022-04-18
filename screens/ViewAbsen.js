@@ -2,6 +2,7 @@ import React, { Component  ,useState , useEffect } from 'react';
 import { View, Text , StyleSheet , BackHandler ,FlatList ,ActivityIndicator ,  Dimensions} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import { DataTable } from 'react-native-paper';
+const { width, height } = Dimensions.get("window");
 
 const  windowHeight = Dimensions.get('window').height;
 export default function ViewAbsen ({navigation,route}) {
@@ -78,13 +79,14 @@ const showData = () => {
        <FlatList 
           data={dataAbsen}
           renderItem = {({item}) => (
-             
-              <DataTable.Row style={{display:'flex'}}>
-                  <DataTable.Cell>{item.time}</DataTable.Cell>
-                  <DataTable.Cell>{item.in_time}</DataTable.Cell>
-                  <DataTable.Cell>{item.out_time}</DataTable.Cell>
-                  <DataTable.Cell>{item.ket}</DataTable.Cell>
+             <View >
+              <DataTable.Row  style={styles.row}>
+                  <DataTable.Cell >{item.time}</DataTable.Cell>
+                  <DataTable.Cell >{item.in_time}</DataTable.Cell>
+                  <DataTable.Cell >{item.out_time}</DataTable.Cell>
+                  <DataTable.Cell >{item.ket}</DataTable.Cell>
               </DataTable.Row>
+              </View>
           )}
           keyExtractor={(item, index) => index.toString()}
         />    
@@ -102,13 +104,13 @@ const showData = () => {
               <ActivityIndicator style={{flex:1 , justifyContent:'center' , alignItems : 'center' , alignContent : 'center'}} size="large" color = 'red'></ActivityIndicator>
             </View>
             :
-            <View >
+            <View style={styles.container2} >
                 <DataTable style={{height : windowHeight}}>
-                <DataTable.Row style={{marginTop:20}}>
-                    <DataTable.Cell>Tanggal</DataTable.Cell>
-                    <DataTable.Cell>IN</DataTable.Cell>
-                    <DataTable.Cell>OUT</DataTable.Cell>
-                    <DataTable.Cell>KET</DataTable.Cell>
+                <DataTable.Row style={styles.row}>
+                    <DataTable.Cell >TANGGAL</DataTable.Cell>
+                    <DataTable.Cell >IN</DataTable.Cell>
+                    <DataTable.Cell >OUT</DataTable.Cell>
+                    <DataTable.Cell >KET</DataTable.Cell>
                   </DataTable.Row>
                     { showData()  }
               </DataTable>
@@ -121,15 +123,40 @@ const showData = () => {
 
 const styles = StyleSheet.create({
     container: { 
-        flex: 1,
-        backgroundColor: '#FFF'  ,
-        height : windowHeight
+      flex: 1,
+      paddingTop: 30,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "#50C4DE",
       },
-      HeadStyle: { 
-       
-        backgroundColor: '#ffe0f0'
+      row:{
+        flex: 1, 
+        margin:10,
+        backgroundColor: "#ffff",
+        borderRadius:15,
       },
-      // TableText: { 
-      //   margin: 10
-      // }
+      container2: { 
+        backgroundColor: "#50C4DE",
+        },
+      header:{
+        flex:1,
+        backgroundColor: "#Fff",
+        width: width * 0.90, // 80% of screen's width
+        height: height * 0.05, // 20% of screen's height
+        borderRadius: 10,
+        margin: 10,
+        alignItems:'center',
+        
+      },
+      table: {
+        backgroundColor: "#Fff",
+        width: width * 0.05, // 80% of screen's width
+        height: height * 0.05, // 20% of screen's height
+        borderRadius: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        margin: 5,
+        padding: 10,
+        
+      },
   });

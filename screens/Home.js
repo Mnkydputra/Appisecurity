@@ -160,7 +160,7 @@ showLoad();
                   }
                 >
                   <Text style={{ fontWeight: "bold" }}>
-                    <Icon name="user-circle" backgroundColor="#3b5998" style={{ fontSize: 25, marginTop: 2 }}></Icon> Hai , <Text style={{ textDecorationLine: "underline" }}>{user.nama}</Text>
+                    <Icon name="user-circle" backgroundColor="#3b5998" style={{ fontSize: 25, marginTop: 2 }}></Icon> <Text style={{ textDecorationLine: "underline" }}>{user.nama}</Text>
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -179,7 +179,7 @@ showLoad();
                 >
                   <View style={styles.linkAbsen}>
                     <Image style={styles.scanIMG} source={require("../src/img/scan.png")}></Image>
-                    <Text style={{ fontSize: 20, color: "#1398c2" }}>Absen</Text>
+                    <Text style={{ fontSize: 20, color: "#fff" }}> scan QR code</Text>
                   </View>
                   <View style={{
                     flex:1 ,
@@ -205,7 +205,7 @@ showLoad();
                     })
                   }
                 >
-                  <View style={[styles.menuBox, { backgroundColor: "#789dec" }]}>
+                  <View style={styles.menuBox}>
                     <Image style={styles.icon} source={require("../src/img/security-man.png")} />
                     <Text style={styles.info}>Profile</Text>
                   </View>
@@ -223,37 +223,37 @@ showLoad();
                     })
                   }
                 >
-                  <View style={[styles.menuBox, { backgroundColor: "#274c67" }]}>
+                  <View style={styles.menuBox}>
                     <Image style={styles.icon} source={require("../src/img/clock.png")} />
                     <Text style={styles.info}>Absensi</Text>
                   </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={informasi}>
-                  <View style={[styles.menuBox, { backgroundColor: "#0f8c74" }]}>
+                  <View style={styles.menuBox}>
                     <Image style={styles.icon} source={require("../src/img/mail-box.png")} />
                     <Text style={styles.info}>Inbox</Text>
                   </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={patrol}>
-                  <View style={[styles.menuBox, { backgroundColor: "#e75876" }]}>
-                    <Image style={styles.icon} source={require("../src/img/guard(1).png")} />
-                    <Text style={styles.info}>I-Patrol</Text>
-                  </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={informasi}>
-                  <View style={[styles.menuBox, { backgroundColor: "#a64dff" }]}>
+                {/* <TouchableOpacity onPress={informasi}>
+                  <View style={styles.menuBox}>
                     <Image style={styles.icon} source={require("../src/img/permit.png")} />
                     <Text style={styles.info}>Ijin</Text>
                   </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 <TouchableOpacity onPress={informasi}>
-                  <View style={[styles.menuBox, { backgroundColor: "#324eec" }]}>
+                  <View style={styles.menuBox}>
                     <Image style={styles.icon} source={require("../src/img/online-course.png")} />
                     <Text style={styles.info}>Course</Text>
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={patrol}>
+                  <View style={styles.menuBox}>
+                    <Image style={styles.icon} source={require("../src/img/guard(1).png")} />
+                    <Text style={styles.info}>I-Patrol</Text>
                   </View>
                 </TouchableOpacity>
                 </View>

@@ -8,45 +8,38 @@ export default StyleSheet.create({
     paddingTop: 30,
     width: "100%",
     height: "100%",
-    // backgroundColor: "#87CEFA",
-    backgroundColor: "#fff",
+    backgroundColor: "#50C4DE",
   },
   scrollView: {
     flex: 1,
   },
   header: {
-    backgroundColor: "#ff8f00",
-    // backgroundColor: "#efa01f",
-    width: "94%",
-    height: "15%",
-    borderRadius: 6,
+    backgroundColor: "#fff",
+    width: width * 0.92, // 80% of screen's width
+    height: height * 0.15, // 20% of screen's height
+    borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
-    margin: 10,
+    margin: 15,
   },
+
   row: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginLeft: 9,
+    margin: 9,
+    
   },
   menuBox: {
-    // width: 80,
-    // height: 85,
-    // borderRadius: 15,
-    // alignItems: "center",
-    // justifyContent: "center",
-    // margin: windowWidth / 22,
-    
-    //update screen responsive
     width: width * 0.28, // 80% of screen's width
     height: height * 0.13, // 20% of screen's height
     alignItems: "center",
-    borderRadius: 15,
+    borderRadius: 25,
     justifyContent : "center",
-    margin: windowWidth /  65,
+    margin: windowWidth /  55,
+    backgroundColor:"#fff",
   },
   linkAbsen: {
-    backgroundColor: "#FFF",
+    backgroundColor: "#00C19F",
     width: 180,
     alignItems: "center",
     justifyContent: "center",
@@ -67,8 +60,10 @@ export default StyleSheet.create({
     height: 30,
   },
   info: {
-    fontSize: 17,
-    color: "#FFF",
+    fontSize: 15,
+    color: "#000000",
+    fontWeight:"bold",
+    fontStyle:"normal",
   },
   headText: {
     margin: 15,

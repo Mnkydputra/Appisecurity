@@ -3,7 +3,7 @@
     "name": "isecurity",
     "slug": "isecurity",
     "version": "1.0.0",
-    "icon" : "src/img/app_js.png" ,
+    "icon" : "src/img/Login.png" ,
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -11,7 +11,7 @@
       [
         "expo-notifications",
         {
-          "icon": "src/img/app_js.png",
+          "icon": "src/img/Login.png",
           "color": "#ffffff"
         }
       ]
@@ -19,7 +19,7 @@
     "android": {
       "package": "com.dasep12.isecurity" ,
       "adaptiveIcon": {
-        "foregroundImage": "src/img/app_js.png",
+        "foregroundImage": "src/img/Login.png",
         "backgroundColor": "#50dbb6"
       }
     }

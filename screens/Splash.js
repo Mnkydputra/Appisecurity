@@ -7,16 +7,17 @@ export default function Splash({navigation,route})  {
 
     setTimeout(() => {
       navigation.dispatch(StackActions.replace('Home'))
-    },3000)
+    },9000)
   },[])
 
 
     return (
       <View style={{flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',}}>
+        justifyContent: 'center',
+        backgroundColor: "#fff",}}>
 
-       <Image style={{height:250, width:250}} source={{uri : "https://cdn-icons-png.flaticon.com/512/1801/1801293.png"}}></Image>
+       <Image style={{height:250, width:250}} source={require("../src/img/Login.png")}></Image>
       </View>
     );
   }

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet  , BackHandler , ScrollView , TouchableOpacity ,
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 
 
+
 import Background from "../src/component/Background";
 import Logo from "../src/component/Logo";
 import Header from "../src/component/Header";
@@ -14,6 +15,7 @@ import { theme } from "../src/core/theme";
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 const windowWidth = Dimensions.get('window').width;
+const { width, height } = Dimensions.get("window");
 
 export default function EditProfile ({navigation,route}) {
     const [status , setStatus] = useState({kta: '', expired_kta: '',ktp: '',masuk_adm: '' , masuk_sigap : ''});
@@ -106,11 +108,11 @@ export default function EditProfile ({navigation,route}) {
     return (
       <View style={{flex:1}}>
           {loading ? 
-            <View style={{flex : 1 , justifyContent : 'center'}}>
+            <View style={{flex : 1 , justifyContent : 'center' }}>
               <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
             </View>
           :
-          <ScrollView style={{backgroundColor:'#fff'}}>
+          <ScrollView style={{backgroundColor:'#50C4DE'}}>
             <View style={styles.container}>
             <View style={styles.marginTextInput}>
             
@@ -259,8 +261,15 @@ export default function EditProfile ({navigation,route}) {
 
 const styles = StyleSheet.create({
     container : {
-        flex :2 , 
-        margin: 14 ,
+        // flex :2 , 
+        // margin: 14 ,
+        // backgroundColor:'#fff',
+        width: width * 0.95, // 80% of screen's width
+        height: height * 0.40, // 20% of screen's height
+        margin:10,
+        borderRadius: 15,
+        padding:5,
+        backgroundColor:"#fff",
     } ,
     marginTextInput : {
     },

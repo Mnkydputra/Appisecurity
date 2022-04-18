@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#ecf0f1",
+    backgroundColor: "#50C4DE",
     padding: 5,
   },
   textInput: {
