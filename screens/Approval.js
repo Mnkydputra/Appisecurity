@@ -1,7 +1,7 @@
 import React, { Component  ,useState , useEffect} from 'react';
 import { View, Text , StyleSheet , TouchableOpacity , FlatList , Platform  , Dimensions ,Alert ,BackHandler , Image} from 'react-native';
 import ColorfulCard from "react-native-colorful-card";
-export default function Pengajuan({navigation,route}) {
+export default function Approval({navigation,route}) {
     useEffect(() => {
           const handleBackPress = () => {
             navigation.goBack();
@@ -21,32 +21,32 @@ export default function Pengajuan({navigation,route}) {
             <TouchableOpacity style={[styles.card , {backgroundColor:'#20ba46'} ]}>
                 <Image style={styles.image} source={ require('../src/img/workaholic.png')}/>
                 <View style={styles.cardContent}>
-                    <Text style={styles.name}>{'Pengajuan Overtime '}</Text>
-                    <TouchableOpacity style={styles.followButton} onPress={()=> navigation.navigate('Input Overtime' , {
+                    <Text style={styles.name}>{'Approve Overtime '}</Text>
+                    <TouchableOpacity style={styles.followButton} onPress={()=> navigation.navigate('Approve Overtime' , {
                         nama: route.params.nama,
                         npk: route.params.npk,
-                        id_akun: route.params.id_absen,
+                        id_akun: route.params.id_akun,
                         wilayah: route.params.wilayah,
                         area_kerja: route.params.area_kerja,
                         jabatan: route.params.jabatan,
                     })}>
-                    <Text style={styles.followButtonText}>AJUKAN</Text>  
+                    <Text style={styles.followButtonText}>VIEW</Text>  
                     </TouchableOpacity>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.card , {backgroundColor:'#7954ff'} ]}>
                 <Image style={styles.image} source={ require('../src/img/absent.png')}/>
                 <View style={styles.cardContent}>
-                    <Text style={styles.name}>{'Pengajuan SKTA'}</Text>
-                    <TouchableOpacity style={styles.followButton} onPress={()=>  navigation.navigate('Input SKTA' , {
+                    <Text style={styles.name}>{'Approve SKTA'}</Text>
+                    <TouchableOpacity style={styles.followButton} onPress={()=>  navigation.navigate('Approve SKTA' , {
                         nama: route.params.nama,
                         npk: route.params.npk,
-                        id_akun: route.params.id_absen,
+                        id_akun: route.params.id_akun,
                         wilayah: route.params.wilayah,
                         area_kerja: route.params.area_kerja,
                         jabatan: route.params.jabatan,
                     }) }>
-                    <Text style={styles.followButtonText}>AJUKAN</Text>  
+                    <Text style={styles.followButtonText}>VIEW</Text>  
                     </TouchableOpacity>
                 </View>
             </TouchableOpacity>

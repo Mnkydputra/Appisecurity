@@ -12,8 +12,8 @@ import Button from "../src/component/Button";
 import TextInput from "../src/component/TextInput";
 import BackButton from "../src/component/BackButton";
 import { theme } from "../src/core/theme";
-
-
+import { registerIndieID , registerNNPushToken } from 'native-notify';
+import * as Device from 'expo-device';
 export default function Login({ navigation }) {
   const [npk, setNPK] = useState("");
   const [password, setPassword] = useState("");
@@ -34,6 +34,7 @@ export default function Login({ navigation }) {
   };
 
   useEffect(() => {
+    setdeviceToken(Device.osInternalBuildId)
     let unmounted = false
     //jika token login ada isinya maka program redirect ke Home
     const tokenLogin = async () => {
@@ -52,53 +53,14 @@ export default function Login({ navigation }) {
     tokenLogin();
     //end
 
-    // 
-    registerForPushNotificationsAsync()
-    // 
     BackHandler.addEventListener("hardwareBackPress", backAction);
 
     return function cleanup() {
       BackHandler.removeEventListener("hardwareBackPress", backAction);
       unmounted = false ;
     }
-
-
   }, []);
 
-
-  // 
-  async function registerForPushNotificationsAsync() {
-    let token;
-    if (Constants.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
-        return;
-      }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
-      setdeviceToken(token)
-    } else {
-      alert('Must use physical device for Push Notifications');
-    }
-  
-    if (Platform.OS === 'android') {
-      Notifications.setNotificationChannelAsync('default', {
-        name: 'default',
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: '#FF231F7C',
-      });
-    }
-  
-    return token;
-  }
-  // 
 
 
   //jika di tekan tombol login  maka jalankan fungsi ini
@@ -135,11 +97,13 @@ export default function Login({ navigation }) {
                 Alert.alert("Perhatian!", "AKUN TIDAK TERDAFTAR", [
                   { text: "YA", onPress: () => setLoading(false) },
                 ]);
-              } else if(json.status == false){
+              }
+               else if(json.status == false){
                 Alert.alert("Perhatian!", json.message, [
                   { text: "YA", onPress: () => setLoading(false) },
                 ]);
-              }else {
+              }
+              else {
                 const hasil = json.result[0];
                 // console.log(json)
                 if (npk === hasil.npk) {
@@ -152,7 +116,8 @@ export default function Login({ navigation }) {
                   AsyncStorage.setItem("id_akun", id_user);
                   AsyncStorage.setItem("patrol", patrol);
                   AsyncStorage.setItem("token_patrol",patrol_w);
-                  AsyncStorage.setItem("token_device",json.token);
+                  // AsyncStorage.setItem("token_device",json.token);
+                   registerIndieID(hasil.npk, 2402, 'Du6sFk5klrqoYjMMapYjhV');
                   navigation.navigate("Splash");
                   setLoading(false);
                 } else {

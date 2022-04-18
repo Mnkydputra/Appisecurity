@@ -19,7 +19,7 @@ Notifications.setNotificationHandler({
     }),
   });
 
-export default function InputOT ({navigation , route}){
+export default function InputSKTA ({navigation , route}){
     const [expoPushToken, setExpoPushToken] = useState('');
     const [notification, setNotification] = useState(false);
     const notificationListener = useRef();
@@ -34,7 +34,7 @@ export default function InputOT ({navigation , route}){
 
     //   datetime
       const [date ,setDate ] = useState(new Date());
-      const [tglLembur , setTglLembur] = useState('')
+      const [tglSKTA , settglSKTA] = useState('')
       const [mode, setMode ] = useState('time');
       const [show ,setShow ] = useState({date1 : false , date2 : false });
       const [text ,setText ] = useState({time1 : '' , time2 : ''});
@@ -140,7 +140,7 @@ export default function InputOT ({navigation , route}){
 
     const sendMessage = async (token) => {
       setLoading(true)
-      if(tglLembur === '' || tglLembur == null){
+      if(tglSKTA === '' || tglSKTA == null){
         Alert.alert("Perhatian!", 'isi tanggal overtime', [
           { text: "OK", onPress: () => null },
         ]);
@@ -158,21 +158,19 @@ export default function InputOT ({navigation , route}){
           })
           .then((response) => response.json())
           .then((json1) => {
-  
-            const tokenDevice = json1.result.token ;
             //kirim data pengajuan lembur  
-            const link = 'https://isecuritydaihatsu.com/api/ajukanLembur' ;
+            const link = 'https://isecuritydaihatsu.com/api/ajukanSKTA' ;
             fetch(link,{
               method : 'POST'  ,
               headers : {
                 'Content-Type' : 'application/x-www-form-urlencoded'  ,
                 'keys-isecurity' : 'isecurity' ,
               } ,
-              body : "npk=" + route.params.npk  + "&tanggal_lembur=" + tglLembur + "&jam_mulai=" + mulai + "&jam_selesai=" + selesai + "&alasan_lembur=" + alasan 
+              body : "npk=" + route.params.npk  + "&wilayah=" + route.params.wilayah + "&area=" + route.params.area_kerja + "&in=" + mulai + "&out=" + selesai + "&date_in=" + tglSKTA + "&date_out=" + null 
             })
             .then((response) => response.json() )
             .then((json) => {
-              // console.log(json.data)
+              console.log(json)
               if(json.status === 'failed'){
                 alert(json.message);
                 Alert.alert("Gagal!", json.message, [
@@ -181,23 +179,6 @@ export default function InputOT ({navigation , route}){
                 setLoading(false);
               }else {
                 setLoading(false);
-                // fetch('https://exp.host/--/api/v2/push/send',{
-                //   method : 'POST' ,
-                //   headers : {
-                //       Accept : 'application/json' ,
-                //       'Accept-encoding' : 'gzip, deflate' ,
-                //       'Content-Type' : 'application/json'
-                //   },
-                //   body : JSON.stringify(
-                //       { 
-                //           to : tokenDevice, 
-                //           title : 'Approval Lemburan' ,
-                //           body  : route.params.nama + ' AGT ' + route.params.area_kerja + ' Mengajukan Lembur , Segera Cek ISECURITY anda' ,
-                //           data : {data : 'goes here'} ,
-                //           _displayInForeground : false 
-                //       }
-                //   ),
-                // })
                 Alert.alert("Berhasil!", json.message, [
                   { text: "OK", onPress: () => navigation.navigate('Home') },
                 ]);
@@ -242,10 +223,10 @@ export default function InputOT ({navigation , route}){
     return (
 
       <View style={styles.container}>
-        <Text style={styles.text}>Tanggal Overtime</Text>
+        <Text style={styles.text}>Tanggal Tidak Absen</Text>
               <DatePicker
                 style={styles.datePickerStyle}
-                date={tglLembur}
+                date={tglSKTA}
                 mode="date"
                 placeholder="Pilih Tanggal"
                 format="YYYY-MM-DD"
@@ -288,16 +269,20 @@ export default function InputOT ({navigation , route}){
                           const hasil = json.result ;
                           setMasukKerja(hasil.in_time);
                           setPulangKerja(hasil.out_time);
+                          setMulai(hasil.in_time);
+                          setSelesai(hasil.out_time);
                       }else {
                           setMasukKerja('');
                           setPulangKerja('');
+                          setMulai('');
+                          setSelesai('');
                       }
                   })
-                   setTglLembur(date)
+                   settglSKTA(date)
                 }}
               />
 
-        <TextInput
+        {/* <TextInput
             label='Jam Masuk'
             mode="flat"
             value= {masukKerja}
@@ -331,11 +316,11 @@ export default function InputOT ({navigation , route}){
                 fontSize: 10 
               }
             }}
-          />
+          /> */}
               
         <TouchableOpacity style={{marginBottom:5}} onPress={() => showMode('time')}>
           <TextInput
-            label='Jam Mulai Overtime'
+            label='Edit Jam Masuk'
             value={`${mulai}`}
             mode="flat"
             editable={false}
@@ -355,7 +340,7 @@ export default function InputOT ({navigation , route}){
 
           <TouchableOpacity onPress={() => showMode2('time')}>
           <TextInput
-            label='Jam Selesai Overtime'
+            label='Edit Jam Pulang'
             value={`${selesai}`}
             editable={false}
             onChangeText={onChange2 }
@@ -365,7 +350,7 @@ export default function InputOT ({navigation , route}){
 
           <TextInput
             style={{backgroundColor:'#fff'}}
-            label="Alasan Overtime"
+            label="Alasan Tidak Absen"
             multiline={true}
             numberOfLines={2}
             value={ alasan }
@@ -374,13 +359,12 @@ export default function InputOT ({navigation , route}){
 
           <Text style={[styles.text, {marginTop:10}]}>Pilih Korlap</Text>
           {showKorlap()}
-
           
           <Button mode="contained"  onPress={sendMessage}>
           {loading ? 
             <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>
-         : 
-           <Text style={{color:'#fff'}}>AJUKAN LEMBUR</Text>   
+            : 
+           <Text style={{color:'#fff'}}>KIRIM SKTA</Text>   
           }
           </Button>
 

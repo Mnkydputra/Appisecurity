@@ -5,6 +5,7 @@ import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { TextInput } from "react-native-paper";
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
+
 export default function  Home ({navigation,route}) {
   const [user , setUser] = useState({npk : '' , id_absen : '' , wilayah: '' , areaKerja : '' , jabatan: ''  , nama : ''})
   const [id_ , setId] = useState(null)

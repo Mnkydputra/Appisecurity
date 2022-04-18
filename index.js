@@ -1,7 +1,7 @@
 import { registerRootComponent } from 'expo';
 
 import App from './App';
-// import App from './screens/Pengajuan';
+// import App from './screens/Sample';
 
 import {
     // en,
@@ -18,7 +18,6 @@ import {
   // registerTranslation('pt', pt)
   // registerTranslation('de', de)
   registerTranslation('en-GB', enGB)
-
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,

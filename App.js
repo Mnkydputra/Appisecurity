@@ -20,9 +20,14 @@ import Logout from './screens/Logout' ;
 import Profile from './screens/Profile' ;
 import Splash from './screens/Splash' ;
 import InputOT from './screens/InputOT' ;
+import InputSKTA from './screens/InputSKTA' ;
 import Absen from './screens/Absen';
 import Pengajuan from './screens/Pengajuan';
 import Register from './screens/Register';
+import ApproveLembur from './screens/Approve Lembur';
+import ApproveSKTA from './screens/Approve SKTA';
+import Approval from './screens/Approval';
+import StatusOT from './screens/Status OT';
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
@@ -74,10 +79,15 @@ export default function App() {
         {/* menu absensi  */}
           <Stack.Screen name='Absen'  component={Absen}></Stack.Screen>
           <Stack.Screen name='Input Overtime'  component={InputOT}></Stack.Screen>
+          <Stack.Screen name='Input SKTA'  component={InputSKTA}></Stack.Screen>
           <Stack.Screen name='Pengajuan'  component={Pengajuan}></Stack.Screen>
           <Stack.Screen name='Absensi' options={{ headerShown: false  ,}}  component={Absensi}></Stack.Screen>
           <Stack.Screen name='View Absen' options={{ headerShown: false  , }}  component={ViewAbsen}></Stack.Screen>
           <Stack.Screen name='Laporan Absen'  component={LaporanAbsen}></Stack.Screen>
+          <Stack.Screen name='Approve Overtime'  component={ApproveLembur}></Stack.Screen>
+          <Stack.Screen name='Approve SKTA'  component={ApproveSKTA}></Stack.Screen>
+          <Stack.Screen name='Approval' component={Approval}></Stack.Screen>
+          <Stack.Screen name='Status Pengajuan' component={StatusOT}></Stack.Screen>
         {/* end */}
 
       </Stack.Navigator>
