@@ -63,22 +63,6 @@ export default function Absen ({navigation,route}) {
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
-<<<<<<< HEAD
-            <TouchableOpacity style={styles.card} >
-              <Image style={styles.image} source={require("../src/img/hourglass.png")}/>
-              <View style={styles.cardContent}>
-                <Text style={styles.name}>{'Status Overtime'}</Text>
-                <TouchableOpacity style={styles.followButton} onPress={ goTostatus   } >
-                  <Text style={styles.followButtonText}>View</Text>  
-                </TouchableOpacity>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.card} >
-              <Image style={styles.image} source={ require('../src/img/absen2.png')}/>
-              <View style={styles.cardContent}>
-                <Text style={styles.name}>{'History Absensi'}</Text>
-                <TouchableOpacity style={styles.followButton} onPress={ () => navigation.navigate('Laporan Absen' , {
-=======
 
             {
               route.params.jabatan === 'KORLAP' ? 
@@ -121,7 +105,6 @@ export default function Absen ({navigation,route}) {
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{'Status Pengajuan'}</Text>
                 <TouchableOpacity style={styles.followButton} onPress={ () => navigation.navigate('Status Pengajuan' , {
->>>>>>> 41105af8c0ab7bd6c3289d95a1916dcb4984b32e
                     nama: route.params.nama,
                     npk: route.params.npk,
                     id_akun: route.params.id_absen,

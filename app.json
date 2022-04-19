@@ -3,34 +3,12 @@
     "name": "isecurity",
     "slug": "isecurity",
     "version": "1.0.0",
-<<<<<<< HEAD
-    "icon" : "src/img/Login.png" ,
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "plugins": [
-      [
-        "expo-notifications",
-        {
-          "icon": "src/img/Login.png",
-          "color": "#ffffff"
-        }
-      ]
-    ],
-    "android": {
-      "package": "com.dasep12.isecurity" ,
-      "adaptiveIcon": {
-        "foregroundImage": "src/img/Login.png",
-        "backgroundColor": "#50dbb6"
-      }
-=======
     "icon": "src/img/icon_app.png",
     "assetBundlePatterns": [
       "**/*"
     ],
     "android": {
       "package": "com.dasep12.isecurity"
->>>>>>> 41105af8c0ab7bd6c3289d95a1916dcb4984b32e
     }
   },
   "name": "isecurity"
