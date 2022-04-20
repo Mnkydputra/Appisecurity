@@ -122,7 +122,7 @@ export default function InputOT ({navigation , route}){
                 'Content-Type' : 'application/x-www-form-urlencoded'  ,
                 'keys-isecurity' : 'isecurity' ,
               } ,
-              body : "npk=" + 229529 + "&wilayah=WIL2" + "&area=VLC" + "&tanggal_cuti=" + tglCuti + "&alasan_cuti=" + alasan + "&status=0" + "&pengganti=" + npkAGT
+              body : "npk=" + route.params.npk + "&wilayah="+ route.params.wilayah + "&area="+ route.params.area + "&tanggal_cuti=" + tglCuti + "&alasan_cuti=" + alasan + "&status=0" + "&pengganti=" + npkAGT
             })
             .then((response) => response.json() )
             .then((json) => {
@@ -258,6 +258,7 @@ export default function InputOT ({navigation , route}){
             label="Alasan Cuti"
             placeholder="Alasan Cuti" placeholderColor="#c4c3cb"
             value={ alasan }
+            numberOfLines={3}
             onChangeText={text =>  setAlasan(text)}
           />
 

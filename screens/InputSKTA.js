@@ -360,7 +360,7 @@ export default function InputSKTA ({navigation , route}){
             onChangeText={text =>  setAlasan(text)}
           ></TextInput>
 
-          <Text style={[styles.text, {marginTop:10}]}>Pilih Korlap</Text>
+          <Text style={[styles.text, {marginTop:10}]}> Pilih Korlap</Text>
           {showKorlap()}
           
           <Button mode="contained"  onPress={sendMessage}>
