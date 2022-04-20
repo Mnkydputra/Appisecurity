@@ -96,7 +96,6 @@ export default function Absen ({navigation,route}) {
   const styles = StyleSheet.create({
     container:{
         flex:1,
-        marginTop:20,
         backgroundColor:"#50C4DE"
       },
       contentList:{
@@ -148,7 +147,7 @@ export default function Absen ({navigation,route}) {
         marginTop:10,
         height:40,
         width:150,
-        padding:10,
+        padding:5,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -159,7 +158,7 @@ export default function Absen ({navigation,route}) {
       },
       followButtonText:{
         color: "#FFF",
-        fontSize:18,
+        fontSize:13,
       },
   
   })

@@ -214,6 +214,7 @@ export default function StatusOT({navigation, route}) {
   const styles = StyleSheet.create({
     container : {
         flex: 1,
+        backgroundColor:"#50C4DE"
     } ,
     buttonContainer: {
         width: 150,
