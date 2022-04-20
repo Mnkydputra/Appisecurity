@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const windowWidth = Dimensions.get('window').width;
 const  windowHeight = Dimensions.get('window').height;
 
-export default function StatusOT({navigation, route}) {
+export default function StatusPengajuan({navigation, route}) {
     const [data , setData] = useState('');
     const [skta , setDataSKTA] = useState('');
     const [refreshing, setRefreshing] = useState(false);

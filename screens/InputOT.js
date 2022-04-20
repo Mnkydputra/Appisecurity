@@ -50,7 +50,7 @@ export default function InputOT ({navigation , route}){
           let wil = route.params.wilayah 
           try {
             // var urlAksi = 'https://isecuritydaihatsu.com/api/tokenKorlap?wilayah=WIL2';
-            var urlAksi = 'https://isecuritydaihatsu.com/api/tokenKorlap?wilayah=' + wil;
+            var urlAksi = 'https://isecuritydaihatsu.com/api/DaftarKorlap?wilayah=' + wil;
             fetch(urlAksi,{
                 headers : {
                     'keys-isecurity' : 'isecurity' ,

@@ -43,6 +43,7 @@ export default function InputSKTA ({navigation , route}){
       const [alasan ,setAlasan ] = useState();
       const[masukKerja , setMasukKerja] = useState('');
       const[pulangKerja , setPulangKerja] = useState('');
+      const[tglPulang , setTanggalPulang] = useState('');
     //
 
     // get token korlap for send notification approval
@@ -50,7 +51,7 @@ export default function InputSKTA ({navigation , route}){
           let wil = route.params.wilayah 
           try {
             // var urlAksi = 'https://isecuritydaihatsu.com/api/tokenKorlap?wilayah=WIL2';
-            var urlAksi = 'https://isecuritydaihatsu.com/api/tokenKorlap?wilayah=' + wil;
+            var urlAksi = 'https://isecuritydaihatsu.com/api/DaftarKorlap?wilayah=' + wil;
             fetch(urlAksi,{
                 headers : {
                     'keys-isecurity' : 'isecurity' ,
@@ -158,7 +159,7 @@ export default function InputSKTA ({navigation , route}){
           })
           .then((response) => response.json())
           .then((json1) => {
-            //kirim data pengajuan lembur  
+            //kirim data pengajuan skta  
             const link = 'https://isecuritydaihatsu.com/api/ajukanSKTA' ;
             fetch(link,{
               method : 'POST'  ,
@@ -166,7 +167,7 @@ export default function InputSKTA ({navigation , route}){
                 'Content-Type' : 'application/x-www-form-urlencoded'  ,
                 'keys-isecurity' : 'isecurity' ,
               } ,
-              body : "npk=" + route.params.npk  + "&wilayah=" + route.params.wilayah + "&area=" + route.params.area_kerja + "&in=" + mulai + "&out=" + selesai + "&date_in=" + tglSKTA + "&date_out=" + null 
+              body : "npk=" + route.params.npk  + "&wilayah=" + route.params.wilayah + "&area=" + route.params.area_kerja + "&in=" + mulai + "&out=" + selesai + "&date_in=" + tglSKTA + "&date_out=" + tglPulang + "&keterangan=" + alasan
             })
             .then((response) => response.json() )
             .then((json) => {
@@ -223,12 +224,12 @@ export default function InputSKTA ({navigation , route}){
     return (
 
       <View style={styles.container}>
-        <Text style={styles.text}>Tanggal Tidak Absen</Text>
+        <Text style={styles.text}>Tanggal Masuk</Text>
               <DatePicker
                 style={styles.datePickerStyle}
                 date={tglSKTA}
                 mode="date"
-                placeholder="Pilih Tanggal"
+                placeholder="Pilih Tanggal Masuk"
                 format="YYYY-MM-DD"
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
@@ -338,6 +339,44 @@ export default function InputSKTA ({navigation , route}){
           />
           </TouchableOpacity>
 
+
+        {/* tanggal pulang */}
+        <Text style={styles.text}>Edit Tanggal Pulang</Text>
+              <DatePicker
+                style={styles.datePickerStyle}
+                date={tglPulang}
+                mode="date"
+                placeholder="Pilih Tanggal"
+                format="YYYY-MM-DD"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    position: 'absolute',
+                    right: -5,
+                    top: 4,
+                    marginLeft: 0,
+                  },
+                  dateInput: {
+                    borderColor : "#b3abab",
+                    alignItems: "flex-start",
+                    borderWidth: 0,
+                    borderBottomWidth: 1,
+                  },
+                  placeholderText: {
+                    fontSize: 12,
+                    color: "gray" ,
+                    marginLeft : 10 
+                  },
+                  dateText: {
+                    fontSize: 17,
+                    marginLeft: 14
+                  }
+                }}
+                onDateChange={(date) => {
+                   setTanggalPulang(date)
+                }}
+              />
           <TouchableOpacity onPress={() => showMode2('time')}>
           <TextInput
             label='Edit Jam Pulang'

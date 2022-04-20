@@ -122,7 +122,6 @@ export default function Approve({navigation, route}) {
                <Image style={{width:350 ,height:350}} source={ require('../src/img/notfound.jpg')}></Image>
             )
         }else {
-
            return data.map((item)=> {
                 console.log(item.alasan_lembur)
                 return (
@@ -198,7 +197,7 @@ export default function Approve({navigation, route}) {
             flex: 1,
             alignContent:'center' ,
             alignItems:'center' ,
-            backgroundColor :'#fff'
+           backgroundColor:"#50C4DE"
         } ,
         buttonContainer: {
             width: 150,

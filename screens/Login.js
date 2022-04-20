@@ -12,7 +12,7 @@ import Button from "../src/component/Button";
 import TextInput from "../src/component/TextInput";
 import BackButton from "../src/component/BackButton";
 import { theme } from "../src/core/theme";
-import { registerIndieID , registerNNPushToken } from 'native-notify';
+// import { registerIndieID , registerNNPushToken } from 'native-notify';
 import * as Device from 'expo-device';
 export default function Login({ navigation }) {
   const [npk, setNPK] = useState("");

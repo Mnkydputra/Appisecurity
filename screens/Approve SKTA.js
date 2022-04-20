@@ -84,7 +84,7 @@ export default function ApproveSKTA({navigation,route}) {
        ])
     }
 
-    //approve lemburan
+    //approve skta
     const approve = (id) => {
         Alert.alert("Perhatian",  'Approve SKTA', [
             {text : 'BATAL' , onPress : () => null
@@ -127,7 +127,6 @@ export default function ApproveSKTA({navigation,route}) {
         }else {
 
            return data.map((item)=> {
-                console.log(item.alasan_lembur)
                 return (
                     <View key={item.id.toString()} >
                     <Card style={styles.cardKonten}>
@@ -201,7 +200,7 @@ export default function ApproveSKTA({navigation,route}) {
             flex: 1,
             alignContent:'center' ,
             alignItems:'center' ,
-            backgroundColor :'#fff'
+          
         } ,
         buttonContainer: {
             width: 150,

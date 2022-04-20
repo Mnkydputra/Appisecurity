@@ -46,7 +46,6 @@ export default function Absen ({navigation,route}) {
     }
     return (
         <View style={styles.container}>
-
             <TouchableOpacity style={styles.card}>
               <Image style={styles.image} source={ require('../src/img/article.png')}/>
               <View style={styles.cardContent}>
@@ -66,7 +65,7 @@ export default function Absen ({navigation,route}) {
             <TouchableOpacity style={styles.card} >
               <Image style={styles.image} source={require("../src/img/hourglass.png")}/>
               <View style={styles.cardContent}>
-                <Text style={styles.name}>{'Status Overtime'}</Text>
+                <Text style={styles.name}>{'Approval'}</Text>
                 <TouchableOpacity style={styles.followButton} onPress={ goTostatus   } >
                   <Text style={styles.followButtonText}>View</Text>  
                 </TouchableOpacity>
@@ -77,6 +76,23 @@ export default function Absen ({navigation,route}) {
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{'History Absensi'}</Text>
                 <TouchableOpacity style={styles.followButton} onPress={ () => navigation.navigate('Laporan Absen' , {
+                    nama: route.params.nama,
+                    npk: route.params.npk,
+                    id_akun: route.params.id_absen,
+                    wilayah: route.params.wilayah,
+                    area_kerja: route.params.areaKerja,
+                    jabatan: route.params.jabatan,
+                })}>
+                  <Text style={styles.followButtonText}>View</Text>  
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.card} >
+              <Image style={styles.image} source={ require('../src/img/clipboard.png')}/>
+              <View style={styles.cardContent}>
+                <Text style={styles.name}>{'Status Pengajuan'}</Text>
+                <TouchableOpacity style={styles.followButton} onPress={ () => navigation.navigate('Status Pengajuan' , {
                     nama: route.params.nama,
                     npk: route.params.npk,
                     id_akun: route.params.id_absen,
