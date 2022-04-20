@@ -50,23 +50,23 @@ export default function App() {
         }}
       >
         {/* login screen */}
-          <Stack.Screen name='Login' options={{ headerShown: false  , }}  component={Login}></Stack.Screen>
-          <Stack.Screen name='Register' options={{ headerShown: false  , }}  component={Register}></Stack.Screen>
+          <Stack.Screen name='Login' options={{ headerShown: false  , headerStyle: {backgroundColor: '#50C4DE'}, }}  component={Login}></Stack.Screen>
+          <Stack.Screen name='Register' options={{ headerShown: false  , headerStyle: {backgroundColor: '#50C4DE'}, }}  component={Register}></Stack.Screen>
         {/* end */}
 
         {/* home screen */}
-          <Stack.Screen name='Home' options={{headerShown: false  , }} component={Home}></Stack.Screen>
+          <Stack.Screen name='Home' options={{headerShown: false  , headerStyle: {backgroundColor: '#50C4DE'}, }} component={Home}></Stack.Screen>
         {/* end */}
 
         {/* splash screen */}
           <Stack.Screen name='Start' component={Start}></Stack.Screen>
-          <Stack.Screen options={{ headerShown: false  ,  }} name='Splash' component={Splash}></Stack.Screen>
+          <Stack.Screen options={{ headerShown: false  ,  headerStyle: {backgroundColor: '#50C4DE'}, }} name='Splash' component={Splash}></Stack.Screen>
         {/* end */}
 
         {/* lihat profile status dan poto */}
-          <Stack.Screen name='Profile'  component={Profile}></Stack.Screen>
-          <Stack.Screen name='Poto'  component={Poto}></Stack.Screen>
-          <Stack.Screen name='Status' component={Status}></Stack.Screen>
+          <Stack.Screen name='Profile' options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={Profile}></Stack.Screen>
+          <Stack.Screen name='Poto' options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={Poto}></Stack.Screen>
+          <Stack.Screen name='Status' options={{headerStyle: {backgroundColor: '#50C4DE'}}}  component={Status}></Stack.Screen>
         {/* end */}
 
         {/* edit poto profile dan status dan logout */}
@@ -77,6 +77,7 @@ export default function App() {
         {/* end */}
 
         {/* menu absensi  */}
+<<<<<<< HEAD
           <Stack.Screen name='Absen'  component={Absen}></Stack.Screen>
           <Stack.Screen name='Input Overtime'  component={InputOT}></Stack.Screen>
           <Stack.Screen name='Input SKTA'  component={InputSKTA}></Stack.Screen>
@@ -88,6 +89,19 @@ export default function App() {
           <Stack.Screen name='Approve SKTA'  component={ApproveSKTA}></Stack.Screen>
           <Stack.Screen name='Approval' component={Approval}></Stack.Screen>
           <Stack.Screen name='Status Pengajuan' component={StatusPengajuan}></Stack.Screen>
+=======
+          <Stack.Screen name='Absen'  options={{headerStyle: {backgroundColor: '#50C4DE'}}}  component={Absen}></Stack.Screen>
+          <Stack.Screen name='Input Overtime' options={{headerStyle: {backgroundColor: '#50C4DE'}}}  component={InputOT}></Stack.Screen>
+          <Stack.Screen name='Input SKTA' options={{headerStyle: {backgroundColor: '#50C4DE'}}}  component={InputSKTA}></Stack.Screen>
+          <Stack.Screen name='Pengajuan'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={Pengajuan}></Stack.Screen>
+          <Stack.Screen name='Absensi'  options={{headerStyle: {backgroundColor: '#50C4DE'}}}  component={Absensi}></Stack.Screen>
+          <Stack.Screen name='View Absen' options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={ViewAbsen}></Stack.Screen>
+          <Stack.Screen name='Laporan Absen' options={{headerStyle: {backgroundColor: '#50C4DE'}}}  component={LaporanAbsen}></Stack.Screen>
+          <Stack.Screen name='Approve Overtime' options={{headerStyle: {backgroundColor: '#50C4DE'}}}  component={ApproveLembur}></Stack.Screen>
+          <Stack.Screen name='Approve SKTA' options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={ApproveSKTA}></Stack.Screen>
+          <Stack.Screen name='Approval' options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={Approval}></Stack.Screen>
+          <Stack.Screen name='Status Pengajuan' options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={StatusOT}></Stack.Screen>
+>>>>>>> f6717be1b46e57149d6038e78e53f31b67efbc4e
         {/* end */}
 
       </Stack.Navigator>
