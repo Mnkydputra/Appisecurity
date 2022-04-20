@@ -394,7 +394,7 @@ export default function InputSKTA ({navigation , route}){
         ></DateTimePicker>
       )}
       </View>
-      </View>
+      // </View>
     );
   }
 
