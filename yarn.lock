@@ -1549,6 +1549,13 @@
   dependencies:
     "invariant" "^2.2.4"
 
+"@react-native-community/push-notification-ios@^1.10.1":
+  "integrity" "sha512-k6bZWUKLif4GjenyTD3aQLwA2VT3bNmt22INO/34lexnpmqkPDZF7nreqbckTHG0Zso9wDTe4N/AZJUC/d8iRg=="
+  "resolved" "https://registry.npmjs.org/@react-native-community/push-notification-ios/-/push-notification-ios-1.10.1.tgz"
+  "version" "1.10.1"
+  dependencies:
+    "invariant" "^2.2.4"
+
 "@react-native-picker/picker@^1.8.3", "@react-native-picker/picker@^1.9.12":
   "integrity" "sha512-pacdQDX6V6EmjF+HoiIh6u++qx4mTK0WnhgUHRc01B+Qt5eoeUwseBqmqfTSXTx/aHDEd6PiIw7UGvKgFoqgFQ=="
   "resolved" "https://registry.npmjs.org/@react-native-picker/picker/-/picker-1.16.8.tgz"
@@ -1938,6 +1945,13 @@
   "integrity" "sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw=="
   "resolved" "https://registry.npmjs.org/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz"
   "version" "1.0.5"
+
+"axios@^0.24.0":
+  "integrity" "sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA=="
+  "resolved" "https://registry.npmjs.org/axios/-/axios-0.24.0.tgz"
+  "version" "0.24.0"
+  dependencies:
+    "follow-redirects" "^1.14.4"
 
 "babel-core@^7.0.0-bridge.0":
   "integrity" "sha512-poPX9mZH/5CSanm50Q+1toVci6pv5KSRv/5TWCwtzQS5XEwn40BcCrgIeMFWP9CKKIniKXNxoIOnOq4VVlGXhg=="
@@ -2901,6 +2915,13 @@
     "@expo/config" "^6.0.6"
     "uuid" "^3.3.2"
 
+"expo-device@~4.1.0":
+  "integrity" "sha512-It0SGtKcvzQSf+Co6zdPdB63zZvG2/rDolB1lqswMNKj03Y7KVU41s5tcQCqNczj7tmeN3CJy7A8YhYGKdb7gA=="
+  "resolved" "https://registry.npmjs.org/expo-device/-/expo-device-4.1.1.tgz"
+  "version" "4.1.1"
+  dependencies:
+    "ua-parser-js" "^0.7.19"
+
 "expo-error-recovery@~3.0.5":
   "integrity" "sha512-VM6OOecjt0aPu5/eCdGGJfNjvAZIemaQym0JF/+SA5IlLiPpEfbVCDTO/5yiS8Zb5fKpeABx+GCRmtfnFqvRRw=="
   "resolved" "https://registry.npmjs.org/expo-error-recovery/-/expo-error-recovery-3.0.5.tgz"
@@ -2985,7 +3006,7 @@
     "compare-versions" "^3.4.0"
     "invariant" "^2.2.4"
 
-"expo-notifications@^0.14.1":
+"expo-notifications@^0.14.1", "expo-notifications@~0.14.0":
   "integrity" "sha512-0L+DFMQmVfMhonza8MFP4aI/6ADKEx/Mn5NzQlBZpo6PinpsPFpQP7of+pihx2onCkmeN8OIsLFS5O6QqzH3rA=="
   "resolved" "https://registry.npmjs.org/expo-notifications/-/expo-notifications-0.14.1.tgz"
   "version" "0.14.1"
@@ -3263,6 +3284,11 @@
   "integrity" "sha512-1gIBiWJNR0tKUNv8gZuk7l9rVX06OuLzY9AoGio7y/JT4V1IZErEMEq2TJS+PFcw/y0RshZ1J/27VfK1UQzYVg=="
   "resolved" "https://registry.npmjs.org/flow-parser/-/flow-parser-0.121.0.tgz"
   "version" "0.121.0"
+
+"follow-redirects@^1.14.4":
+  "integrity" "sha512-MQDfihBQYMcyy5dhRDJUHcw7lb2Pv/TuE6xP1vyraLukNDHKbDxDNaOE3NbCAdKQApno+GPRyo1YAp89yCjK4w=="
+  "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.9.tgz"
+  "version" "1.14.9"
 
 "fontfaceobserver@^2.1.0":
   "integrity" "sha512-ReOsO2F66jUa0jmv2nlM/s1MiutJx/srhAe2+TE8dJCMi02ZZOcCTxTCQFr3Yet+uODUtnr4Mewg+tNQ+4V1Ng=="
@@ -4758,6 +4784,15 @@
     "snapdragon" "^0.8.1"
     "to-regex" "^3.0.1"
 
+"native-notify@^2.0.2":
+  "integrity" "sha512-dHbXlA6Cyf4vbNxIVq2G5/NonEiPXCH/HJrrnlPvoHfjg0iwDRFjKXpXaAKZnIGIoRwZ6/FjYAmKwCO3b029PQ=="
+  "resolved" "https://registry.npmjs.org/native-notify/-/native-notify-2.0.2.tgz"
+  "version" "2.0.2"
+  dependencies:
+    "axios" "^0.24.0"
+    "expo-device" "~4.1.0"
+    "expo-notifications" "~0.14.0"
+
 "negotiator@0.6.3":
   "integrity" "sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg=="
   "resolved" "https://registry.npmjs.org/negotiator/-/negotiator-0.6.3.tgz"
@@ -5349,6 +5384,11 @@
   "resolved" "https://registry.npmjs.org/react-native-fast-image/-/react-native-fast-image-8.5.11.tgz"
   "version" "8.5.11"
 
+"react-native-flat-button@^1.0.6":
+  "integrity" "sha512-vat5SYmtDXiDt0kqfAK4Qg3wTLLWLiF87i3cNX476DhgVzSAHEi27mNgMurOE3F+4XSMOSpDsJpWa/2XzxdLww=="
+  "resolved" "https://registry.npmjs.org/react-native-flat-button/-/react-native-flat-button-1.0.6.tgz"
+  "version" "1.0.6"
+
 "react-native-form-select-picker@^0.0.12":
   "integrity" "sha512-A2p6lh7pV4UFGc+/Gfo9AFqtJMjW3g2V3BSY6opKpoFOMf8RikggwPgHAdR8BdRjqjShqYwmk7pGeFB6646v5A=="
   "resolved" "https://registry.npmjs.org/react-native-form-select-picker/-/react-native-form-select-picker-0.0.12.tgz"
@@ -5408,6 +5448,11 @@
   dependencies:
     "@react-native-picker/picker" "^1.8.3"
     "lodash.isequal" "^4.5.0"
+
+"react-native-push-notification@^8.1.1":
+  "integrity" "sha512-XpBtG/w+a6WXTxu6l1dNYyTiHnbgnvjoc3KxPTxYkaIABRmvuJZkFxqruyGvfCw7ELAlZEAJO+dthdTabCe1XA=="
+  "resolved" "https://registry.npmjs.org/react-native-push-notification/-/react-native-push-notification-8.1.1.tgz"
+  "version" "8.1.1"
 
 "react-native-ratings@8.0.4":
   "integrity" "sha512-Xczu5lskIIRD6BEdz9A0jDRpEck/SFxRqiglkXi0u67yAtI1/pcJC76P4MukCbT8K4BPVl+42w83YqXBoBRl7A=="
@@ -5517,7 +5562,7 @@
     "uuid" "^3.3.2"
     "xml-parser" "^1.2.1"
 
-"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.68 || 1000.0.0", "react-native@^0.62.0-0", "react-native@^0.64.3", "react-native@>= 0.55.x", "react-native@>=0.42.0", "react-native@>=0.57", "react-native@>=0.59", "react-native@>=0.60.0", "react-native@>=0.64.0-rc.0 || 0.0.0-*":
+"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.68 || 1000.0.0", "react-native@^0.62.0-0", "react-native@^0.64.3", "react-native@>= 0.55.x", "react-native@>=0.33", "react-native@>=0.42.0", "react-native@>=0.57", "react-native@>=0.58.4", "react-native@>=0.59", "react-native@>=0.60.0", "react-native@>=0.64.0-rc.0 || 0.0.0-*":
   "integrity" "sha512-2OEU74U0Ek1/WeBzPbg6XDsCfjF/9fhrNX/5TFgEiBKd5mNc9LOZ/OlMmkb7iues/ZZ/oc51SbEfLRQdcW0fVw=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.64.3.tgz"
   "version" "0.64.3"
@@ -5560,7 +5605,7 @@
   "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.4.3.tgz"
   "version" "0.4.3"
 
-"react@*", "react@^16.8.0 || ^17 || ^18", "react@^16.8.6 || ^17.0.0", "react@^17.0.0", "react@^18.0.0", "react@>= 16.8.0", "react@>= 16.x.x", "react@>=15.0.0", "react@>=16.0.0", "react@>=16.3.0", "react@>=16.8.3", "react@>=17.0.1", "react@16 || 17", "react@16.11.0", "react@17.0.1":
+"react@*", "react@^16.8.0 || ^17 || ^18", "react@^16.8.6 || ^17.0.0", "react@^17.0.0", "react@^18.0.0", "react@>= 16.8.0", "react@>= 16.x.x", "react@>=15.0.0", "react@>=16.0.0", "react@>=16.3.0", "react@>=16.6.3", "react@>=16.8.3", "react@>=17.0.1", "react@16 || 17", "react@16.11.0", "react@17.0.1":
   "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
   "version" "17.0.1"
@@ -6376,7 +6421,7 @@
   "resolved" "https://registry.npmjs.org/type-fest/-/type-fest-0.7.1.tgz"
   "version" "0.7.1"
 
-"ua-parser-js@^0.7.18", "ua-parser-js@^0.7.30":
+"ua-parser-js@^0.7.18", "ua-parser-js@^0.7.19", "ua-parser-js@^0.7.30":
   "integrity" "sha512-qLK/Xe9E2uzmYI3qLeOmI0tEOt+TBBQyUIAh4aAgU05FVYzeZrKUdkAZfBNVGRaHVgV0TDkdEngJSw/SyQchkQ=="
   "resolved" "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.31.tgz"
   "version" "0.7.31"

@@ -124,19 +124,19 @@ const showData = () => {
 const styles = StyleSheet.create({
     container: { 
       flex: 1,
-      paddingTop: 30,
-      width: "100%",
-      height: "100%",
+     
       backgroundColor: "#50C4DE",
       },
       row:{
         flex: 1, 
-        margin:10,
+        margin:5,
+        padding: 10,
         backgroundColor: "#ffff",
         borderRadius:15,
       },
       container2: { 
         backgroundColor: "#50C4DE",
+      
         },
       header:{
         flex:1,

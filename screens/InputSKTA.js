@@ -8,6 +8,7 @@ import { TextInput , Headline, Card} from "react-native-paper";
 import DatePicker from 'react-native-datepicker';
 import Button from "../src/component/Button";
 import SelectPicker from 'react-native-form-select-picker';
+const { width, height } = Dimensions.get("window");
 
 const options = ["Apple", "Banana", "Orange"];
 const windowWidth = Dimensions.get('window').width;
@@ -223,6 +224,7 @@ export default function InputSKTA ({navigation , route}){
     return (
 
       <View style={styles.container}>
+      <View style={styles.container2}>
         <Text style={styles.text}>Tanggal Tidak Absen</Text>
               <DatePicker
                 style={styles.datePickerStyle}
@@ -281,42 +283,6 @@ export default function InputSKTA ({navigation , route}){
                    settglSKTA(date)
                 }}
               />
-
-        {/* <TextInput
-            label='Jam Masuk'
-            mode="flat"
-            value= {masukKerja}
-            editable={false}
-            onChangeText={ onChange }
-            style={{ backgroundColor:'#fff',  }}
-            customStyles = {{
-              TextValue : {
-                marginLeft: 20 ,
-                fontSize : 14 
-              } , 
-              label : {
-                marginLeft : 20 ,
-              }
-            }}
-          />
-        <TextInput
-            label='Jam Pulang'
-            mode="flat"
-            value= {pulangKerja}
-            editable={false}
-            onChangeText={ onChange }
-            style={{ backgroundColor:'#fff',  }}
-            customStyles = {{
-              TextValue : {
-                marginLeft: 20 ,
-                fontSize : 14 
-              } , 
-              label : {
-                marginLeft : 20 ,
-                fontSize: 10 
-              }
-            }}
-          /> */}
               
         <TouchableOpacity style={{marginBottom:5}} onPress={() => showMode('time')}>
           <TextInput
@@ -351,7 +317,6 @@ export default function InputSKTA ({navigation , route}){
           <TextInput
             style={{backgroundColor:'#fff'}}
             label="Alasan Tidak Absen"
-            multiline={true}
             numberOfLines={2}
             value={ alasan }
             onChangeText={text =>  setAlasan(text)}
@@ -391,6 +356,7 @@ export default function InputSKTA ({navigation , route}){
         ></DateTimePicker>
       )}
       </View>
+      </View>
     );
   }
 
@@ -398,13 +364,18 @@ export default function InputSKTA ({navigation , route}){
 
   const styles = StyleSheet.create({
       container : {
-          flex : 1 ,
-          backgroundColor:'#fff' ,
-          margin:2 
+        flex : 1 ,
+        backgroundColor:'#50C4DE' ,
+        flexWrap:"wrap",
       } ,
-      
+      container2 : {
+        backgroundColor:'#fff',
+        margin: 20,
+        padding:15,
+        borderRadius: 25, 
+      },
       datePickerStyle: {
-        width: windowWidth  , 
+        width: width * 0.80, // 80% of screen's width
       },
       text: {
         textAlign: 'left',

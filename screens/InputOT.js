@@ -8,6 +8,7 @@ import { TextInput , Headline, Card} from "react-native-paper";
 import DatePicker from 'react-native-datepicker';
 import Button from "../src/component/Button";
 import SelectPicker from 'react-native-form-select-picker';
+const { width, height } = Dimensions.get("window");
 
 const options = ["Apple", "Banana", "Orange"];
 const windowWidth = Dimensions.get('window').width;
@@ -240,8 +241,8 @@ export default function InputOT ({navigation , route}){
     }
   
     return (
-
       <View style={styles.container}>
+      <View style={styles.container2}>
         <Text style={styles.text}>Tanggal Overtime</Text>
               <DatePicker
                 style={styles.datePickerStyle}
@@ -271,7 +272,7 @@ export default function InputOT ({navigation , route}){
                   },
                   dateText: {
                     fontSize: 17,
-                    marginLeft: 14
+                    marginLeft: 5
                   }
                 }}
                 onDateChange={(date) => {
@@ -366,11 +367,10 @@ export default function InputOT ({navigation , route}){
           <TextInput
             style={{backgroundColor:'#fff'}}
             label="Alasan Overtime"
-            multiline={true}
-            numberOfLines={2}
+            placeholder="Alasan Overtime" placeholderColor="#c4c3cb"
             value={ alasan }
             onChangeText={text =>  setAlasan(text)}
-          ></TextInput>
+          />
 
           <Text style={[styles.text, {marginTop:10}]}>Pilih Korlap</Text>
           {showKorlap()}
@@ -407,6 +407,7 @@ export default function InputOT ({navigation , route}){
         ></DateTimePicker>
       )}
       </View>
+      </View>
     );
   }
 
@@ -414,13 +415,19 @@ export default function InputOT ({navigation , route}){
 
   const styles = StyleSheet.create({
       container : {
-          flex : 1 ,
-          backgroundColor:'#fff' ,
-          margin:2 
-      } ,
-      
+        flex : 1 ,
+        backgroundColor:'#50C4DE' ,
+        flexWrap:"wrap",
+      },
+      container2 : {
+        backgroundColor:'#fff',
+        margin: 20,
+        padding:15,
+        borderRadius: 25,
+          
+    } ,
       datePickerStyle: {
-        width: windowWidth  , 
+        width: width * 0.80, // 80% of screen's width
       },
       text: {
         textAlign: 'left',

@@ -63,45 +63,34 @@ export default function Absen ({navigation,route}) {
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.card} >
+              <Image style={styles.image} source={require("../src/img/hourglass.png")}/>
+              <View style={styles.cardContent}>
+                <Text style={styles.name}>{'Status Overtime'}</Text>
+                <TouchableOpacity style={styles.followButton} onPress={ goTostatus   } >
+                  <Text style={styles.followButtonText}>View</Text>  
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.card} >
+              <Image style={styles.image} source={ require('../src/img/absen2.png')}/>
+              <View style={styles.cardContent}>
+                <Text style={styles.name}>{'History Absensi'}</Text>
+                <TouchableOpacity style={styles.followButton} onPress={ () => navigation.navigate('Laporan Absen' , {
+                    nama: route.params.nama,
+                    npk: route.params.npk,
+                    id_akun: route.params.id_absen,
+                    wilayah: route.params.wilayah,
+                    area_kerja: route.params.areaKerja,
+                    jabatan: route.params.jabatan,
+                })}>
+                  <Text style={styles.followButtonText}>View</Text>  
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
 
-            {
-              route.params.jabatan === 'KORLAP' ? 
-              <>
-                <TouchableOpacity style={[styles.card , {backgroundColor:'#0e9ff7'} ]} >
-                <Image style={styles.image} source={require("../src/img/hourglass.png")}/>
-                <View style={styles.cardContent}>
-                  <Text style={styles.name}>{'Approve OT & SKTA'}</Text>
-                  <TouchableOpacity style={styles.followButton} onPress={ goTostatus }>
-                    <Text style={styles.followButtonText}>View</Text>  
-                  </TouchableOpacity>
-                </View>
-              </TouchableOpacity>
-              </>
-
-              :
-                  null
-            }
-              <TouchableOpacity style={[styles.card , {backgroundColor:'#04314d'} ]} >
-                <Image style={styles.image} source={ require('../src/img/absen2.png')}/>
-                <View style={styles.cardContent}>
-                  <Text style={styles.name}>{'History Absensi'}</Text>
-                  <TouchableOpacity style={styles.followButton} onPress={ () => navigation.navigate('Laporan Absen' , {
-                      nama: route.params.nama,
-                      npk: route.params.npk,
-                      id_akun: route.params.id_absen,
-                      wilayah: route.params.wilayah,
-                      area_kerja: route.params.areaKerja,
-                      jabatan: route.params.jabatan,
-                  })}>
-                    <Text style={styles.followButtonText}>View</Text>  
-                  </TouchableOpacity>
-                </View>
-              </TouchableOpacity>
-              
-            
-
-            <TouchableOpacity style={[styles.card , {backgroundColor:'#6F69AC'} ]} >
-              <Image style={[styles.image]} source={ require('../src/img/clipboard.png')}/>
+            <TouchableOpacity style={styles.card} >
+              <Image style={styles.image} source={ require('../src/img/clipboard.png')}/>
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{'Status Pengajuan'}</Text>
                 <TouchableOpacity style={styles.followButton} onPress={ () => navigation.navigate('Status Pengajuan' , {
@@ -124,7 +113,6 @@ export default function Absen ({navigation,route}) {
   const styles = StyleSheet.create({
     container:{
         flex:1,
-        marginTop:20,
         backgroundColor:"#50C4DE"
       },
       contentList:{
@@ -176,7 +164,7 @@ export default function Absen ({navigation,route}) {
         marginTop:10,
         height:40,
         width:150,
-        padding:10,
+        padding:5,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -187,7 +175,7 @@ export default function Absen ({navigation,route}) {
       },
       followButtonText:{
         color: "#FFF",
-        fontSize:18,
+        fontSize:13,
       },
   
   })
