@@ -50,6 +50,24 @@ export default function Approval({navigation,route}) {
                     </TouchableOpacity>
                 </View>
             </TouchableOpacity>
+            
+            <TouchableOpacity style={[styles.card , {backgroundColor:'#fff'} ]}>
+                <Image style={styles.image} source={ require('../src/img/absent.png')}/>
+                <View style={styles.cardContent}>
+                    <Text style={styles.name}>{'Approve Cuti'}</Text>
+                    <TouchableOpacity style={styles.followButton} onPress={()=>  navigation.navigate('Approve Cuti' , {
+                        nama: route.params.nama,
+                        npk: route.params.npk,
+                        id_akun: route.params.id_akun,
+                        wilayah: route.params.wilayah,
+                        area_kerja: route.params.area_kerja,
+                        jabatan: route.params.jabatan,
+                    }) }>
+                    <Text style={styles.followButtonText}>VIEW</Text>  
+                    </TouchableOpacity>
+                </View>
+            </TouchableOpacity>
+
         </View>
       </View>
     );

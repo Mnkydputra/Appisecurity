@@ -30,8 +30,8 @@ export default function ApproveCuti({navigation, route}) {
     showLoad();
 
     const daftarCuti = () => {
-        // var urlAksi = 'https://isecuritydaihatsu.com/api/daftarCuti?wilayah=' + route.params.wilayah
-        var urlAksi = 'https://isecuritydaihatsu.com/api/daftarCuti?wilayah=wil2'
+        var urlAksi = 'https://isecuritydaihatsu.com/api/daftarCuti?wilayah=' + route.params.wilayah
+        // var urlAksi = 'https://isecuritydaihatsu.com/api/daftarCuti?wilayah=wil2'
         fetch(urlAksi,{
             headers : {
                 'keys-isecurity' : 'isecurity' ,
@@ -43,7 +43,7 @@ export default function ApproveCuti({navigation, route}) {
                 setData('')
             }else {
                 const hasil =  json.result ;
-                console.log(hasil)
+                // console.log(hasil)
                 setData(hasil)
             }
         })
@@ -60,17 +60,25 @@ export default function ApproveCuti({navigation, route}) {
                                'keys-isecurity' : 'isecurity' ,
                                'Content-Type': 'application/json' , 
                            } ,
-                           method : 'POST' , 
-                           body :  "accept=0" + "&id=" + id 
+                           method : 'PUT' , 
+                           body : JSON.stringify({
+                                "id" : id,
+                                "accept" : 0  ,
+                                "npk" : route.params.npk ,
+                                "wilayah" : route.params.wilayah ,
+                                "area" :  route.params.area_kerja  ,
+                                "id_token" : route.params.id_akun 
+                            })
                    })
                    .then((response) => response.json())
                    .then((json) => {
-                       if(json.status === 'fail'){
-                           Alert.alert("INFORMASI", json.result, [
+                    //    console.log(json)
+                       if(json.status === 'failed'){
+                           Alert.alert("INFORMASI", json.message, [
                                { text: "YA", onPress: () => daftarCuti() },
                            ]);
                        }else {
-                           Alert.alert("Berhasil!", json.result, [
+                           Alert.alert("Berhasil!", json.message, [
                                { text: "YA", onPress: () => daftarCuti() },
                            ]);
                        }
@@ -80,7 +88,7 @@ export default function ApproveCuti({navigation, route}) {
        ])
     }
 
-    //approve lemburan
+    //approve cuti
     const approve = (id) => {
         Alert.alert("Perhatian",  'Approve Cuti', [
             {text : 'BATAL' , onPress : () => null
@@ -90,12 +98,19 @@ export default function ApproveCuti({navigation, route}) {
                         'keys-isecurity' : 'isecurity' ,
                         'Content-Type': 'application/json' , 
                     } ,
-                    method : 'POST' , 
-                    body : "npk=" + route.params.npk + "&wilayah="+ route.params.wilayah + "&area="+ route.params.area_kerja + "&id_token=" + route.params.id_akun + "&id=" + id + "&accept=1"
+                    method : 'PUT' , 
+                    body : JSON.stringify({
+                         "id"       : id,
+                         "accept"   : 1  ,
+                         "npk"      : route.params.npk ,
+                         "wilayah"  : route.params.wilayah ,
+                         "area"     :  route.params.area_kerja  ,
+                         "id_token" : route.params.id_akun 
+                     })
                 })
                 .then((response) => response.json())
                 .then((json) => {
-                if(json.status === 'fail'){
+                if(json.status === 'failed'){
                     Alert.alert("GAGAL", json.result, [
                         { text: "YA", onPress: () => daftarCuti() },
                     ]);

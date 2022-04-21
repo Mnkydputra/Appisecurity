@@ -29,6 +29,7 @@ import ApproveSKTA from './screens/Approve SKTA';
 import Approval from './screens/Approval';
 import StatusPengajuan from './screens/Status Pengajuan';
 import InputCuti from './screens/InputCuti';
+import ApproveCuti from './screens/Approve Cuti';
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
@@ -90,6 +91,7 @@ export default function App() {
           <Stack.Screen name='Approval' component={Approval}></Stack.Screen>
           <Stack.Screen name='Status Pengajuan' component={StatusPengajuan}></Stack.Screen>
           <Stack.Screen name='Input Cuti' component={InputCuti}></Stack.Screen>
+          <Stack.Screen name='Approve Cuti' component={ApproveCuti}></Stack.Screen>
         {/* end */}
 
       </Stack.Navigator>

@@ -122,7 +122,7 @@ export default function InputOT ({navigation , route}){
                 'Content-Type' : 'application/x-www-form-urlencoded'  ,
                 'keys-isecurity' : 'isecurity' ,
               } ,
-              body : "npk=" + route.params.npk + "&wilayah="+ route.params.wilayah + "&area="+ route.params.area + "&tanggal_cuti=" + tglCuti + "&alasan_cuti=" + alasan + "&status=0" + "&pengganti=" + npkAGT
+              body : "npk=" + route.params.npk + "&wilayah="+ route.params.wilayah + "&area="+ route.params.area_kerja + "&tanggal_cuti=" + tglCuti + "&alasan_cuti=" + alasan + "&status=0" + "&pengganti=" + npkAGT + "&nama=" + route.params.nama
             })
             .then((response) => response.json() )
             .then((json) => {
@@ -134,15 +134,13 @@ export default function InputOT ({navigation , route}){
                 setLoading(false);
               }else {
                 setLoading(false);
-                alert(json.message)
+                alert(json.message);
                 // Alert.alert("Berhasil!", json.message, [
                 //   { text: "OK", onPress: () => navigation.navigate('Pengajuan Status',{
                 //     // nama: route.params.nama,
                 //     // npk: route.params.npk,
-                //        npk: 229529,
                 //     // id_akun: route.params.id_absen,
                 //     // wilayah: route.params.wilayah,
-                //     wilayah: "WIL2",
                 //     // area_kerja: route.params.areaKerja,
                 //     // jabatan: route.params.jabatan,
                 //     }
