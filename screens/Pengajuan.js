@@ -18,7 +18,7 @@ export default function Pengajuan({navigation,route}) {
     return (
       <View style={styles.container}>
         <View style={styles.row}>
-            <TouchableOpacity style={[styles.card , {backgroundColor:'#20ba46'} ]}>
+            <TouchableOpacity style={[styles.card , {backgroundColor:'#fff'} ]}>
                 <Image style={styles.image} source={ require('../src/img/workaholic.png')}/>
                 <View style={styles.cardContent}>
                     <Text style={styles.name}>{'Pengajuan Overtime '}</Text>
@@ -34,11 +34,27 @@ export default function Pengajuan({navigation,route}) {
                     </TouchableOpacity>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.card , {backgroundColor:'#7954ff'} ]}>
+            <TouchableOpacity style={[styles.card , {backgroundColor:'#fff'} ]}>
                 <Image style={styles.image} source={ require('../src/img/absent.png')}/>
                 <View style={styles.cardContent}>
                     <Text style={styles.name}>{'Pengajuan SKTA'}</Text>
                     <TouchableOpacity style={styles.followButton} onPress={()=>  navigation.navigate('Input SKTA' , {
+                        nama: route.params.nama,
+                        npk: route.params.npk,
+                        id_akun: route.params.id_absen,
+                        wilayah: route.params.wilayah,
+                        area_kerja: route.params.area_kerja,
+                        jabatan: route.params.jabatan,
+                    }) }>
+                    <Text style={styles.followButtonText}>AJUKAN</Text>  
+                    </TouchableOpacity>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.card , {backgroundColor:'#fff'} ]}>
+                <Image style={styles.image} source={ require('../src/img/cuti.png')}/>
+                <View style={styles.cardContent}>
+                    <Text style={styles.name}>{'Pengajuan Cuti'}</Text>
+                    <TouchableOpacity style={styles.followButton} onPress={()=>  navigation.navigate('Input Cuti' , {
                         nama: route.params.nama,
                         npk: route.params.npk,
                         id_akun: route.params.id_absen,
@@ -101,7 +117,7 @@ const styles = StyleSheet.create({
         fontSize:18,
         flex:1,
         alignSelf:'center',
-        color:"#fff",
+        color:"#000",
         fontWeight:'bold'
       },
       count:{

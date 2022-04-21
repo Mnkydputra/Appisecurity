@@ -80,25 +80,16 @@ export default function App() {
         {/* menu absensi  */}
           <Stack.Screen name='Absen'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={Absen}></Stack.Screen>
           <Stack.Screen name='Input Overtime'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={InputOT}></Stack.Screen>
-          <Stack.Screen name='Input SKTA'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={InputSKTA}></Stack.Screen>
+          <Stack.Screen name='Input SKTA'  options={{headerStyle: {backgroundColor: '#50C4DE', headerShown: false}}} component={InputSKTA}></Stack.Screen>
+          <Stack.Screen name='Input Cuti'  options={{headerStyle: {backgroundColor: '#50C4DE', headerShown: false}}} component={InputCuti}></Stack.Screen>
           <Stack.Screen name='Pengajuan'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={Pengajuan}></Stack.Screen>
           <Stack.Screen name='Absensi' options={{ headerShown: false  ,}}  component={Absensi}></Stack.Screen>
-<<<<<<< HEAD
-          <Stack.Screen name='View Absen'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} options={{ headerShown: false  , }}  component={ViewAbsen}></Stack.Screen>
+          <Stack.Screen name='View Absen'  options={{headerStyle: {backgroundColor: '#50C4DE' ,  headerShown: false}}}   component={ViewAbsen}></Stack.Screen>
           <Stack.Screen name='Laporan Absen'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={LaporanAbsen}></Stack.Screen>
           <Stack.Screen name='Approve Overtime'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={ApproveLembur}></Stack.Screen>
           <Stack.Screen name='Approve SKTA'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={ApproveSKTA}></Stack.Screen>
           <Stack.Screen name='Approval'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={Approval}></Stack.Screen>
           <Stack.Screen name='Status Pengajuan'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={StatusPengajuan}></Stack.Screen>
-=======
-          <Stack.Screen name='View Absen' options={{ headerShown: false  , }}  component={ViewAbsen}></Stack.Screen>
-          <Stack.Screen name='Laporan Absen'  component={LaporanAbsen}></Stack.Screen>
-          <Stack.Screen name='Approve Overtime'  component={ApproveLembur}></Stack.Screen>
-          <Stack.Screen name='Approve SKTA'  component={ApproveSKTA}></Stack.Screen>
-          <Stack.Screen name='Approval' component={Approval}></Stack.Screen>
-          <Stack.Screen name='Status Pengajuan' component={StatusPengajuan}></Stack.Screen>
-          <Stack.Screen name='Input Cuti' component={InputCuti}></Stack.Screen>
->>>>>>> 929438110a9389e1fbc68c56058081f14b3acda3
         {/* end */}
 
       </Stack.Navigator>
