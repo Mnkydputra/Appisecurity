@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@99xt/first-born": "^1.1.8",
+        "@expo-google-fonts/roboto": "^0.2.2",
         "@expo/metro-config": "^0.3.12",
         "@react-native-community/datetimepicker": "^4.0.1",
         "@react-navigation/drawer": "^6.3.1",
@@ -44,6 +45,7 @@
         "react-native-flat-button": "^1.0.6",
         "react-native-form-select-picker": "^0.0.12",
         "react-native-gesture-handler": "~2.1.0",
+        "react-native-neat-date-picker": "^1.2.2",
         "react-native-pager-view": "^5.4.15",
         "react-native-paper-dates": "^0.8.7",
         "react-native-picker-select": "^8.0.4",
