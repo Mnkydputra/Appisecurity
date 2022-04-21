@@ -59,7 +59,7 @@ export default function Pengajuan({navigation,route}) {
 const styles = StyleSheet.create({
     container : {
         flex : 1  ,
-        backgroundColor:'#fff'
+        backgroundColor:'#50C4DE'
     } ,
     row : {
     } ,

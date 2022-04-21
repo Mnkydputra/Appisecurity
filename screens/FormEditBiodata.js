@@ -17,6 +17,7 @@ export default function FormEditBiodata({navigation,route}) {
     const [kk , setKK] = useState('');
     const [tempat_lahir , setTempatLahir] = useState('');
     const [tanggal_lahir , setTanggalLahir] = useState('');
+    const [gol_darah , setGolDarah] = useState('');
     const [email , setEmail] = useState('');
     const [no_hp , setNoHP] = useState('');
     const [no_emergency , setNoEmergency] = useState('');
@@ -193,6 +194,14 @@ export default function FormEditBiodata({navigation,route}) {
                           setTanggalLahir(date);
                         }}
                       />
+                </View>
+                <View style={styles.marginTextInput}>
+                <TextInput label="Golongan Darah" 
+                  value={gol_darah}
+                  keyboardType="text"
+                  onChangeText={text => setGolDarah(text)}
+                  placeholder="Golongan Darah" placeholderColor="#c4c3cb">
+                  </TextInput>
                 </View>
                 <View style={styles.marginTextInput}>
                 <TextInput label="NO KTP" 
