@@ -233,6 +233,7 @@ export default function InputSKTA ({navigation , route}){
     return (
 
       <View style={styles.container}>
+      <View style={styles.container2}>
         <Text style={styles.text}>Tanggal Masuk</Text>
               <DatePicker
                 style={styles.datePickerStyle}
@@ -402,7 +403,7 @@ export default function InputSKTA ({navigation , route}){
         ></DateTimePicker>
       )}
       </View>
-      // </View>
+      </View>
     );
   }
 

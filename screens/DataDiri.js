@@ -11,7 +11,7 @@ import { DataTable } from 'react-native-paper';
 // import TextInput from '../src/component/TextInput';
 import { TextInput } from "react-native-paper";
 export default function DataDiri({navigation , route }) {
-    const [biodata , setBiodata] = useState({npk: '', nama: '',ktp: '',kk: '',tempat_lahir: '',tanggal_lahir: '',email: '',no_hp: '',no_emergency: '',tinggi_badan: '',berat_badan: '',imt: '',keterangan: '',jl_ktp: '',rt_ktp: '',rw_ktp: '',kel_ktp: '',kec_ktp: '',kota_ktp: '',provinsi_ktp: '',jl_dom: '',rt_dom: '',rw_dom: '',kel_dom: '',kec_dom: '',kota_dom: '',provinsi_dom: '' })
+    const [biodata , setBiodata] = useState({npk: '', nama: '',ktp: '',kk: '',tempat_lahir: '', gol_darah: '', tanggal_lahir: '',email: '',no_hp: '',no_emergency: '',tinggi_badan: '',berat_badan: '',imt: '',keterangan: '',jl_ktp: '',rt_ktp: '',rw_ktp: '',kel_ktp: '',kec_ktp: '',kota_ktp: '',provinsi_ktp: '',jl_dom: '',rt_dom: '',rw_dom: '',kel_dom: '',kec_dom: '',kota_dom: '',provinsi_dom: '' })
     const [loading,setLoading] = useState(true)
   //tombol kembali 
   function handleBackButtonClick() {
@@ -34,7 +34,7 @@ export default function DataDiri({navigation , route }) {
                   const hasil =  json.result[0] ;
                 //   console.log(hasil.id_biodata)
                   setBiodata({npk: hasil.npk, nama: hasil.nama,ktp: hasil.ktp,
-                  kk: hasil.kk,tempat_lahir: hasil.tempat_lahir ,tanggal_lahir: hasil.tanggal_lahir,
+                  kk: hasil.kk,tempat_lahir: hasil.tempat_lahir ,tanggal_lahir: hasil.tanggal_lahir, gol_darah: hasil.gol_darah,
                   email: hasil.email , no_hp: hasil.no_hp ,no_emergency: hasil.no_emergency,
                   tinggi_badan: hasil.tinggi_badan ,berat_badan: hasil.berat_badan,imt: hasil.imt ,keterangan: hasil.keterangan, jl_ktp: hasil.jl_ktp ,rt_ktp: hasil.rt_ktp ,rw_ktp: hasil.rw_ktp,kel_ktp: hasil.kel_ktp,kec_ktp: hasil.kec_ktp,kota_ktp: hasil.kota_ktp,provinsi_ktp: hasil.provinsi_ktp, jl_dom: hasil.jl_dom,rt_dom: hasil.rt_dom ,rw_dom: hasil.rw_dom,kel_dom: hasil.kel_dom,kec_dom: hasil.kec_dom, kota_dom: hasil.kota_dom,provinsi_dom: hasil.provinsi_dom}) 
                 })
@@ -103,6 +103,14 @@ export default function DataDiri({navigation , route }) {
             editable={false}
             placeholder="Tanggal Lahir"
             value={biodata.tanggal_lahir}
+          ></TextInput>
+
+          <TextInput
+            style={styles.textINPUT}
+            label="Golongan Darah"
+            editable={false}
+            placeholder="Golongan Darah"
+            value={biodata.gol_darah}
           ></TextInput>
 
           <TextInput

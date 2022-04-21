@@ -72,17 +72,18 @@ export default function App() {
         {/* end */}
 
         {/* edit poto profile dan status dan logout */}
-          <Stack.Screen name='Edit Status' component={EditStatus}></Stack.Screen>
-          <Stack.Screen name='Edit Profile' component={EditBiodata}></Stack.Screen>
-          <Stack.Screen name='Akun' component={Sidebar}></Stack.Screen>
+          <Stack.Screen name='Edit Status'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={EditStatus}></Stack.Screen>
+          <Stack.Screen name='Edit Profile'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={EditBiodata}></Stack.Screen>
+          <Stack.Screen name='Akun'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={Sidebar}></Stack.Screen>
           <Stack.Screen name='Logout'  options={{ headerShown: false  , }} component={Logout}></Stack.Screen>
         {/* end */}
 
         {/* menu absensi  */}
-          <Stack.Screen name='Absen'  component={Absen}></Stack.Screen>
-          <Stack.Screen name='Input Overtime'  component={InputOT}></Stack.Screen>
-          <Stack.Screen name='Input SKTA'  component={InputSKTA}></Stack.Screen>
-          <Stack.Screen name='Pengajuan'  component={Pengajuan}></Stack.Screen>
+          <Stack.Screen name='Absen'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={Absen}></Stack.Screen>
+          <Stack.Screen name='Input Overtime'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={InputOT}></Stack.Screen>
+          <Stack.Screen name='Input SKTA'  options={{headerStyle: {backgroundColor: '#50C4DE', headerShown: false}}} component={InputSKTA}></Stack.Screen>
+          <Stack.Screen name='Input Cuti'  options={{headerStyle: {backgroundColor: '#50C4DE', headerShown: false}}} component={InputCuti}></Stack.Screen>
+          <Stack.Screen name='Pengajuan'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={Pengajuan}></Stack.Screen>
           <Stack.Screen name='Absensi' options={{ headerShown: false  ,}}  component={Absensi}></Stack.Screen>
           <Stack.Screen name='View Absen' options={{ headerShown: false  , }}  component={ViewAbsen}></Stack.Screen>
           <Stack.Screen name='Laporan Absen'  component={LaporanAbsen}></Stack.Screen>

@@ -18,7 +18,7 @@ export default function Pengajuan({navigation,route}) {
     return (
       <View style={styles.container}>
         <View style={styles.row}>
-            <TouchableOpacity style={[styles.card , {backgroundColor:'#20ba46'} ]}>
+            <TouchableOpacity style={[styles.card , {backgroundColor:'#fff'} ]}>
                 <Image style={styles.image} source={ require('../src/img/workaholic.png')}/>
                 <View style={styles.cardContent}>
                     <Text style={styles.name}>{'Pengajuan Overtime '}</Text>
@@ -34,7 +34,7 @@ export default function Pengajuan({navigation,route}) {
                     </TouchableOpacity>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.card , {backgroundColor:'#7954ff'} ]}>
+            <TouchableOpacity style={[styles.card , {backgroundColor:'#fff'} ]}>
                 <Image style={styles.image} source={ require('../src/img/absent.png')}/>
                 <View style={styles.cardContent}>
                     <Text style={styles.name}>{'Pengajuan SKTA'}</Text>
@@ -77,7 +77,7 @@ export default function Pengajuan({navigation,route}) {
 const styles = StyleSheet.create({
     container : {
         flex : 1  ,
-        backgroundColor:'#fff'
+        backgroundColor:'#50C4DE'
     } ,
     row : {
     } ,
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
         fontSize:18,
         flex:1,
         alignSelf:'center',
-        color:"#fff",
+        color:"#000",
         fontWeight:'bold'
       },
       count:{
