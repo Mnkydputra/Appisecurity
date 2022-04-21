@@ -117,7 +117,6 @@ export default function Login({ navigation }) {
                   AsyncStorage.setItem("patrol", patrol);
                   AsyncStorage.setItem("token_patrol",patrol_w);
                   // AsyncStorage.setItem("token_device",json.token);
-                   registerIndieID(hasil.npk, 2402, 'Du6sFk5klrqoYjMMapYjhV');
                   navigation.navigate("Splash");
                   setLoading(false);
                 } else {

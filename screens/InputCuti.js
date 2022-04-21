@@ -134,18 +134,18 @@ export default function InputOT ({navigation , route}){
                 setLoading(false);
               }else {
                 setLoading(false);
-                alert(json.message);
-                // Alert.alert("Berhasil!", json.message, [
-                //   { text: "OK", onPress: () => navigation.navigate('Pengajuan Status',{
-                //     // nama: route.params.nama,
-                //     // npk: route.params.npk,
-                //     // id_akun: route.params.id_absen,
-                //     // wilayah: route.params.wilayah,
-                //     // area_kerja: route.params.areaKerja,
-                //     // jabatan: route.params.jabatan,
-                //     }
-                //   )},
-                // ]);
+                // alert(json.message);
+                Alert.alert("Berhasil!", json.message, [
+                  { text: "OK", onPress: () => navigation.navigate('Status Pengajuan',{
+                    nama: route.params.nama,
+                    npk: route.params.npk,
+                    id_akun: route.params.id_absen,
+                    wilayah: route.params.wilayah,
+                    area_kerja: route.params.areaKerja,
+                    jabatan: route.params.jabatan,
+                    }
+                  )},
+                ]);
               }
             })
         }catch(error){

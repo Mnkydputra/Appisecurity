@@ -182,7 +182,15 @@ export default function InputSKTA ({navigation , route}){
               }else {
                 setLoading(false);
                 Alert.alert("Berhasil!", json.message, [
-                  { text: "OK", onPress: () => navigation.navigate('Home') },
+                  { text: "OK", onPress: () => navigation.navigate('Status Pengajuan',{
+                    nama: route.params.nama,
+                    npk: route.params.npk,
+                    id_akun: route.params.id_absen,
+                    wilayah: route.params.wilayah,
+                    area_kerja: route.params.areaKerja,
+                    jabatan: route.params.jabatan,
+                    }
+                  )},
                 ]);
                 
               }

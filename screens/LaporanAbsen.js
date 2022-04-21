@@ -23,7 +23,6 @@ export default function Profile({navigation , route }) {
       BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
     }, []);
 
-    const BULAN = ["JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI", "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER" , "DESEMBER"]; 
     const [loading,setLoading] = useState(true)
     const [bln,setBln] =useState([
       { id : '01' , bulan : 'Januari'} ,

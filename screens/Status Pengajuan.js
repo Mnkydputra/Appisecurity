@@ -9,6 +9,7 @@ const  windowHeight = Dimensions.get('window').height;
 export default function StatusPengajuan({navigation, route}) {
     const [data , setData] = useState('');
     const [skta , setDataSKTA] = useState('');
+    const [cuti , setDataCuti] = useState('');
     const [refreshing, setRefreshing] = useState(false);
     const [loading,setLoading] = useState(true)
     //refresh screen home 
@@ -20,6 +21,7 @@ export default function StatusPengajuan({navigation, route}) {
         setRefreshing(true);
         daftarLembur();
         daftarSKTA();
+        daftarCuti();
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
@@ -53,6 +55,29 @@ export default function StatusPengajuan({navigation, route}) {
         })
     }
 
+    const daftarCuti = () => {
+        var urlAksi = 'https://isecuritydaihatsu.com/api/statusCuti?npk=' + route.params.npk
+        // var urlAksi = 'https://isecuritydaihatsu.com/api/statusCuti?npk=228572'
+        fetch(urlAksi,{
+            headers : {
+                'keys-isecurity' : 'isecurity' ,
+            } ,
+        })
+        .then((response) => response.json())
+        .then((json) => {
+            console.log(route.params.npk)
+            if(json.status === 'failed'){
+                setDataCuti('')
+                console.log(json.status)
+            }else {
+                const hasil =  json.result ;
+                console.log(hasil)
+                setDataCuti(hasil)
+            }
+        })
+    }
+
+
     const daftarSKTA = () => {
         var urlAksi = 'https://isecuritydaihatsu.com/api/statusSKTA?npk=' + route.params.npk
         // var urlAksi = 'https://isecuritydaihatsu.com/api/statusLembur?npk=228572'
@@ -74,7 +99,7 @@ export default function StatusPengajuan({navigation, route}) {
         })
     }
 
-   function renderSwitch(param) {
+   function renderOT(param) {
         switch(param) {
           case '1':
             return (
@@ -95,7 +120,7 @@ export default function StatusPengajuan({navigation, route}) {
                 </>
             )
         }
-      }
+    }
 
       function renderSKTA(param) {
         switch(param) {
@@ -120,7 +145,31 @@ export default function StatusPengajuan({navigation, route}) {
         }
       }
 
-    const showData = () => {
+
+      function renderCuti(param) {
+        switch(param) {
+          case '1':
+            return (
+                <>
+                    <Badge style={[styles.infoBTN , {backgroundColor: '#6BCB77',color:'#fff'}]}>Cuti Diterima</Badge> 
+                </>
+            )
+            case '2':
+            return (
+                <>
+                    <Badge style={[styles.infoBTN, {color:'#fff'}]}>Cuti Ditolak</Badge> 
+                </>
+            )
+          default:
+            return (
+                <>
+                    <Badge style={[styles.infoBTN,{backgroundColor: '#4D96FF' , color:'#fff'}]}>Menunggu Approval</Badge> 
+                </>
+            )
+        }
+    }
+
+    const showDataOT = () => {
         if(data === '' || data == null){
             return(
                <Text></Text>
@@ -139,7 +188,7 @@ export default function StatusPengajuan({navigation, route}) {
                             </View>
                             <View>
                             {
-                                renderSwitch(item.status_lembur) 
+                                renderOT(item.status_lembur) 
                             }
                             </View>
                             </View>
@@ -183,11 +232,44 @@ export default function StatusPengajuan({navigation, route}) {
     }
 
 
+    const showDataCuti = () => {
+        if(cuti === '' || cuti == null){
+            return(
+                <Text></Text>
+            )
+        }else {
+            return cuti.map((item)=> {
+                return (
+                    <View key={item.id} >
+                        <Card style={styles.cardStyle} >
+                            <Card.Content>
+                            <Title style={{fontSize:12}}>Pengajuan Cuti</Title>
+                            <View style={styles.layout}>
+                            <View style={{width:'60%'}}>
+                                <Text style={styles.textT}>{item.alasan_cuti} </Text>
+                                <Text style={styles.textT}>{item.tanggal_cuti} </Text>
+                            </View>
+                            <View>
+                            {
+                                renderCuti(item.status) 
+                            }
+                            </View>
+                            </View>
+                            </Card.Content>
+                        </Card>
+                    </View>
+                )
+            })
+        }     
+    }
+
+
 
         useEffect(() => {
             daftarLembur();
             daftarSKTA();
-            console.log(route.params.npk)
+            daftarCuti();
+            // console.log(route.params.npk)
         },[])
 
     return (
@@ -200,10 +282,9 @@ export default function StatusPengajuan({navigation, route}) {
             :
             <ScrollView contentContainerStyle={styles.container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                 <View style={styles.container}>
-                    {showData()}
-                    {showDataSKTA()}
-
-                    
+                    {showDataOT()}
+                    {showDataSKTA()}   
+                    {showDataCuti()}
                 </View>
             </ScrollView> 
         }
