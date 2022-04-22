@@ -70,7 +70,13 @@ const showLoad = () => {
 showLoad();
 //
 
-
+const  cekIN = (ket,jamMasuk) =>{
+    if(ket === 'CUTI'){
+      <Text> - </Text>
+    }else {
+        <Text>{jamMasuk}</Text>
+    }
+}
 
 
 //fungsi untuk menampilkan data absen karyawan
@@ -82,8 +88,14 @@ const showData = () => {
              <View >
               <DataTable.Row  style={styles.row}>
                   <DataTable.Cell >{item.time}</DataTable.Cell>
-                  <DataTable.Cell >{item.in_time}</DataTable.Cell>
-                  <DataTable.Cell >{item.out_time}</DataTable.Cell>
+                  <DataTable.Cell >
+                  {
+                    item.ket === 'CUTI' ? '-'  : item.in_time
+                  }
+                  </DataTable.Cell>
+                  <DataTable.Cell >{
+                    item.ket === 'CUTI' ? '-'  : item.ourt_time
+                  }</DataTable.Cell>
                   <DataTable.Cell >{item.ket}</DataTable.Cell>
               </DataTable.Row>
               </View>

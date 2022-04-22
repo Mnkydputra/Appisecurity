@@ -17,14 +17,27 @@ import Status from './Status'
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function Pro() {
 
+function data() {
+  render(
+    <View>Hallo</View>
+  )
+}
+
+
+
+
+export default function Pro({navigation,route}) {
+  useEffect(() => {
+      console.log(route.params.npk)
+  },[])
   return (
-      // <Tab.Navigator>
-      //   <Tab.Screen name="Data Diri" component={DataDiri} />
-      //   <Tab.Screen name="Biodata" component={Status} />
-      //   <Tab.Screen name="Poto" component={Poto} />
-      // </Tab.Navigator>
+    
+    //   <Tab.Navigator>
+    //     <Tab.Screen name="Data Diri" component={DataDiri} />
+    //     <Tab.Screen name="Biodata" component={Status} />
+    //   </Tab.Navigator>
+
       <ScrollView>
         <Image source={ require('../src/img/loading.png')}
           style={styles.cover}
@@ -36,14 +49,30 @@ export default function Pro() {
             <Text style={styles.username}>220927</Text>
             <Text style={styles.bio}>Anggota</Text>
             <Text style={styles.location}>VLC</Text>
-          </View>
-        
+          </View>        
         <Tab.Navigator>
-          <Tab.Screen name="Data Diri" component={DataDiri} />
-          <Tab.Screen name="Biodata" component={Status} />
+          <Tab.Screen name="Data Diri" component={DataDiri} 
+            initialParams={{ 
+              nama: route.params.nama,
+              npk: route.params.npk,
+              id_akun: route.params.id_akun,
+              wilayah: route.params.wilayah,
+              area_kerja: route.params.area_kerja,
+              jabatan: route.params.jabatan 
+            }}
+          />
+          <Tab.Screen name="Biodata" component={Status}
+            initialParams={{ 
+              nama: route.params.nama,
+              npk: route.params.npk,
+              id_akun: route.params.id_akun,
+              wilayah: route.params.wilayah,
+              area_kerja: route.params.area_kerja,
+              jabatan: route.params.jabatan 
+            }} />
         </Tab.Navigator>
-        
       </ScrollView>
+      
 
   );
 }

@@ -51,7 +51,7 @@ export default function Pengajuan({navigation,route}) {
                 </View>
             </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.card , {backgroundColor:'#AAA655'} ]}>
+            <TouchableOpacity style={[styles.card , {backgroundColor:'#FFF'} ]}>
               <Image style={styles.image} source={ require('../src/img/article.png')}/>
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{'Pengajuan Cuti'}</Text>

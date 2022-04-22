@@ -32,7 +32,7 @@ export default function DataDiri({navigation , route }) {
                 .then((response) => response.json())
                 .then((json) => {
                   const hasil =  json.result[0] ;
-                //   console.log(hasil.id_biodata)
+                  console.log(hasil.id_biodata)
                   setBiodata({npk: hasil.npk, nama: hasil.nama,ktp: hasil.ktp,
                   kk: hasil.kk,tempat_lahir: hasil.tempat_lahir ,tanggal_lahir: hasil.tanggal_lahir, gol_darah: hasil.gol_darah,
                   email: hasil.email , no_hp: hasil.no_hp ,no_emergency: hasil.no_emergency,

@@ -202,7 +202,12 @@ showLoad();
                 <TouchableOpacity
                   onPress={() =>
                     navigation.navigate("Profile", {
-                      nama: "dasep",
+                      nama: user.nama,
+                      npk: user.npk,
+                      id_akun: user.id_absen,
+                      wilayah: user.wilayah,
+                      area_kerja: user.areaKerja,
+                      jabatan: user.jabatan,
                     })
                   }
                 >

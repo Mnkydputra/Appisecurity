@@ -81,18 +81,18 @@ export default function App() {
         {/* menu absensi  */}
           <Stack.Screen name='Absen'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={Absen}></Stack.Screen>
           <Stack.Screen name='Input Overtime'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={InputOT}></Stack.Screen>
-          <Stack.Screen name='Input SKTA'  options={{headerStyle: {backgroundColor: '#50C4DE', headerShown: false}}} component={InputSKTA}></Stack.Screen>
-          <Stack.Screen name='Input Cuti'  options={{headerStyle: {backgroundColor: '#50C4DE', headerShown: false}}} component={InputCuti}></Stack.Screen>
+          <Stack.Screen name='Input SKTA'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={InputSKTA}></Stack.Screen>
+          <Stack.Screen name='Input Cuti'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={InputCuti}></Stack.Screen>
           <Stack.Screen name='Pengajuan'  options={{headerStyle: {backgroundColor: '#50C4DE'}}} component={Pengajuan}></Stack.Screen>
           <Stack.Screen name='Absensi' options={{ headerShown: false  ,}}  component={Absensi}></Stack.Screen>
           <Stack.Screen name='View Absen' options={{ headerShown: false  , }}  component={ViewAbsen}></Stack.Screen>
           <Stack.Screen name='Laporan Absen'  component={LaporanAbsen}></Stack.Screen>
           <Stack.Screen name='Approve Overtime'  component={ApproveLembur}></Stack.Screen>
           <Stack.Screen name='Approve SKTA'  component={ApproveSKTA}></Stack.Screen>
+          <Stack.Screen name='Approve Cuti' component={ApproveCuti}></Stack.Screen>
           <Stack.Screen name='Approval' component={Approval}></Stack.Screen>
           <Stack.Screen name='Status Pengajuan' component={StatusPengajuan}></Stack.Screen>
-          <Stack.Screen name='Input Cuti' component={InputCuti}></Stack.Screen>
-          <Stack.Screen name='Approve Cuti' component={ApproveCuti}></Stack.Screen>
+          {/* <Stack.Screen name='Input Cuti' component={InputCuti}></Stack.Screen> */}
         {/* end */}
 
       </Stack.Navigator>

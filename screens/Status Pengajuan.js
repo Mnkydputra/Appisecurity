@@ -273,22 +273,25 @@ export default function StatusPengajuan({navigation, route}) {
         },[])
 
     return (
-        <>
+        // <>
+        <View>
         {
           loading ? 
             <View style={{flex : 1 , justifyContent : 'center'}}>
               <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
             </View>
             :
-            <ScrollView contentContainerStyle={styles.container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+         <ScrollView contentContainerStyle={styles.container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                 <View style={styles.container}>
                     {showDataOT()}
                     {showDataSKTA()}   
                     {showDataCuti()}
                 </View>
             </ScrollView> 
+            
         }
-        </>
+        </View>
+        // </>
     );
   }
 
