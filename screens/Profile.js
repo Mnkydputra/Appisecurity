@@ -9,6 +9,7 @@ const Tab = createMaterialTopTabNavigator();
 export default function Profile({ navigation, route }) {
   const [profiling, setProfiling] = useState({
     npk: "",
+    gol_darah:"",
     email: "",
     nama: "",
     kk: "",
@@ -70,6 +71,7 @@ export default function Profile({ navigation, route }) {
             setNama(hasil.nama);
             setProfiling({
               npk: hasil.npk,
+              gol_darah: hasil.gol_darah,
               email: hasil.email,
               nama: hasil.nama,
               kk: hasil.kk,
