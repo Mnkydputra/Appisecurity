@@ -9,7 +9,7 @@ const Tab = createMaterialTopTabNavigator();
 export default function Profile({ navigation, route }) {
   const [profiling, setProfiling] = useState({
     npk: "",
-    email:"",
+    email: "",
     nama: "",
     kk: "",
     ktp: "",
@@ -137,6 +137,7 @@ export default function Profile({ navigation, route }) {
         <ScrollView style={styles.container}>
           <View style={styles.card}>
             <Avatar rounded size="xlarge" source={require("../src/img/PotoAGT-220927.png")} containerStyle={styles.avatar} />
+
             <Text style={styles.username}>NPK</Text>
             <Text style={styles.name}>{profiling.npk}</Text>
             <Text style={styles.username}>NAMA LENGKAP</Text>
@@ -179,6 +180,8 @@ export default function Profile({ navigation, route }) {
             <Text style={styles.name}>{profiling.tinggi_badan}</Text>
             <Text style={styles.username}>BERAT BADAN</Text>
             <Text style={styles.name}>{profiling.berat_badan}</Text>
+            <Text style={styles.username}>GOLONGAN DARAH</Text>
+            <Text style={styles.name}>{profiling.gol_darah}</Text>
             <Text style={styles.username}>STATUS INDEKS MASSA TUBUH</Text>
             <Text style={styles.name}>{profiling.keterangan}</Text>
             <Text style={styles.username}>ALAMAT EMAIL</Text>
