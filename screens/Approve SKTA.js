@@ -122,7 +122,7 @@ export default function ApproveSKTA({navigation,route}) {
 
         if(data === '' || data == null){
             return(
-               <Image style={{width:350 ,height:350}} source={ require('../src/img/notfound.jpg')}></Image>
+               <Image style={styles.img} source={ require('../src/img/notfound.png')}></Image>
             )
         }else {
 
@@ -196,32 +196,36 @@ export default function ApproveSKTA({navigation,route}) {
   }
 
   const styles = StyleSheet.create({
-        container : {
-            flex: 1,
-            alignContent:'center' ,
-            alignItems:'center' ,
-          
-        } ,
-        buttonContainer: {
-            width: 150,
-            height: 30,
-            fontSize : 3 ,
-            margin:3 ,
-            borderRadius : 3 
-          },
-          cardKonten : {
-            backgroundColor:'#254079', 
-            borderRadius:12 ,
-            marginTop:3 ,
-            width : windowWidth - 10
-          },
-          content : {
-            fontSize:13,
-            fontWeight: 'normal' ,
-            color : '#fff'
-          } ,
-          colorText : {
-              color :'#fff'
-          }
-
+    container: {
+      flex: 1,
+      alignContent: "center",
+      alignItems: "center",
+    },
+    buttonContainer: {
+      width: 150,
+      height: 30,
+      fontSize: 3,
+      margin: 3,
+      borderRadius: 3,
+    },
+    cardKonten: {
+      backgroundColor: "#254079",
+      borderRadius: 12,
+      marginTop: 3,
+      width: windowWidth - 10,
+    },
+    content: {
+      fontSize: 13,
+      fontWeight: "normal",
+      color: "#fff",
+    },
+    colorText: {
+      color: "#fff",
+    },
+    img: {
+      alignItems: "center",
+      margin: 200,
+      width: 250,
+      height: 250,
+    },
   });

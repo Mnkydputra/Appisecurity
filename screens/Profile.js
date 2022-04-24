@@ -10,8 +10,8 @@ export default function Profile({ navigation, route }) {
   const [profiling, setProfiling] = useState({
     npk: "",
     gol_darah: "",
-    tempat_lahir:"",
-    tanggal_lahir:"",
+    tempat_lahir: "",
+    tanggal_lahir: "",
     email: "",
     nama: "",
     kk: "",
@@ -67,8 +67,7 @@ export default function Profile({ navigation, route }) {
           .then((response) => response.json())
           .then((json) => {
             const hasil = json.result[0];
-            console.log(hasil);
-            console.log(hasil.nama);
+
             // alert(hasil.npk);
             setNama(hasil.nama);
             setProfiling({
@@ -156,8 +155,7 @@ export default function Profile({ navigation, route }) {
             <Text style={styles.name}>{profiling.wilayah}</Text>
             <Text style={styles.username}>TEMPAT, TANGGAL LAHIR</Text>
             <Text style={styles.name}>
-              {profiling.tempat_lahir},
-              {profiling.tanggal_lahir}
+              {profiling.tempat_lahir},{profiling.tanggal_lahir}
             </Text>
             <Text style={styles.username}>NOMOR KTP</Text>
             <Text style={styles.name}>{profiling.ktp}</Text>

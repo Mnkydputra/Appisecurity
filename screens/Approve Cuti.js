@@ -128,7 +128,7 @@ export default function ApproveCuti({navigation, route}) {
 
         if(data === '' || data == null){
             return(
-               <Image style={{width:350 ,height:350}} source={ require('../src/img/notfound.jpg')}></Image>
+               <Image style={styles.img} source={ require('../src/img/notfound.png')}></Image>
             )
         }else {
            return data.map((item)=> {
@@ -226,6 +226,12 @@ export default function ApproveCuti({navigation, route}) {
           } ,
           colorText : {
               color :'#fff'
-          }
+          },
+          img: {
+            alignItems:'center',
+            margin:200,
+            width:250,
+            height:250,
+          },
 
   });
