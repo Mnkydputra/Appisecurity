@@ -9,7 +9,9 @@ const Tab = createMaterialTopTabNavigator();
 export default function Profile({ navigation, route }) {
   const [profiling, setProfiling] = useState({
     npk: "",
-    gol_darah:"",
+    gol_darah: "",
+    tempat_lahir:"",
+    tanggal_lahir:"",
     email: "",
     nama: "",
     kk: "",
@@ -72,6 +74,8 @@ export default function Profile({ navigation, route }) {
             setProfiling({
               npk: hasil.npk,
               gol_darah: hasil.gol_darah,
+              tempat_lahir: hasil.tempat_lahir,
+              tanggal_lahir: hasil.tanggal_lahir,
               email: hasil.email,
               nama: hasil.nama,
               kk: hasil.kk,
@@ -151,7 +155,10 @@ export default function Profile({ navigation, route }) {
             <Text style={styles.username}>WILAYAH</Text>
             <Text style={styles.name}>{profiling.wilayah}</Text>
             <Text style={styles.username}>TEMPAT, TANGGAL LAHIR</Text>
-            <Text style={styles.name}>{profiling.npk}</Text>
+            <Text style={styles.name}>
+              {profiling.tempat_lahir},
+              {profiling.tanggal_lahir}
+            </Text>
             <Text style={styles.username}>NOMOR KTP</Text>
             <Text style={styles.name}>{profiling.ktp}</Text>
             <Text style={styles.username}>NOMOR KK</Text>
@@ -230,6 +237,11 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: "#fff",
     borderStyle: "solid",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
   },
   profileInfo: {
     marginLeft: 10,
