@@ -3,9 +3,10 @@ import { View, Text , StyleSheet , TouchableOpacity ,FlatList , Alert, Dimension
 import Button from 'react-native-flat-button'
 import { Card, Title, Paragraph } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ImageModal from 'react-native-image-modal';
 const windowWidth = Dimensions.get('window').width;
 const  windowHeight = Dimensions.get('window').height;
-export default function ApproveSKTA({navigation,route}) {
+export default function ApproveSakit({navigation, route}) {
     const [data , setData] = useState('');
     const [refreshing, setRefreshing] = useState(false);
     const [loading,setLoading] = useState(true)
@@ -17,7 +18,7 @@ export default function ApproveSKTA({navigation,route}) {
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-        daftarSKTA();
+        daftarSakit();
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
@@ -29,9 +30,9 @@ export default function ApproveSKTA({navigation,route}) {
     }
     showLoad();
 
-    const daftarSKTA = () => {
-        var urlAksi = 'https://isecuritydaihatsu.com/api/daftarSKTA?wilayah=' + route.params.wilayah
-        // var urlAksi = 'https://isecuritydaihatsu.com/api/daftarSKTA?wilayah=wil2'
+    const daftarSakit = () => {
+        // var urlAksi = 'https://isecuritydaihatsu.com/api/daftarSakit?wilayah=' + route.params.wilayah
+        var urlAksi = 'http://192.168.8.170:8090/api/daftarSakit?wilayah=' + route.params.wilayah
         fetch(urlAksi,{
             headers : {
                 'keys-isecurity' : 'isecurity' ,
@@ -50,12 +51,12 @@ export default function ApproveSKTA({navigation,route}) {
     }
 
 
-    //reject lemburan
+    //reject ijin sakit 
     const reject = (id) => {
-        Alert.alert("Perhatian",  'Tolak SKTA', [
+        Alert.alert("Perhatian",  'Tolak Perijinan ', [
             { text: "TIDAK", onPress: () => null },
             {text : 'YA' , onPress : () => 
-               fetch('https://isecuritydaihatsu.com/api/ApproveSKTA',{
+               fetch('https://isecuritydaihatsu.com/api/ApproveLembur',{
                            headers : {
                                'keys-isecurity' : 'isecurity' ,
                                'Content-Type': 'application/json' , 
@@ -63,33 +64,32 @@ export default function ApproveSKTA({navigation,route}) {
                            method : 'PUT' , 
                            body : JSON.stringify({
                                "id" : id,
-                               "status_approve" : '0' ,
-                               "id_absen"  : "AGT-228572"
+                               "status_approve" : '0'
                            })
                    })
                    .then((response) => response.json())
                    .then((json) => {
                        if(json.status === 'fail'){
                            Alert.alert("INFORMASI", json.result, [
-                               { text: "YA", onPress: () => daftarSKTA() },
+                               { text: "YA", onPress: () => daftarSakit() },
                            ]);
                        }else {
                            Alert.alert("Berhasil!", json.result, [
-                               { text: "YA", onPress: () => daftarSKTA() },
+                               { text: "YA", onPress: () => daftarSakit() },
                            ]);
                        }
-                       daftarSKTA();
+                       daftarSakit();
                    })
                }
        ])
     }
 
-    //approve skta
+    //approve ijin sakit 
     const approve = (id) => {
-        Alert.alert("Perhatian",  'Approve SKTA', [
+        Alert.alert("Perhatian",  'Approve Perijinan ', [
             {text : 'BATAL' , onPress : () => null
             } ,
-            {text : 'YA' , onPress : () => fetch('https://isecuritydaihatsu.com/api/ApproveSKTA',{
+            {text : 'YA' , onPress : () => fetch('https://isecuritydaihatsu.com/api/ApproveLembur',{
                     headers : {
                         'keys-isecurity' : 'isecurity' ,
                         'Content-Type': 'application/json' , 
@@ -97,23 +97,21 @@ export default function ApproveSKTA({navigation,route}) {
                     method : 'PUT' , 
                     body : JSON.stringify({
                         "id" : id,
-                        "status_approve" : '1' ,
-                        "id_absen"  : "AGT-228572"
+                        "status_approve" : '1'
                     })
                 })
                 .then((response) => response.json())
                 .then((json) => {
-                    console.log(json)
                 if(json.status === 'fail'){
                     Alert.alert("GAGAL", json.result, [
-                        { text: "YA", onPress: () => daftarSKTA() },
+                        { text: "YA", onPress: () => daftarSakit() },
                     ]);
                 }else {
                     Alert.alert("Berhasil!", json.result, [
-                        { text: "YA", onPress: () => daftarSKTA() },
+                        { text: "YA", onPress: () => daftarSakit() },
                     ]);
                 }
-                daftarSKTA();
+                daftarSakit();
             })}
         ])
     }
@@ -125,18 +123,17 @@ export default function ApproveSKTA({navigation,route}) {
                <Image style={{width:350 ,height:350}} source={ require('../src/img/notfound.jpg')}></Image>
             )
         }else {
-
            return data.map((item)=> {
+                console.log(item.alasan_lembur)
                 return (
                     <View key={item.id.toString()} >
                     <Card style={styles.cardKonten}>
                             <Card.Content>
                             <Paragraph style={styles.colorText} >{item.nama} - {item.npk}</Paragraph>
                             <View>
-                                <Text style={styles.colorText}>Tanggal : {item.date_in}</Text>
-                                <Text style={styles.colorText}>Jam Masuk : {item.in_time}</Text>
-                                <Text style={styles.colorText}>Jam Pulang : {item.out_time}</Text>
-                                <Text style={styles.colorText}>Keterangan  : {item.keterangan}</Text>
+                                <Text style={styles.colorText}>Tanggal Sakit : {item.date_perijinan}</Text>
+                                <Text style={styles.colorText}>Keterangan : {item.keterangan} </Text>
+                               
                             </View>
                             <View style={{ 
                                 flexDirection: "row",
@@ -160,7 +157,18 @@ export default function ApproveSKTA({navigation,route}) {
                                 containerStyle={styles.buttonContainer}
                                 contentStyle={styles.content}
                                 >
-                                   <Icon style={{fontWeight:'normal'}} name="check" ></Icon> Approve SKTA
+                                   <Icon style={{fontWeight:'normal'}} name="check" ></Icon> Approve Overtime
+                                </Button>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity>
+                                <Button
+                                type="info"
+                                onPress={() => approve(item.id)}
+                                containerStyle={styles.buttonContainer}
+                                contentStyle={styles.content}
+                                >
+                                   <Icon style={{fontWeight:'normal'}} name="envelope" ></Icon> SKD
                                 </Button>
                                 </TouchableOpacity>
                             </View>
@@ -174,7 +182,8 @@ export default function ApproveSKTA({navigation,route}) {
     }
 
         useEffect(() => {
-            daftarSKTA();
+            daftarSakit();
+            // console.log(Device.osBuildId);
         },[])
 
     return (
@@ -189,6 +198,7 @@ export default function ApproveSKTA({navigation,route}) {
                 <View style={styles.container}>
                         {showData()}
                 </View>
+              
             </ScrollView> 
         }
         </>
@@ -200,7 +210,7 @@ export default function ApproveSKTA({navigation,route}) {
             flex: 1,
             alignContent:'center' ,
             alignItems:'center' ,
-            backgroundColor:"#50C4DE"
+           backgroundColor:"#50C4DE"
         } ,
         buttonContainer: {
             width: 150,

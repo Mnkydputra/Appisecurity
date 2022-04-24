@@ -182,25 +182,17 @@ export default function InputOT ({navigation , route}){
                 setLoading(false);
               }else {
                 setLoading(false);
-                // fetch('https://exp.host/--/api/v2/push/send',{
-                //   method : 'POST' ,
-                //   headers : {
-                //       Accept : 'application/json' ,
-                //       'Accept-encoding' : 'gzip, deflate' ,
-                //       'Content-Type' : 'application/json'
-                //   },
-                //   body : JSON.stringify(
-                //       { 
-                //           to : tokenDevice, 
-                //           title : 'Approval Lemburan' ,
-                //           body  : route.params.nama + ' AGT ' + route.params.area_kerja + ' Mengajukan Lembur , Segera Cek ISECURITY anda' ,
-                //           data : {data : 'goes here'} ,
-                //           _displayInForeground : false 
-                //       }
-                //   ),
-                // })
+               
                 Alert.alert("Berhasil!", json.message, [
-                  { text: "OK", onPress: () => navigation.navigate('Home') },
+                  { text: "OK", onPress: () => navigation.navigate('Status Pengajuan',{
+                    nama: route.params.nama,
+                    npk: route.params.npk,
+                    id_akun: route.params.id_absen,
+                    wilayah: route.params.wilayah,
+                    area_kerja: route.params.areaKerja,
+                    jabatan: route.params.jabatan,
+                    }
+                  )},
                 ]);
                 
               }

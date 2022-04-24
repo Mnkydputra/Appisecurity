@@ -49,8 +49,26 @@ export default function Absen ({navigation,route}) {
             <TouchableOpacity style={styles.card}>
               <Image style={styles.image} source={ require('../src/img/article.png')}/>
               <View style={styles.cardContent}>
-                <Text style={styles.name}>{'Pengajuan'}</Text>
+                <Text style={styles.name}>{'Pengajuan (OT SKTA CUTI)'}</Text>
                 <TouchableOpacity style={styles.followButton} onPress={()=> navigation.navigate('Pengajuan' , {
+                    nama: route.params.nama,
+                    npk: route.params.npk,
+                    id_akun: route.params.id_akun,
+                    wilayah: route.params.wilayah,
+                    area_kerja: route.params.area_kerja,
+                    jabatan: route.params.jabatan,
+                })}>
+                  <Text style={styles.followButtonText}>View</Text>  
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
+
+
+            <TouchableOpacity style={styles.card}>
+              <Image style={styles.image} source={ require('../src/img/permited.png')}/>
+              <View style={styles.cardContent}>
+                <Text style={styles.name}>{'Perijinan'}</Text>
+                <TouchableOpacity style={styles.followButton} onPress={()=> navigation.navigate('Perijinan' , {
                     nama: route.params.nama,
                     npk: route.params.npk,
                     id_akun: route.params.id_akun,

@@ -10,7 +10,6 @@ import Button from "../src/component/Button";
 import SelectPicker from 'react-native-form-select-picker';
 const { width, height } = Dimensions.get("window");
 
-const options = ["Apple", "Banana", "Orange"];
 const windowWidth = Dimensions.get('window').width;
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -21,29 +20,18 @@ Notifications.setNotificationHandler({
   });
 
 export default function InputSKTA ({navigation , route}){
-    const [expoPushToken, setExpoPushToken] = useState('');
-    const [notification, setNotification] = useState(false);
-    const notificationListener = useRef();
-    const responseListener = useRef();
     const [loading, setLoading] = useState(false);
-
     const [npkKorlap, setNPKkorlap] = useState();
     const [daftarKorlap , setLisKorlap] = useState([]);
-    const [jamOT, setJamOT] = useState();
 
-    const [addressToken , setAddressToken ] = useState()
 
     //   datetime
       const [date ,setDate ] = useState(new Date());
       const [tglSKTA , settglSKTA] = useState('')
-      const [mode, setMode ] = useState('time');
       const [show ,setShow ] = useState({date1 : false , date2 : false });
-      const [text ,setText ] = useState({time1 : '' , time2 : ''});
       const [mulai ,setMulai ] = useState('');
       const [selesai ,setSelesai ] = useState('');
       const [alasan ,setAlasan ] = useState();
-      const[masukKerja , setMasukKerja] = useState('');
-      const[pulangKerja , setPulangKerja] = useState('');
       const[tglPulang , setTanggalPulang] = useState('');
     //
 
@@ -62,7 +50,6 @@ export default function InputSKTA ({navigation , route}){
             .then((json) => {
               const hasil =  json.result;
               setLisKorlap(hasil)
-              // console.log(hasil)
             })
           }catch(error){
             alert(error.message)
@@ -83,14 +70,7 @@ export default function InputSKTA ({navigation , route}){
       // 
         listKorlap();
       // 
-    
-        notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-          setNotification(notification);
-        });
-    
-        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-          console.log(response);
-        });
+
 
         const handleBackPress = () => {
           navigation.goBack();
@@ -100,8 +80,6 @@ export default function InputSKTA ({navigation , route}){
     
         return () => {
           BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
-          Notifications.removeNotificationSubscription(notificationListener.current);
-          Notifications.removeNotificationSubscription(responseListener.current);
         };
       }, []);
     // timer 

@@ -30,17 +30,15 @@ export default function InputSKTA ({navigation , route}){
     const [berkas, setBerkas] = useState('Upload Surat Dokter (Klik disini)');
     const [dokumen , setDokumen] = useState('');
     const [nameFile , setFileName] = useState('');
-    //   datetime
-      const [tglSakit, setTglSakit] = useState('')
-      const [alasan ,setAlasan ] = useState();
-    //
+    const [tglSakit, setTglSakit] = useState('')
+    const [alasan ,setAlasan ] = useState();
 
-    // get token korlap for send notification approval
+    // get list korlap
       const listKorlap = async () => {
-        //   let wil = route.params.wilayah 
+          let wil = route.params.wilayah 
           try {
-            var urlAksi = 'https://isecuritydaihatsu.com/api/DaftarKorlap?wilayah=WIL2';
-            // var urlAksi = 'https://isecuritydaihatsu.com/api/DaftarKorlap?wilayah=' + wil;
+            // var urlAksi = 'https://isecuritydaihatsu.com/api/DaftarKorlap?wilayah=WIL2';
+            var urlAksi = 'https://isecuritydaihatsu.com/api/DaftarKorlap?wilayah=' + wil;
             fetch(urlAksi,{
                 headers : {
                     'keys-isecurity' : 'isecurity' ,
@@ -90,14 +88,13 @@ export default function InputSKTA ({navigation , route}){
       let type = dokumen.mimeType ;
       let localUri = dokumen.uri ;
       let formData = new FormData();
-          // Assume "photo" is the name of the form field the server expects
           formData.append('berkas', { uri: localUri, name: filename, type } );
           formData.append('tanggal_ijin' , tglSakit);
-          formData.append('npk' , '229529' );
-          formData.append('id_ijin' , 'AGT-229529' );
-          formData.append('nama' , 'DASEP DEPIYAWAN' );
-          formData.append('area' , 'VLC' );
-          formData.append('wilayah' , 'WIL2' );
+          formData.append('npk' , route.params.npk );
+          formData.append('id_ijin' , route.params.id_akun );
+          formData.append('nama' , route.params.nama );
+          formData.append('area' ,route.params.area_kerja );
+          formData.append('wilayah' , route.params.wilayah  );
           formData.append('status' , '0' );
           formData.append('ket' , alasan );
           const url = "http://192.168.8.170:8090/api/ajukanSakit" ;
@@ -112,14 +109,14 @@ export default function InputSKTA ({navigation , route}){
             })
             .then((response) => response.json())
             .then((json) => {
-              if(json.message === 'success'){
+              if(json.status === 'success'){
                 Alert.alert("Berhasil!", json.message, [
                     { text: "OK", onPress: () => navigation.navigate('Status Pengajuan',{
                         nama: route.params.nama,
                         npk: route.params.npk,
                         id_akun: route.params.id_absen,
                         wilayah: route.params.wilayah,
-                        area_kerja: route.params.areaKerja,
+                        area_kerja: route.params.area_kerja,
                         jabatan: route.params.jabatan,
                       }
                     )},
@@ -131,13 +128,11 @@ export default function InputSKTA ({navigation , route}){
                     ]);
                }
             })
-            // console.log(localUri)
           }catch(error){
             alert(error.message)
           }
     }
     const showKorlap = () => {
-    //   console.log(daftarKorlap)
       if(daftarKorlap == undefined || daftarKorlap === ''){
         console.log("Sabar dulu")
       }else {
@@ -225,14 +220,12 @@ export default function InputSKTA ({navigation , route}){
 
           <Text style={[styles.text, {marginTop:10}]}> Pilih Korlap</Text>
           {showKorlap()}
-
-         
-          
+ 
           <Button mode="contained"  onPress={sendMessage}>
           {loading ? 
             <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>
             : 
-           <Text style={{color:'#fff'}}>KIRIM SKTA</Text>   
+           <Text style={{color:'#fff'}}>KIRIM PERIJINAN</Text>   
           }
           </Button>
 

@@ -17,7 +17,7 @@ export default function Splash({navigation,route})  {
         justifyContent: 'center',
         backgroundColor: "#fff",}}>
 
-       <Image style={{height:250, width:250}} source={require("../src/img/Login.png")}></Image>
+       <Image style={{height:150, width:150}} source={require("../src/img/splassh.png")}></Image>
       </View>
     );
   }
