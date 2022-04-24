@@ -1,100 +1,77 @@
-import React, { useContext } from "react";
-import { NavigationEvents } from "react-navigation";
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import React, { Component, useState, useEffect } from "react";
 import { Text, Image, Avatar, Divider } from "react-native-elements";
-import { EvilIcons, Feather, MaterialIcons } from "@expo/vector-icons";
-import ListItem from "../components/ListItem";
-import moment from "moment";
-import { Context as TweetContext } from "../context/TweetContext";
-const ProfileScreen = () => {
-  const { state, fetchProfileTweet } = useContext(TweetContext);
-  const { profile, username, followers, following } = state.user;
+import { View, StyleSheet, BackHandler, FlatList, TouchableOpacity, ScrollView } from "react-native";
+import { Navigation } from "@react-navigation/native";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import DataDiri from "./DataDiri";
+import Status from "./Status";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+const Tab = createMaterialTopTabNavigator();
+
+export default function Pro({ Navigation, route }) {
+  useEffect(() => {
+    console.log(route.params.npk);
+  }, []);
   return (
     <ScrollView>
-      <NavigationEvents onWillFocus={() => fetchProfileTweet(username)} />
-      <Image
-        source={{ uri: profile ? profile.cover.filename : null }}
-        style={styles.cover}
-      />
-      <Avatar
-        rounded
-        size="large"
-        source={{
-          uri: profile ? profile.avatar.filename : null,
-        }}
-        containerStyle={styles.avatar}
-      />
+      <View style={styles.cover} />
+      <Avatar rounded size="large" source={require("../src/img/PotoAGT-220927.png")} containerStyle={styles.avatar} />
+
       <View style={styles.profileInfo}>
-        <Text style={styles.name}>{profile.name}</Text>
-        <Text style={styles.username}>@{username}</Text>
-        <Text style={styles.bio}>{profile.bio}</Text>
-        <Text style={styles.location}>
-          <EvilIcons name="location" size={16} />
-          {profile.location}
-        </Text>
-        <Text style={styles.regDate}>
-          <MaterialIcons name="date-range" size={16} />
-          {" " + moment.unix(profile.regDate).format("MMMM YYYY")}
-        </Text>
-        <Text style={styles.follow}>
-          {followers ? followers.length : 0}{" "}
-          <Text style={styles.followers}>Followers </Text>
-          {following ? following.length : 0}{" "}
-          <Text style={styles.following}>Following </Text>
-        </Text>
+        <Text style={styles.name}>Murry Febriansyah</Text>
+        <Text style={styles.username}>220927</Text>
+        <Text style={styles.bio}>Anggota</Text>
+        <Text style={styles.location}>VLC</Text>
       </View>
-      <Divider />
-      <FlatList
-        data={state.tweet}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item }) => {
-          return (
-            <TouchableOpacity
-              onPress={() => navigation.navigate("SingleTweet", { item })}
-            >
-              <ListItem
-                avatar={item.avatar}
-                _id={item._id}
-                userId={item.userId}
-                username={item.username}
-                name={item.name}
-                content={item.content}
-                image={item.img}
-                timestamp={item.timestamp}
-                likes={item.likes}
-                user={state.user}
-              />
-            </TouchableOpacity>
-          );
-        }}
-      />
+      <SafeAreaView>
+        <Tab.Navigator>
+          <Tab.Screen
+            name="Data Diri"
+            component={DataDiri}
+            initialParams={{
+              nama: route.params.nama,
+              npk: route.params.npk,
+              id_akun: route.params.id_akun,
+              wilayah: route.params.wilayah,
+              area_kerja: route.params.area_kerja,
+              jabatan: route.params.jabatan,
+            }}
+          />
+          <Tab.Screen
+            name="Biodata"
+            component={Status}
+            initialParams={{
+              nama: route.params.nama,
+              npk: route.params.npk,
+              id_akun: route.params.id_akun,
+              wilayah: route.params.wilayah,
+              area_kerja: route.params.area_kerja,
+              jabatan: route.params.jabatan,
+            }}
+          />
+        </Tab.Navigator>
+      </SafeAreaView>
     </ScrollView>
   );
-};
-ProfileScreen.navigationOptions = {
-  tabBarOptions: {
-    showLabel: false,
-  },
-  tabBarIcon: <Feather name="mail" size={30} color="#636E72" />,
-};
+}
+
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+  },
   cover: {
     width: "100%",
     height: 100,
+    backgroundColor: "#50C4DE",
   },
   avatar: {
-    marginLeft: 20,
+    justifyContent: "center",
     marginTop: -40,
     borderWidth: 3,
-    borderColor: "white",
+    borderColor: "#000",
     borderStyle: "solid",
   },
   profileInfo: {
@@ -115,18 +92,4 @@ const styles = StyleSheet.create({
   username: {
     color: "#657786",
   },
-  location: {
-    color: "#657786",
-  },
-  regDate: {
-    color: "#657786",
-  },
-  follow: {
-    fontSize: 16,
-  },
-  followers: {
-    marginRight: 10,
-  },
-  following: {},
 });
-export default ProfileScreen;

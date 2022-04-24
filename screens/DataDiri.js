@@ -1,14 +1,8 @@
 import React, { Component , useState , useEffect } from 'react';
 import { View, Text , StyleSheet , BackHandler ,ActivityIndicator , ScrollView} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
-import BackButton from "../src/component/BackButton";
-import Background from "../src/component/Background";
-import Logo from "../src/component/Logo";
-import Header from "../src/component/Header";
-import Button from "../src/component/Button";
-import Paragraph from "../src/component/Paragraph";
-import { DataTable } from 'react-native-paper';
-// import TextInput from '../src/component/TextInput';
+
+
 import { TextInput } from "react-native-paper";
 export default function DataDiri({navigation , route }) {
     const [biodata , setBiodata] = useState({npk: '', nama: '',ktp: '',kk: '',tempat_lahir: '', gol_darah: '', tanggal_lahir: '',email: '',no_hp: '',no_emergency: '',tinggi_badan: '',berat_badan: '',imt: '',keterangan: '',jl_ktp: '',rt_ktp: '',rw_ktp: '',kel_ktp: '',kec_ktp: '',kota_ktp: '',provinsi_ktp: '',jl_dom: '',rt_dom: '',rw_dom: '',kel_dom: '',kec_dom: '',kota_dom: '',provinsi_dom: '' })
