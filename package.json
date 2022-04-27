@@ -45,6 +45,8 @@
         "react-native-flat-button": "^1.0.6",
         "react-native-form-select-picker": "^0.0.12",
         "react-native-gesture-handler": "~2.1.0",
+        "react-native-image-viewing": "^0.2.2",
+        "react-native-image-zoom-viewer": "^3.0.1",
         "react-native-neat-date-picker": "^1.2.2",
         "react-native-pager-view": "^5.4.9",
         "react-native-paper-dates": "^0.8.7",

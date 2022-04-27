@@ -1,5 +1,5 @@
 import React, { Component , useState , useEffect, useCallback } from 'react';
-import { View, Text , StyleSheet , TouchableOpacity ,FlatList , Alert, Dimensions , Image  ,RefreshControl , ScrollView , ActivityIndicator } from 'react-native';
+import { View, Text , StyleSheet , TouchableOpacity ,FlatList , Alert, Dimensions , Image  ,RefreshControl , ScrollView , ActivityIndicator,BackHandler } from 'react-native';
 import Button from 'react-native-flat-button'
 import { Card, Title, Paragraph } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -122,7 +122,7 @@ export default function ApproveSKTA({navigation,route}) {
 
         if(data === '' || data == null){
             return(
-               <Image style={{width:350 ,height:350}} source={ require('../src/img/notfound.jpg')}></Image>
+               <Image style={styles.img} source={ require('../src/img/notfound.png')}></Image>
             )
         }else {
 

@@ -97,7 +97,8 @@ export default function InputSKTA ({navigation , route}){
           formData.append('wilayah' , route.params.wilayah  );
           formData.append('status' , '0' );
           formData.append('ket' , alasan );
-          const url = "http://192.168.8.170:8090/api/ajukanSakit" ;
+          // const url = "http://192.168.8.170:8090/api/ajukanSakit" ;
+          const url = "https://isecuritydaihatsu.com/api/ajukanSakit" ;
           try{
             fetch(url, {
               method: 'POST',

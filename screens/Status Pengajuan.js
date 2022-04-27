@@ -274,7 +274,7 @@ export default function StatusPengajuan({navigation, route}) {
 
     return (
         // <>
-        <View>
+        <View style={styles.container}>
         {
           loading ? 
             <View style={{flex : 1 , justifyContent : 'center'}}>
@@ -282,7 +282,7 @@ export default function StatusPengajuan({navigation, route}) {
             </View>
             :
          <ScrollView contentContainerStyle={styles.container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-                <View style={styles.container}>
+                <View >
                     {showDataOT()}
                     {showDataSKTA()}   
                     {showDataCuti()}
@@ -298,6 +298,7 @@ export default function StatusPengajuan({navigation, route}) {
   const styles = StyleSheet.create({
     container : {
         flex: 1,
+        width:"100%",
         backgroundColor:"#50C4DE"
     } ,
     buttonContainer: {

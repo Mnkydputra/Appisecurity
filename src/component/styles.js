@@ -37,6 +37,7 @@ export default StyleSheet.create({
     justifyContent : "center",
     margin: windowWidth /  55,
     backgroundColor:"#fff",
+    
   },
   linkAbsen: {
     backgroundColor: "#00C19F",

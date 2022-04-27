@@ -1,11 +1,9 @@
 import React, { Component , useState , useEffect, useCallback } from 'react';
-import { View, Text , StyleSheet , TouchableOpacity ,FlatList , Alert, Dimensions , Image  ,RefreshControl , ScrollView , ActivityIndicator } from 'react-native';
+import { View, Text , StyleSheet , TouchableOpacity ,FlatList , Alert, Dimensions , Image  ,RefreshControl , ScrollView , ActivityIndicator  ,  BackHandler } from 'react-native';
 import Button from 'react-native-flat-button'
 import { Card, Title, Paragraph } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import ImageModal from 'react-native-image-modal';
 const windowWidth = Dimensions.get('window').width;
-const  windowHeight = Dimensions.get('window').height;
 export default function ApproveSakit({navigation, route}) {
     const [data , setData] = useState('');
     const [refreshing, setRefreshing] = useState(false);
@@ -14,7 +12,6 @@ export default function ApproveSakit({navigation, route}) {
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     }
-
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -31,8 +28,8 @@ export default function ApproveSakit({navigation, route}) {
     showLoad();
 
     const daftarSakit = () => {
-        // var urlAksi = 'https://isecuritydaihatsu.com/api/daftarSakit?wilayah=' + route.params.wilayah
-        var urlAksi = 'http://192.168.8.170:8090/api/daftarSakit?wilayah=' + route.params.wilayah
+        var urlAksi = 'https://isecuritydaihatsu.com/api/daftarSakit?wilayah=' + route.params.wilayah
+        // var urlAksi = 'http://192.168.8.170:8090/api/daftarSakit?wilayah=WIL2'
         fetch(urlAksi,{
             headers : {
                 'keys-isecurity' : 'isecurity' ,
@@ -44,7 +41,7 @@ export default function ApproveSakit({navigation, route}) {
                 setData('')
             }else {
                 const hasil =  json.result ;
-                console.log(hasil)
+                // console.log(hasil)
                 setData(hasil)
             }
         })
@@ -56,25 +53,29 @@ export default function ApproveSakit({navigation, route}) {
         Alert.alert("Perhatian",  'Tolak Perijinan ', [
             { text: "TIDAK", onPress: () => null },
             {text : 'YA' , onPress : () => 
-               fetch('https://isecuritydaihatsu.com/api/ApproveLembur',{
+               fetch('https://isecuritydaihatsu.com/api/approveSakit',{
                            headers : {
                                'keys-isecurity' : 'isecurity' ,
                                'Content-Type': 'application/json' , 
                            } ,
                            method : 'PUT' , 
                            body : JSON.stringify({
-                               "id" : id,
-                               "status_approve" : '0'
+                                "id"       : id ,
+                                "npk"      : route.params.npk,
+                                "id_token" : route.params.id_akun,
+                                "area"     : route.params.area_kerja ,
+                                "wilayah"  : route.params.wilayah ,
+                                "accept"   : 1 
                            })
                    })
                    .then((response) => response.json())
                    .then((json) => {
                        if(json.status === 'fail'){
-                           Alert.alert("INFORMASI", json.result, [
+                           Alert.alert("Informasi !", json.result, [
                                { text: "YA", onPress: () => daftarSakit() },
                            ]);
                        }else {
-                           Alert.alert("Berhasil!", json.result, [
+                           Alert.alert("Informasi !", json.result, [
                                { text: "YA", onPress: () => daftarSakit() },
                            ]);
                        }
@@ -89,15 +90,19 @@ export default function ApproveSakit({navigation, route}) {
         Alert.alert("Perhatian",  'Approve Perijinan ', [
             {text : 'BATAL' , onPress : () => null
             } ,
-            {text : 'YA' , onPress : () => fetch('https://isecuritydaihatsu.com/api/ApproveLembur',{
+            {text : 'YA' , onPress : () => fetch('https://isecuritydaihatsu.com/api/approveSakit',{
                     headers : {
                         'keys-isecurity' : 'isecurity' ,
                         'Content-Type': 'application/json' , 
                     } ,
                     method : 'PUT' , 
                     body : JSON.stringify({
-                        "id" : id,
-                        "status_approve" : '1'
+                      "id"       : id ,
+                      "npk"      : route.params.npk,
+                      "id_token" : route.params.id_akun,
+                      "area"     : route.params.area_kerja ,
+                      "wilayah"  : route.params.wilayah ,
+                      "accept"   : 1 
                     })
                 })
                 .then((response) => response.json())
@@ -107,7 +112,7 @@ export default function ApproveSakit({navigation, route}) {
                         { text: "YA", onPress: () => daftarSakit() },
                     ]);
                 }else {
-                    Alert.alert("Berhasil!", json.result, [
+                    Alert.alert("Informasi!", json.result, [
                         { text: "YA", onPress: () => daftarSakit() },
                     ]);
                 }
@@ -116,15 +121,25 @@ export default function ApproveSakit({navigation, route}) {
         ])
     }
 
+
+    //showing image 
+    const showImage = (link) => {
+      // alert(link)  
+      navigation.navigate('Surat Sakit', {
+          url : link 
+      })
+    }
+
+    //show data sakit
     const showData = () => {
 
         if(data === '' || data == null){
             return(
-               <Image style={{width:350 ,height:350}} source={ require('../src/img/notfound.jpg')}></Image>
+               <Image style={{width:350 ,height:350}} source={ require('../src/img/notfound.png')}></Image>
             )
         }else {
            return data.map((item)=> {
-                console.log(item.alasan_lembur)
+                // console.log(item.alasan_lembur)
                 return (
                     <View key={item.id.toString()} >
                     <Card style={styles.cardKonten}>
@@ -139,11 +154,22 @@ export default function ApproveSakit({navigation, route}) {
                                 flexDirection: "row",
                                 flexWrap: "wrap"
                             }}>
+                            
+                            <TouchableOpacity>
+                                <Button
+                                type="info"
+                                onPress={() => showImage(item.link_dokumen)}
+                                containerStyle={[styles.buttonContainer,{width:70}]}
+                                contentStyle={styles.content}
+                                >
+                                   <Icon style={{fontWeight:'normal'}} name="envelope" ></Icon> SKD
+                                </Button>
+                                </TouchableOpacity>
                                <TouchableOpacity>
                                 <Button
                                     type="negative"
                                     onPress={() => reject(item.id)}
-                                    containerStyle={styles.buttonContainer}
+                                    containerStyle={[styles.buttonContainer,{width:70}]}
                                     contentStyle={styles.content}
                                 >
                                      <Icon style={{fontWeight:'normal'}} name="close" ></Icon> Reject
@@ -157,20 +183,10 @@ export default function ApproveSakit({navigation, route}) {
                                 containerStyle={styles.buttonContainer}
                                 contentStyle={styles.content}
                                 >
-                                   <Icon style={{fontWeight:'normal'}} name="check" ></Icon> Approve Overtime
+                                   <Icon style={{fontWeight:'normal'}} name="check" ></Icon> Approve Perijinan
                                 </Button>
                                 </TouchableOpacity>
 
-                                <TouchableOpacity>
-                                <Button
-                                type="info"
-                                onPress={() => approve(item.id)}
-                                containerStyle={styles.buttonContainer}
-                                contentStyle={styles.content}
-                                >
-                                   <Icon style={{fontWeight:'normal'}} name="envelope" ></Icon> SKD
-                                </Button>
-                                </TouchableOpacity>
                             </View>
                             </Card.Content>
                         </Card>
@@ -181,9 +197,17 @@ export default function ApproveSakit({navigation, route}) {
         }     
     }
 
+
         useEffect(() => {
+            console.log(route.params.wilayah);
             daftarSakit();
-            // console.log(Device.osBuildId);
+            const handleBackPress = () => {
+                navigation.goBack();
+                return true;
+              };
+              BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+              return () =>
+              BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
         },[])
 
     return (
@@ -198,7 +222,6 @@ export default function ApproveSakit({navigation, route}) {
                 <View style={styles.container}>
                         {showData()}
                 </View>
-              
             </ScrollView> 
         }
         </>

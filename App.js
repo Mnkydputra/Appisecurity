@@ -33,6 +33,7 @@ import ApproveCuti from './screens/Approve Cuti';
 import InputSakit from './screens/Input Sakit'; 
 import Perijinan from './screens/Perijinan';
 import ApproveSakit from './screens/Approve Sakit';
+import ShowSuratSakit from './screens/ShowSuratSakit';
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
@@ -98,6 +99,7 @@ export default function App() {
           <Stack.Screen name='Input Sakit' component={InputSakit}></Stack.Screen>
           <Stack.Screen name='Perijinan' component={Perijinan}></Stack.Screen>
           <Stack.Screen name='Approve Sakit' component={ApproveSakit}></Stack.Screen>
+          <Stack.Screen options={{ headerShown: false  ,  headerStyle: {backgroundColor: '#50C4DE'}, }}  name='Surat Sakit' component={ShowSuratSakit}></Stack.Screen>
         {/* end */}
 
       </Stack.Navigator>

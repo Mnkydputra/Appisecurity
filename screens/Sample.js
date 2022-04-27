@@ -1,268 +1,278 @@
-import React, { Component , useState , useEffect , useRef } from 'react';
-import { View, Text , StyleSheet , TouchableOpacity , Platform  , Dimensions ,Alert ,BackHandler} from 'react-native';
-import Constants from 'expo-constants';
-import * as Notifications from 'expo-notifications';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import {Picker ,} from '@react-native-picker/picker';
-import { TextInput , Headline, Card} from "react-native-paper";
-import DatePicker from 'react-native-datepicker';
-import Button from "../src/component/Button";
-import SelectPicker from 'react-native-form-select-picker';
-const { width, height } = Dimensions.get("window");
-import * as DocumentPicker from 'expo-document-picker';
-const options = ["Apple", "Banana", "Orange"];
+import React, { Component , useState , useEffect, useCallback } from 'react';
+import { View, Text , StyleSheet , TouchableOpacity ,FlatList , Alert, Dimensions , Image  ,RefreshControl , ScrollView , ActivityIndicator  , Modal } from 'react-native';
+import Button from 'react-native-flat-button'
+import { Card, Title, Paragraph } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import ImageModal from 'react-native-image-modal';
 const windowWidth = Dimensions.get('window').width;
-Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: true,
-      shouldSetBadge: false,
-    }),
-  });
+const  windowHeight = Dimensions.get('window').height;
+import ImageViewing from "react-native-image-viewing";
+export default function ApproveSakit({navigation, route}) {
+    const [data , setData] = useState('');
+    const [refreshing, setRefreshing] = useState(false);
+    const [loading,setLoading] = useState(true)
+    //refresh screen home 
+    const wait = (timeout) => {
+        return new Promise(resolve => setTimeout(resolve, timeout));
+    }
 
-export default function InputSKTA ({navigation , route}){
-    const [loading, setLoading] = useState(false);
-    const [npkKorlap, setNPKkorlap] = useState();
-    const [daftarKorlap , setLisKorlap] = useState([]);
-
-
-    //berkas
-    const [berkas, setBerkas] = useState('Upload Surat Dokter (Klik disini)');
-    const [dokumen , setDokumen] = useState('');
-    const [nameFile , setFileName] = useState('');
-    //   datetime
-      const [tglSakit, setTglSakit] = useState('')
-      const [alasan ,setAlasan ] = useState();
-    //
-
-    // get token korlap for send notification approval
-      const listKorlap = async () => {
-        //   let wil = route.params.wilayah 
-          try {
-            var urlAksi = 'https://isecuritydaihatsu.com/api/DaftarKorlap?wilayah=WIL2';
-            // var urlAksi = 'https://isecuritydaihatsu.com/api/DaftarKorlap?wilayah=' + wil;
-            fetch(urlAksi,{
-                headers : {
-                    'keys-isecurity' : 'isecurity' ,
-                } ,
-            })
-            .then((response) => response.json())
-            .then((json) => {
-              const hasil =  json.result;
-              setLisKorlap(hasil)
-            })
-          }catch(error){
-            alert(error.message)
-          }
-      }
+    const [visible, setIsVisible] = useState(false);
 
 
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        daftarSakit();
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
 
+    //fungsi loading 
+    const showLoad = () => {
+        setTimeout(() => {
+          setLoading(false);
+        },3000)
+    }
+    showLoad();
 
-    useEffect(() => {
-        listKorlap();
-        const handleBackPress = () => {
-          navigation.goBack();
-          return true;
-        };
-        BackHandler.addEventListener('hardwareBackPress', handleBackPress);
-    
-        return () => {
-          BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
-        };
-      }, []);
-
-
-    // ambil data picker
-    const _pickDocument = async () => {
-        let result = await DocumentPicker.getDocumentAsync({});
-        console.log(result);
-        setDokumen(result);
-        setFileName(result.name);
-        console.log(result.name);
+    const daftarSakit = () => {
+        var urlAksi = 'https://isecuritydaihatsu.com/api/daftarSakit?wilayah=' + route.params.wilayah
+        // var urlAksi = 'http://192.168.8.170:8090/api/daftarSakit?wilayah=' + route.params.wilayah
+        // var urlAksi = 'http://192.168.8.170:8090/api/daftarSakit?wilayah=WIL2'
+        fetch(urlAksi,{
+            headers : {
+                'keys-isecurity' : 'isecurity' ,
+            } ,
+        })
+        .then((response) => response.json())
+        .then((json) => {
+            if(json.status === 'failed'){
+                setData('')
+            }else {
+                const hasil =  json.result ;
+                // console.log(hasil)
+                setData(hasil)
+            }
+        })
     }
 
 
-    //kirim data pengajuan sakit 
-    const sendMessage = async (token) => {
-      setLoading(true)
-      let filename = dokumen.name ;
-      let type = dokumen.mimeType ;
-      let localUri = dokumen.uri ;
-      let formData = new FormData();
-          // Assume "photo" is the name of the form field the server expects
-          formData.append('berkas', { uri: localUri, name: filename, type } );
-          formData.append('tanggal_ijin' , tglSakit);
-          formData.append('npk' , '229529' );
-          formData.append('id_ijin' , 'AGT-229529' );
-          formData.append('nama' , 'DASEP DEPIYAWAN' );
-          formData.append('area' , 'VLC' );
-          formData.append('wilayah' , 'WIL2' );
-          formData.append('status' , '0' );
-          formData.append('ket' , alasan );
-          const url = "http://192.168.8.170:8090/api/ajukanSakit" ;
-          try{
-            fetch(url, {
-              method: 'POST',
-              body: formData,
-              headers: {
-                'content-type'     : 'multipart/form-data',
-                'keys-isecurity'   : 'isecurity'
-              },
-            })
-            .then((response) => response.json())
-            .then((json) => {
-              if(json.message === 'success'){
-                Alert.alert("Berhasil!", json.message, [
-                    { text: "OK", onPress: () => navigation.navigate('Status Pengajuan',{
-                        nama: route.params.nama,
-                        npk: route.params.npk,
-                        id_akun: route.params.id_absen,
-                        wilayah: route.params.wilayah,
-                        area_kerja: route.params.areaKerja,
-                        jabatan: route.params.jabatan,
-                      }
-                    )},
-                  ]);
-                 setLoading(false);
-                }else {
-                    Alert.alert("Gagal!", json.message, [
-                        { text: "OK", onPress: () => setLoading(false) },
+    //reject ijin sakit 
+    const reject = (id) => {
+        Alert.alert("Perhatian",  'Tolak Perijinan ', [
+            { text: "TIDAK", onPress: () => null },
+            {text : 'YA' , onPress : () => 
+               fetch('https://isecuritydaihatsu.com/api/approveSakit',{
+                           headers : {
+                               'keys-isecurity' : 'isecurity' ,
+                               'Content-Type': 'application/json' , 
+                           } ,
+                           method : 'PUT' , 
+                           body : JSON.stringify({
+                              "id"       : 9 ,
+                              "npk"      :  229529 ,
+                              "id_token" : "AGT-229529",
+                              "area"     : "VLC" ,
+                              "wilayah"  : "WIL2" ,
+                              "accept"   : 1 
+                           })
+                   })
+                   .then((response) => response.json())
+                   .then((json) => {
+                       if(json.status === 'fail'){
+                           Alert.alert("Informasi !", json.result, [
+                               { text: "YA", onPress: () => daftarSakit() },
+                           ]);
+                       }else {
+                           Alert.alert("Informasi !", json.result, [
+                               { text: "YA", onPress: () => daftarSakit() },
+                           ]);
+                       }
+                       daftarSakit();
+                   })
+               }
+       ])
+    }
+
+    //approve ijin sakit 
+    const approve = (id) => {
+        Alert.alert("Perhatian",  'Approve Perijinan ', [
+            {text : 'BATAL' , onPress : () => null
+            } ,
+            {text : 'YA' , onPress : () => fetch('https://isecuritydaihatsu.com/api/approveSakit',{
+                    headers : {
+                        'keys-isecurity' : 'isecurity' ,
+                        'Content-Type': 'application/json' , 
+                    } ,
+                    method : 'PUT' , 
+                    body : JSON.stringify({
+                      "id"       : 9 ,
+                      "npk"      :  229529 ,
+                      "id_token" : "AGT-229529",
+                      "area"     : "VLC" ,
+                      "wilayah"  : "WIL2" ,
+                      "accept"   : 1 
+                    })
+                })
+                .then((response) => response.json())
+                .then((json) => {
+                if(json.status === 'fail'){
+                    Alert.alert("GAGAL", json.result, [
+                        { text: "YA", onPress: () => daftarSakit() },
                     ]);
-               }
+                }else {
+                    Alert.alert("Informasi!", json.result, [
+                        { text: "YA", onPress: () => daftarSakit() },
+                    ]);
+                }
+                daftarSakit();
+            })}
+        ])
+    }
+
+
+    //showing image 
+    const showImage = (link) => {
+      // alert(link)
+      setIsVisible(true)
+      return (
+        <Modal visible={visible} transparent={false}>
+           <ImageViewing
+                images={link}
+                imageIndex={0}
+                visible={visible}
+                onRequestClose={() => setIsVisible(false)}
+            />
+        </Modal>  
+      )
+    }
+
+    //show data sakit
+    const showData = () => {
+
+        if(data === '' || data == null){
+            return(
+               <Image style={{width:350 ,height:350}} source={ require('../src/img/notfound.png')}></Image>
+            )
+        }else {
+           return data.map((item)=> {
+                // console.log(item.alasan_lembur)
+                return (
+                    <View key={item.id.toString()} >
+                    <Card style={styles.cardKonten}>
+                            <Card.Content>
+                            <Paragraph style={styles.colorText} >{item.nama} - {item.npk}</Paragraph>
+                            <View>
+                                <Text style={styles.colorText}>Tanggal Sakit : {item.date_perijinan}</Text>
+                                <Text style={styles.colorText}>Keterangan : {item.keterangan} </Text>
+                               
+                            </View>
+                            <View style={{ 
+                                flexDirection: "row",
+                                flexWrap: "wrap"
+                            }}>
+                            
+                            <TouchableOpacity>
+                                <Button
+                                type="info"
+                                onPress={() => showImage(item.link_dokumen)}
+                                containerStyle={[styles.buttonContainer,{width:70}]}
+                                contentStyle={styles.content}
+                                >
+                                   <Icon style={{fontWeight:'normal'}} name="envelope" ></Icon> SKD
+                                </Button>
+                                </TouchableOpacity>
+                               <TouchableOpacity>
+                                <Button
+                                    type="negative"
+                                    onPress={() => reject(item.id)}
+                                    containerStyle={[styles.buttonContainer,{width:70}]}
+                                    contentStyle={styles.content}
+                                >
+                                     <Icon style={{fontWeight:'normal'}} name="close" ></Icon> Reject
+                                </Button>
+                                </TouchableOpacity>
+    
+                                <TouchableOpacity>
+                                <Button
+                                type="positive"
+                                onPress={() => approve(item.id)}
+                                containerStyle={styles.buttonContainer}
+                                contentStyle={styles.content}
+                                >
+                                   <Icon style={{fontWeight:'normal'}} name="check" ></Icon> Approve Perijinan
+                                </Button>
+                                </TouchableOpacity>
+
+                            </View>
+                            </Card.Content>
+                        </Card>
+                    </View>
+
+                )
             })
-            // console.log(localUri)
-          }catch(error){
-            alert(error.message)
-          }
+        }     
     }
-    const showKorlap = () => {
-    //   console.log(daftarKorlap)
-      if(daftarKorlap == undefined || daftarKorlap === ''){
-        console.log("Sabar dulu")
-      }else {
-        return (
-          <Picker
-              style={{
-                borderColor : "#b3abab",
-                borderBottom : 1 , 
-                alignItems: "flex-start",
-                borderWidth: 1,
-              }}
-              selectedValue={npkKorlap}
-              onValueChange={(itemValue, itemIndex) =>
-                setNPKkorlap(itemValue)
-           }>
-               {
-                  daftarKorlap.map((item) =>
-                  <Picker.Item label={`${item.nama}`} value={`${item.npk}`} key={item.npk} />
-                  )
-               }
-            </Picker>
-        )
-      }
-    }
-  
+
+    const images = [
+      {
+        uri: "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4",
+      },
+      {
+        uri: "https://images.unsplash.com/photo-1573273787173-0eb81a833b34",
+      },
+      {
+        uri: "https://images.unsplash.com/photo-1569569970363-df7b6160d111",
+      },
+    ];
+
+        useEffect(() => {
+            daftarSakit();
+        },[])
+
     return (
-
-      <View style={styles.container}>
-      <View style={styles.container2}>
-        <Text style={styles.text}>Tanggal Sakit</Text>
-              <DatePicker
-                style={styles.datePickerStyle}
-                date={tglSakit}
-                mode="date"
-                placeholder="Pilih Tanggal Sakit"
-                format="YYYY-MM-DD"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                customStyles={{
-                  dateIcon: {
-                    position: 'absolute',
-                    right: -5,
-                    top: 4,
-                    marginLeft: 0,
-                  },
-                  dateInput: {
-                    borderColor : "#b3abab",
-                    alignItems: "flex-start",
-                    borderWidth: 0,
-                    borderBottomWidth: 1,
-                  },
-                  placeholderText: {
-                    fontSize: 12,
-                    color: "gray" ,
-                    marginLeft : 10 
-                  },
-                  dateText: {
-                    fontSize: 17,
-                    marginLeft: 14
-                  }
-                }}
-                onDateChange={(date) => {
-                  setTglSakit(date)
-                }}
-              />
-
-          <TextInput
-            style={{backgroundColor:'#fff'}}
-            label="Keterangan Sakit"
-            numberOfLines={2}
-            value={ alasan }
-            onChangeText={text =>  setAlasan(text)}
-          ></TextInput>
-
-         <TouchableOpacity onPress={_pickDocument}>
-            <Text style={{marginLeft:10,marginTop:10,color:'blue'}}>{berkas}</Text>
-          </TouchableOpacity>
-          <TextInput
-            style={{backgroundColor:'#fff'}}
-            label="surat dokter"
-            value={nameFile}
-            editable={false}
-            onChangeText={text =>  setAlasan(text)}
-          ></TextInput>
-
-          <Text style={[styles.text, {marginTop:10}]}> Pilih Korlap</Text>
-          {showKorlap()}
-
-         
-          
-          <Button mode="contained"  onPress={sendMessage}>
-          {loading ? 
-            <Text style={{color:'#fff'}}>Harap Tunggu . . . </Text>
-            : 
-           <Text style={{color:'#fff'}}>KIRIM SKTA</Text>   
-          }
-          </Button>
-
-      </View>
-      </View>
+        <>
+        {
+            loading ? 
+            <View style={{flex : 1 , justifyContent : 'center'}}>
+              <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
+            </View>
+            :
+            <ScrollView contentContainerStyle={styles.container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+                <View style={styles.container}>
+                        {showData()}
+                </View>
+            </ScrollView> 
+        }
+        </>
     );
   }
 
-
-
   const styles = StyleSheet.create({
-      container : {
-        flex : 1 ,
-        backgroundColor:'#50C4DE' ,
-        flexWrap:"wrap",
-      } ,
-      container2 : {
-        backgroundColor:'#fff',
-        margin: 20,
-        padding:15,
-        borderRadius: 25, 
-      },
-      datePickerStyle: {
-        width: width * 0.80, // 80% of screen's width
-      },
-      text: {
-        textAlign: 'left',
-        width: 230,
-        marginLeft : 10 ,
-        fontSize: 12,
-        color : "gray"
-      }
-  })
+        container : {
+            flex: 1,
+            alignContent:'center' ,
+            alignItems:'center' ,
+           backgroundColor:"#50C4DE"
+        } ,
+        buttonContainer: {
+            width: 150,
+            height: 30,
+            fontSize : 3 ,
+            margin:3 ,
+            borderRadius : 3 
+          },
+          cardKonten : {
+            backgroundColor:'#254079', 
+            borderRadius:12 ,
+            marginTop:3 ,
+            width : windowWidth - 10
+          },
+          content : {
+            fontSize:13,
+            fontWeight: 'normal' ,
+            color : '#fff'
+          } ,
+          colorText : {
+              color :'#fff'
+          }
+
+  });

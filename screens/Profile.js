@@ -9,7 +9,9 @@ const Tab = createMaterialTopTabNavigator();
 export default function Profile({ navigation, route }) {
   const [profiling, setProfiling] = useState({
     npk: "",
-    gol_darah:"",
+    gol_darah: "",
+    tempat_lahir: "",
+    tanggal_lahir: "",
     email: "",
     nama: "",
     kk: "",
@@ -51,6 +53,7 @@ export default function Profile({ navigation, route }) {
     navigation.goBack();
     return true;
   }
+  const link = "https://isecuritydaihatsu.com/assets/berkas/Poto/";
 
   useEffect(() => {
     const getProfiling = async () => {
@@ -65,13 +68,14 @@ export default function Profile({ navigation, route }) {
           .then((response) => response.json())
           .then((json) => {
             const hasil = json.result[0];
-            console.log(hasil);
-            console.log(hasil.nama);
+
             // alert(hasil.npk);
             setNama(hasil.nama);
             setProfiling({
               npk: hasil.npk,
               gol_darah: hasil.gol_darah,
+              tempat_lahir: hasil.tempat_lahir,
+              tanggal_lahir: hasil.tanggal_lahir,
               email: hasil.email,
               nama: hasil.nama,
               kk: hasil.kk,
@@ -138,7 +142,13 @@ export default function Profile({ navigation, route }) {
       ) : (
         <ScrollView style={styles.container}>
           <View style={styles.card}>
-            <Avatar rounded size="xlarge" source={require("../src/img/PotoAGT-220927.png")} containerStyle={styles.avatar} />
+            <Avatar rounded size="xlarge" 
+            // source={require("../src/img/PotoAGT-220927.png")} 
+              source={{ 
+                uri: `${link}` + `${profiling.foto}`  + '?time='  + new Date() 
+              }}     
+              containerStyle={styles.avatar} 
+            />
 
             <Text style={styles.username}>NPK</Text>
             <Text style={styles.name}>{profiling.npk}</Text>
@@ -151,7 +161,9 @@ export default function Profile({ navigation, route }) {
             <Text style={styles.username}>WILAYAH</Text>
             <Text style={styles.name}>{profiling.wilayah}</Text>
             <Text style={styles.username}>TEMPAT, TANGGAL LAHIR</Text>
-            <Text style={styles.name}>{profiling.npk}</Text>
+            <Text style={styles.name}>
+              {profiling.tempat_lahir},{profiling.tanggal_lahir}
+            </Text>
             <Text style={styles.username}>NOMOR KTP</Text>
             <Text style={styles.name}>{profiling.ktp}</Text>
             <Text style={styles.username}>NOMOR KK</Text>
@@ -230,7 +242,26 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: "#fff",
     borderStyle: "solid",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
   },
+  // avatar: {
+  //   width: 130,
+  //   height: 130,
+  //   borderRadius: 63,
+  //   borderWidth: 4,
+  //   borderColor: "#FF6347",
+  //   marginBottom:10,
+  //   margin: -55,
+  //   position: "absolute",
+  //   marginLeft: 90,
+  //   shadowOpacity: 0.8,
+  //   shadowRadius: 2,
+  //   elevation: 5,
+  // },
   profileInfo: {
     marginLeft: 10,
     marginTop: -40,

@@ -142,7 +142,7 @@ import { StyleSheet,
         <View style={styles.header}>
           <View style={styles.headerContent}>
         
-          <Image style={styles.avatar} source={{
+            <Image style={styles.avatar} source={{
                 uri :   `${imgUrl}` ,
              }} 
              transition={false}
