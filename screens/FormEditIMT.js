@@ -150,7 +150,7 @@ export default function FormEditIMT({navigation,route}) {
 
 
     return (
-      <View style={{backgroundColor:'#fff'}}>
+      <View style={styles.container }>
           <View style={styles.marginTextInput}>
           <TextInput label="Berat Badan" 
             value={berat_badan}
@@ -202,8 +202,9 @@ export default function FormEditIMT({navigation,route}) {
 
   const styles = StyleSheet.create({
     container : {
-        flex :2 , 
-        margin: 14 ,
+        flex :1 ,  
+        backgroundColor:'#fff' ,
+        margin:2
     } ,
     marginTextInput : {
         marginBottom:-17

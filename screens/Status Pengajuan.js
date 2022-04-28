@@ -1,5 +1,5 @@
 import React, { Component , useState , useEffect,useCallback } from 'react';
-import { View, Text , StyleSheet , TouchableOpacity ,FlatList , Alert, Dimensions , Image,RefreshControl , ScrollView , ActivityIndicator } from 'react-native';
+import { View, Text , StyleSheet , TouchableOpacity ,FlatList , Alert, Dimensions , Image,RefreshControl , ScrollView , ActivityIndicator , SafeAreaView } from 'react-native';
 import Button from 'react-native-flat-button'
 import { Card, Title, Paragraph , Badge  } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -10,6 +10,7 @@ export default function StatusPengajuan({navigation, route}) {
     const [data , setData] = useState('');
     const [skta , setDataSKTA] = useState('');
     const [cuti , setDataCuti] = useState('');
+    const [sakit , setDataSakit] = useState('');
     const [refreshing, setRefreshing] = useState(false);
     const [loading,setLoading] = useState(true)
     //refresh screen home 
@@ -46,10 +47,10 @@ export default function StatusPengajuan({navigation, route}) {
             console.log(route.params.npk)
             if(json.status === 'failed'){
                 setData('')
-                console.log(json.status)
+                // console.log(json.status)
             }else {
                 const hasil =  json.result ;
-                console.log(hasil)
+                // console.log(hasil)
                 setData(hasil)
             }
         })
@@ -68,10 +69,10 @@ export default function StatusPengajuan({navigation, route}) {
             console.log(route.params.npk)
             if(json.status === 'failed'){
                 setDataCuti('')
-                console.log(json.status)
+                // console.log(json.status)
             }else {
                 const hasil =  json.result ;
-                console.log(hasil)
+                // console.log(hasil)
                 setDataCuti(hasil)
             }
         })
@@ -90,11 +91,33 @@ export default function StatusPengajuan({navigation, route}) {
         .then((json) => {
             if(json.status === 'failed'){
                 setDataSKTA('')
-                console.log(json.status)
+                // console.log(json.status)
             }else {
                 const hasil =  json.result ;
-                console.log(hasil)
+                // console.log(hasil)
                 setDataSKTA(hasil)
+            }
+        })
+    }
+
+
+    const daftarSakit = () => {
+        var urlAksi = 'https://isecuritydaihatsu.com/api/StatusSakit?npk=' + route.params.npk
+        // var urlAksi = 'https://isecuritydaihatsu.com/api/StatusSakit?npk=228572'
+        fetch(urlAksi,{
+            headers : {
+                'keys-isecurity' : 'isecurity' ,
+            } ,
+        })
+        .then((response) => response.json())
+        .then((json) => {
+            if(json.status === 'failed'){
+                setDataSakit('')
+                // console.log(json.status)
+            }else {
+                const hasil =  json.result ;
+                // console.log(hasil)
+                setDataSakit(hasil)
             }
         })
     }
@@ -158,6 +181,29 @@ export default function StatusPengajuan({navigation, route}) {
             return (
                 <>
                     <Badge style={[styles.infoBTN, {color:'#fff'}]}>Cuti Ditolak</Badge> 
+                </>
+            )
+          default:
+            return (
+                <>
+                    <Badge style={[styles.infoBTN,{backgroundColor: '#4D96FF' , color:'#fff'}]}>Menunggu Approval</Badge> 
+                </>
+            )
+        }
+    }
+
+    function renderSakit(param) {
+        switch(param) {
+          case '1':
+            return (
+                <>
+                    <Badge style={[styles.infoBTN , {backgroundColor: '#6BCB77',color:'#fff'}]}>Ijin Diterima</Badge> 
+                </>
+            )
+            case '2':
+            return (
+                <>
+                    <Badge style={[styles.infoBTN, {color:'#fff'}]}>Ijin Ditolak</Badge> 
                 </>
             )
           default:
@@ -263,17 +309,48 @@ export default function StatusPengajuan({navigation, route}) {
         }     
     }
 
+    const showDataSakit= () => {
+        if(sakit === '' || sakit == null){
+            return(
+                <Text></Text>
+            )
+        }else {
+            return sakit.map((item)=> {
+                return (
+                    <View key={item.id} >
+                        <Card style={styles.cardStyle} >
+                            <Card.Content>
+                            <Title style={{fontSize:12}}>Perijinan ( Sakit )</Title>
+                            <View style={styles.layout}>
+                            <View style={{width:'60%'}}>
+                                <Text style={styles.textT}>{item.keterangan} </Text>
+                                <Text style={styles.textT}>{item.date_perijinan} </Text>
+                            </View>
+                            <View>
+                            {
+                                renderSakit(item.status) 
+                            }
+                            </View>
+                            </View>
+                            </Card.Content>
+                        </Card>
+                    </View>
+                )
+            })
+        }     
+    }
+
 
 
         useEffect(() => {
             daftarLembur();
             daftarSKTA();
             daftarCuti();
+            daftarSakit();
             // console.log(route.params.npk)
         },[])
 
     return (
-        // <>
         <View style={styles.container}>
         {
           loading ? 
@@ -281,17 +358,16 @@ export default function StatusPengajuan({navigation, route}) {
               <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
             </View>
             :
-         <ScrollView contentContainerStyle={styles.container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-                <View >
-                    {showDataOT()}
-                    {showDataSKTA()}   
-                    {showDataCuti()}
-                </View>
+        <SafeAreaView>
+            <ScrollView contentContainerStyle={styles.container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+                        {showDataOT()}
+                        {showDataSKTA()}   
+                        {showDataCuti()}
+                        {showDataSakit()}
             </ScrollView> 
-            
+            </SafeAreaView>   
         }
         </View>
-        // </>
     );
   }
 

@@ -210,7 +210,8 @@ export default function FormEditDomisili({navigation,route}) {
   const styles = StyleSheet.create({
     container : {
       flex :1 , 
-      backgroundColor:'#fff'
+      backgroundColor:'#fff' ,
+      margin:2
     } ,
     marginTextInput : {
         marginBottom:-17

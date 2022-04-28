@@ -107,7 +107,7 @@ export default function Profile({navigation , route }) {
     height: height * 0.08, // 20% of screen's height
     alignItems: "center",
     borderRadius: 15,
-    padding:5,
+    padding:1,
     backgroundColor:"#fff",
     
     },

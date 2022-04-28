@@ -41,7 +41,8 @@ export default function FormEditBiodata({navigation,route}) {
                     setTanggalLahir(hasil.tanggal_lahir)
                     setEmail(hasil.email)
                     setNoHP(hasil.no_hp)
-                    setNoEmergency(hasil.no_emergency)
+                    setNoEmergency(hasil.no_emergency);
+                    setGolDarah(hasil.gol_darah)
                   })
             }
             getBiodata();
@@ -116,7 +117,8 @@ export default function FormEditBiodata({navigation,route}) {
                     "tanggal_lahir" : tanggal_lahir,
                     "no_hp"         : no_hp ,
                     "no_emergency"  : no_emergency ,
-                    "email"         : email
+                    "email"         : email ,
+                    "gol_darah"     : gol_darah,
                   })
               })
               .then((response) => response.json())
@@ -261,7 +263,8 @@ export default function FormEditBiodata({navigation,route}) {
   const styles = StyleSheet.create({
     container : {
         flex :1 , 
-        backgroundColor:'#fff'
+        backgroundColor:'#fff' ,
+        margin:2
     } ,
     marginTextInput : {
       marginBottom: -9

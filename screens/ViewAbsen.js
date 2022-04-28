@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from "react";
-import { View, Text, StyleSheet, BackHandler, FlatList, ActivityIndicator, Dimensions } from "react-native";
+import { View, Text, StyleSheet, BackHandler, FlatList, ActivityIndicator, Dimensions , ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DataTable } from "react-native-paper";
 const { width, height } = Dimensions.get("window");
@@ -13,6 +13,7 @@ export default function ViewAbsen({ navigation, route }) {
   let controller = new AbortController();
   const bulan = route.params.bulan;
   var url = "https://isecuritydaihatsu.com/api/ambil_absen?bulan=" + bulan + "&npk=" + route.params.npk + "&wilayah=" + route.params.wilayah;
+  // var url = "https://isecuritydaihatsu.com/api/ambil_absen?bulan=04&npk=229529&wilayah=WIL2";
   //ambil data absensi anggota
   const getDataAbsensi = async () => {
     const npk = await AsyncStorage.getItem("token");
@@ -62,14 +63,6 @@ export default function ViewAbsen({ navigation, route }) {
   showLoad();
   //
 
-  const cekIN = (ket, jamMasuk) => {
-    if (ket === "CUTI") {
-      <Text> - </Text>;
-    } else {
-      <Text>{jamMasuk}</Text>;
-    }
-  };
-
   //fungsi untuk menampilkan data absen karyawan
   const showData = () => {
     return (
@@ -78,10 +71,24 @@ export default function ViewAbsen({ navigation, route }) {
         renderItem={({ item }) => (
           <View>
             <DataTable.Row style={styles.row}>
-              <DataTable.Cell>{item.time}</DataTable.Cell>
-              <DataTable.Cell>{item.ket === "CUTI" ? "-" : item.in_time}</DataTable.Cell>
-              <DataTable.Cell>{item.ket === "CUTI" ? "-" : item.out_time}</DataTable.Cell>
-              <DataTable.Cell>{item.ket}</DataTable.Cell>
+              <DataTable.Cell style={{width:90}} >
+                {item.time}
+              </DataTable.Cell>
+              <DataTable.Cell style={{width:90}}>
+                {item.ket === "CUTI" || item.ket === "SAKIT" ? "-" : item.in_time}
+              </DataTable.Cell>
+              <DataTable.Cell style={{width:90}} >
+                {item.ket === "CUTI" || item.ket === "SAKIT" ? "-" : item.out_time}
+                </DataTable.Cell>
+              <DataTable.Cell style={{width:90}}>
+                {item.ket === "CUTI" || item.ket === "SAKIT" || item.over_time_start == null ? "-" : item.over_time_start}
+              </DataTable.Cell>
+              <DataTable.Cell style={{width:90}}>
+                {item.ket === "CUTI" || item.ket === "SAKIT" || item.over_time_end == null ? "-" : item.over_time_end}
+              </DataTable.Cell>
+              <DataTable.Cell style={{width:90}}>
+                {item.ket}
+              </DataTable.Cell>
             </DataTable.Row>
           </View>
         )}
@@ -97,17 +104,19 @@ export default function ViewAbsen({ navigation, route }) {
           <ActivityIndicator style={{ flex: 1, justifyContent: "center", alignItems: "center", alignContent: "center" }} size="large" color="red"></ActivityIndicator>
         </View>
       ) : (
-        <View style={styles.container2}>
+        <ScrollView horizontal={true} style={styles.container2}>
           <DataTable style={{ height: windowHeight }}>
-            <DataTable.Row style={styles.row}>
-              <DataTable.Cell>TANGGAL</DataTable.Cell>
-              <DataTable.Cell>IN</DataTable.Cell>
-              <DataTable.Cell>OUT</DataTable.Cell>
-              <DataTable.Cell>KET</DataTable.Cell>
+            <DataTable.Row style={[styles.row]}>
+              <DataTable.Cell style={{ width:50}}>TANGGAL</DataTable.Cell>
+              <DataTable.Cell style={{ width:50}}>IN</DataTable.Cell>
+              <DataTable.Cell style={{ width:50}}>OUT</DataTable.Cell>
+              <DataTable.Cell style={{ width:50}}>START OT</DataTable.Cell>
+              <DataTable.Cell style={{ width:50}}>END OT</DataTable.Cell>
+              <DataTable.Cell style={{ width:50}}>KET</DataTable.Cell>
             </DataTable.Row>
             {showData()}
           </DataTable>
-        </View>
+        </ScrollView>
       )}
     </View>
   );
@@ -121,10 +130,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#50C4DE",
   },
   row: {
-    margin: 5,
+    margin: 2,
     padding: 10,
     backgroundColor: "#ffff",
-    borderRadius: 15,
+    borderRadius: 10, 
   },
   container2: {
     backgroundColor: "#50C4DE",
@@ -144,8 +153,8 @@ const styles = StyleSheet.create({
     width: width * 0.05, // 80% of screen's width
     height: height * 0.05, // 20% of screen's height
     borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
+    // alignItems: "center",
+    // justifyContent: "center",
     margin: 5,
     padding: 10,
   },
