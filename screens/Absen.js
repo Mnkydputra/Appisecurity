@@ -49,7 +49,7 @@ export default function Absen ({navigation,route}) {
             <TouchableOpacity style={styles.card}>
               <Image style={styles.image} source={ require('../src/img/article.png')}/>
               <View style={styles.cardContent}>
-                <Text style={styles.name}>{'Pengajuan (OT SKTA CUTI)'}</Text>
+                <Text style={styles.name}>{'Pengajuan (OT SKTA)'}</Text>
                 <TouchableOpacity style={styles.followButton} onPress={()=> navigation.navigate('Pengajuan' , {
                     nama: route.params.nama,
                     npk: route.params.npk,
@@ -67,7 +67,7 @@ export default function Absen ({navigation,route}) {
             <TouchableOpacity style={styles.card}>
               <Image style={styles.image} source={ require('../src/img/permited.png')}/>
               <View style={styles.cardContent}>
-                <Text style={styles.name}>{'Perijinan'}</Text>
+                <Text style={styles.name}>{'Perijinan (Sakit Cuti)'}</Text>
                 <TouchableOpacity style={styles.followButton} onPress={()=> navigation.navigate('Perijinan' , {
                     nama: route.params.nama,
                     npk: route.params.npk,
@@ -171,7 +171,7 @@ export default function Absen ({navigation,route}) {
       },
     
       name:{
-        fontSize:18,
+        fontSize:16,
         flex:1,
         alignSelf:'center',
         color:"#000",

@@ -1,11 +1,12 @@
 import React, { Component , useState , useEffect } from 'react';
-import { View, Text, StyleSheet  , BackHandler , ScrollView , ActivityIndicator , Alert, Dimensions } from 'react-native';
+import { View, Text, StyleSheet  , BackHandler ,  ActivityIndicator , Alert, Dimensions , ScrollView} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import Background from "../src/component/Background";
 import Logo from "../src/component/Logo";
 import Header from "../src/component/Header";
 import Button from "../src/component/Button";
-import TextInput from "../src/component/TextInput";
+// import TextInput from "../src/component/TextInput";
+import { TextInput , Headline, Card} from "react-native-paper";
 import BackButton from "../src/component/BackButton";
 import { theme } from "../src/core/theme";
 import DatePicker from 'react-native-datepicker';
@@ -152,10 +153,13 @@ export default function FormEditBiodata({navigation,route}) {
               <ActivityIndicator size="large" color = 'red'></ActivityIndicator>
             </View>
           :
-          <View style={styles.container}>
+          <ScrollView  style={styles.container}>
+
+          <View  style={styles.container2}>
               <View style={styles.marginTextInput}>
               <TextInput label="Tempat Lahir" 
                 value={tempat_lahir}
+                style={styles.textBg}
                 onChangeText={text => setTempatLahir(text)}
                 placeholder="Tempat Lahir" placeholderColor="#c4c3cb">
                 </TextInput>
@@ -179,17 +183,17 @@ export default function FormEditBiodata({navigation,route}) {
                             marginLeft: 0,
                           },
                           dateInput: {
-                            borderColor : "gray",
+                            borderColor : "#ccc",
                             alignItems: "flex-start",
                             borderWidth: 0,
                             borderBottomWidth: 1,
                           },
                           placeholderText: {
-                            fontSize: 17,
+                            fontSize: 12,
                             color: "gray"
                           },
                           dateText: {
-                            fontSize: 17,
+                            fontSize: 12,
                           }
                         }}
                         onDateChange={(date) => {
@@ -200,6 +204,7 @@ export default function FormEditBiodata({navigation,route}) {
                 <View style={styles.marginTextInput}>
                 <TextInput label="Golongan Darah" 
                   value={gol_darah}
+                  style={styles.textBg}
                   keyboardType="text"
                   onChangeText={text => setGolDarah(text)}
                   placeholder="Golongan Darah" placeholderColor="#c4c3cb">
@@ -208,6 +213,7 @@ export default function FormEditBiodata({navigation,route}) {
                 <View style={styles.marginTextInput}>
                 <TextInput label="NO KTP" 
                   value={ktp}
+                  style={styles.textBg}
                   keyboardType="phone-pad"
                   onChangeText={text => setKTP(text)}
                   placeholder="NO KTP" placeholderColor="#c4c3cb">
@@ -216,6 +222,7 @@ export default function FormEditBiodata({navigation,route}) {
                 <View style={styles.marginTextInput}>
                 <TextInput label="NO KK" 
                   value={kk}
+                  style={styles.textBg}
                   keyboardType="phone-pad"
                   onChangeText={ text => setKK(text) }
                   placeholder="NO KK" placeholderColor="#c4c3cb" >
@@ -224,6 +231,7 @@ export default function FormEditBiodata({navigation,route}) {
                 <View style={styles.marginTextInput}>
                 <TextInput label="NO HANDPHONE" 
                   value={no_hp}
+                  style={styles.textBg}
                   keyboardType="phone-pad"
                   onChangeText={ text => setNoHP(text) }
                   placeholder="NO HANDPHONE" placeholderColor="#c4c3cb">
@@ -232,6 +240,7 @@ export default function FormEditBiodata({navigation,route}) {
                 <View style={styles.marginTextInput}>
                 <TextInput label="NO EMERGENCY" 
                   value={no_emergency}
+                  style={styles.textBg}
                   keyboardType="phone-pad"
                   onChangeText={text => setNoEmergency(text) }
                   placeholder="NO EMERGENCY" placeholderColor="#c4c3cb">
@@ -240,6 +249,7 @@ export default function FormEditBiodata({navigation,route}) {
                 <View style={styles.marginTextInput}>
                 <TextInput label="Email" 
                   value={email}
+                  style={styles.textBg}
                   keyboardType="email-address"
                   onChangeText={ text => setEmail(text) }
                   placeholder="Email" placeholderColor="#c4c3cb">
@@ -253,6 +263,8 @@ export default function FormEditBiodata({navigation,route}) {
                   }
                 </Button>
       </View>
+      </ScrollView>
+
         }
       </>
       
@@ -263,11 +275,17 @@ export default function FormEditBiodata({navigation,route}) {
   const styles = StyleSheet.create({
     container : {
         flex :1 , 
-        backgroundColor:'#fff' ,
-        margin:2
+        // backgroundColor:'#fff' ,
+        backgroundColor:'#50C4DE' ,
     } ,
+    container2 : {
+      backgroundColor:'#fff',
+      margin: 10,
+      padding:10,
+      borderRadius: 10, 
+    },
     marginTextInput : {
-      marginBottom: -9
+      // marginBottom: -15
     },
     title: {
       textAlign: 'left',
@@ -276,7 +294,7 @@ export default function FormEditBiodata({navigation,route}) {
       fontWeight: 'bold',
     },
     datePickerStyle: {
-      width: windowWidth - 10 ,
+      width: windowWidth * 0.90 ,
       margin:5 
     },
     text: {
@@ -285,5 +303,9 @@ export default function FormEditBiodata({navigation,route}) {
       fontSize: 12,
       marginLeft : 8,
       color : "#8c8685"
+    } ,
+    textBg : {
+      backgroundColor:'#fff' ,
+      fontSize : 12
     }
 })

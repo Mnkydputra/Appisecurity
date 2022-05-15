@@ -191,9 +191,9 @@ export default function Profile({ navigation, route }) {
               {profiling.provinsi_dom}
             </Text>
             <Text style={styles.username}>TINGGI BADAN</Text>
-            <Text style={styles.name}>{profiling.tinggi_badan}</Text>
+            <Text style={styles.name}>{profiling.tinggi_badan} cm</Text>
             <Text style={styles.username}>BERAT BADAN</Text>
-            <Text style={styles.name}>{profiling.berat_badan}</Text>
+            <Text style={styles.name}>{profiling.berat_badan} kg</Text>
             <Text style={styles.username}>GOLONGAN DARAH</Text>
             <Text style={styles.name}>{profiling.gol_darah}</Text>
             <Text style={styles.username}>STATUS INDEKS MASSA TUBUH</Text>

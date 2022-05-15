@@ -28,6 +28,7 @@ export default function InputSKTA ({navigation , route}){
     //   datetime
       const [date ,setDate ] = useState(new Date());
       const [tglSKTA , settglSKTA] = useState('')
+      const [mode, setMode ] = useState('time');
       const [show ,setShow ] = useState({date1 : false , date2 : false });
       const [mulai ,setMulai ] = useState('');
       const [selesai ,setSelesai ] = useState('');
@@ -95,6 +96,7 @@ export default function InputSKTA ({navigation , route}){
         let fTime = jam  + ":" + menit + ":" + "00";
         setMulai(fTime);
       }
+      
       const showMode = (currentMode) => {
         setShow({date1 : true});
         setMode(currentMode)
@@ -112,6 +114,7 @@ export default function InputSKTA ({navigation , route}){
         let fTime = jam  + ":" + menit + ":" + "00";
         setSelesai(fTime);
       }
+
       const showMode2 = (currentMode) => {
         setShow({date2 : true});
         setMode(currentMode)
@@ -256,13 +259,13 @@ export default function InputSKTA ({navigation , route}){
                     console.log(json)
                       if(json.status === 'success'){
                           const hasil = json.result ;
-                          setMasukKerja(hasil.in_time);
-                          setPulangKerja(hasil.out_time);
+                          // setMasukKerja(hasil.in_time);
+                          // setPulangKerja(hasil.out_time);
                           setMulai(hasil.in_time);
                           setSelesai(hasil.out_time);
                       }else {
-                          setMasukKerja('');
-                          setPulangKerja('');
+                          // setMasukKerja('');
+                          // setPulangKerja('');
                           setMulai('');
                           setSelesai('');
                       }

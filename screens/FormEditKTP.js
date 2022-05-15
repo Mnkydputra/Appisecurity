@@ -5,7 +5,8 @@ import Background from "../src/component/Background";
 import Logo from "../src/component/Logo";
 import Header from "../src/component/Header";
 import Button from "../src/component/Button";
-import TextInput from "../src/component/TextInput";
+// import TextInput from "../src/component/TextInput";
+import { TextInput , Headline, Card} from "react-native-paper";
 import BackButton from "../src/component/BackButton";
 import { theme } from "../src/core/theme";
 
@@ -140,10 +141,13 @@ export default function FormEditKTP({navigation,route}) {
   }
 
     return (
-      <View style={styles.container}>
+      <ScrollView  style={styles.container}>
+
+          <View  style={styles.container2}>
           <View style={styles.marginTextInput}>
             <TextInput label="Nama Jalan" 
               value={jl_ktp}
+              style={styles.textBg}
               onChangeText={text => setJLKTP(text)}
               placeholder="Nama Jalan" placeholderColor="#c4c3cb" >
               </TextInput>
@@ -152,6 +156,7 @@ export default function FormEditKTP({navigation,route}) {
             <View style={styles.marginTextInput}>
             <TextInput label="RT" 
               value={rt_ktp}
+              style={styles.textBg}
               onChangeText={ text => setRT(text) }
               placeholder="RT" placeholderColor="#c4c3cb" >
               </TextInput>
@@ -159,6 +164,7 @@ export default function FormEditKTP({navigation,route}) {
             <View style={styles.marginTextInput}>
             <TextInput label="RW" 
               value={rw_ktp}
+              style={styles.textBg}
               onChangeText={text => setRW(text)}
               placeholder="RW" placeholderColor="#c4c3cb" >
               </TextInput>
@@ -166,6 +172,7 @@ export default function FormEditKTP({navigation,route}) {
             <View style={styles.marginTextInput}>
             <TextInput label="PROVINSI" 
               value={provinsi_ktp}
+              style={styles.textBg}
               onChangeText={ text => setProvinsi(text) }
               placeholder="PROVINSI" placeholderColor="#c4c3cb" >
               </TextInput>
@@ -173,6 +180,7 @@ export default function FormEditKTP({navigation,route}) {
             <View style={styles.marginTextInput}>
             <TextInput label="Kabupaten / Kota " 
               value={kota_ktp}
+              style={styles.textBg}
               onChangeText={ text => setKota(text) }
               placeholder="Kabupaten / Kota " placeholderColor="#c4c3cb" >
               </TextInput>
@@ -180,6 +188,7 @@ export default function FormEditKTP({navigation,route}) {
             <View style={styles.marginTextInput}>
             <TextInput label="Kecamatan" 
               value={kec_ktp}
+              style={styles.textBg}
               onChangeText={text => setKec(text)}
               placeholder="Kecamatan" placeholderColor="#c4c3cb" >
               </TextInput>
@@ -187,6 +196,7 @@ export default function FormEditKTP({navigation,route}) {
             <View style={styles.marginTextInput}>
             <TextInput label="Kelurahan" 
               value={kel_ktp}
+              style={styles.textBg}
               onChangeText={ text => setKel(text) }
               placeholder="Kelurahan" placeholderColor="#c4c3cb" >
               </TextInput>
@@ -200,16 +210,27 @@ export default function FormEditKTP({navigation,route}) {
               }
             </Button>
       </View>
+      </ScrollView>
     );
   }
 
   const styles = StyleSheet.create({
     container : {
       flex :1 , 
-      backgroundColor:'#fff' ,
-      margin:2
+        // backgroundColor:'#fff' ,
+        backgroundColor:'#50C4DE' ,
     } ,
+    container2 : {
+      backgroundColor:'#fff',
+      margin: 10,
+      padding:10,
+      borderRadius: 10, 
+    },
     marginTextInput : {
-        marginBottom:-17
+        // marginBottom:-17
+    } ,
+    textBg : {
+      backgroundColor:'#fff' ,
+      fontSize : 12
     }
 })

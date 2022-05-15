@@ -222,6 +222,11 @@ export default function ApproveSKTA({navigation,route}) {
           } ,
           colorText : {
               color :'#fff'
-          }
+          },img: {
+            alignItems:'center',
+            margin:200,
+            width:250,
+            height:250,
+          },
 
   });

@@ -34,7 +34,22 @@ export default function Perijinan({navigation,route}) {
                     </TouchableOpacity>
                 </View>
             </TouchableOpacity>
-
+            <TouchableOpacity style={[styles.card , {backgroundColor:'#FFF'} ]}>
+              <Image style={styles.image} source={ require('../src/img/article.png')}/>
+              <View style={styles.cardContent}>
+                <Text style={styles.name}>{'Pengajuan Cuti'}</Text>
+                <TouchableOpacity style={styles.followButton} onPress={()=> navigation.navigate('Input Cuti' , {
+                    nama: route.params.nama,
+                    npk: route.params.npk,
+                    id_akun: route.params.id_akun,
+                    wilayah: route.params.wilayah,
+                    area_kerja: route.params.area_kerja,
+                    jabatan: route.params.jabatan,
+                })}>
+                  <Text style={styles.followButtonText}>Input</Text>  
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
         </View>
       </View>
     );

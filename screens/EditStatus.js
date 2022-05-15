@@ -119,9 +119,18 @@ export default function EditProfile ({navigation,route}) {
             <TextInput
               label="NO KTA" 
               value={kta}
+              style={styles.textBg}
               onChangeText={date =>  setKta(date)}
               placeholder="NO KTA" placeholderColor="#c4c3cb"
-              style={{ backgroundColor:'#fff',  }}>
+              customStyles = {{
+              TextValue : {
+                marginLeft: 20 ,
+                fontSize : 14 
+              } , 
+              label : {
+                marginLeft : 20 ,
+              }
+            }}>
               </TextInput>
             </View>
             <View style={styles.marginTextInput}>
@@ -142,18 +151,18 @@ export default function EditProfile ({navigation,route}) {
                     marginLeft: 0,
                   },
                   dateInput: {
-                    borderColor : "gray",
+                    borderColor : "#ccc",
                     alignItems: "flex-start",
                     borderWidth: 0,
                     borderBottomWidth: 1,
                   },
                   placeholderText: {
-                    fontSize: 17,
-                    color: "gray"
+                    fontSize: 12,
+                    color: "gray" ,
                   },
                   dateText: {
-                    fontSize: 17,
-                    marginLeft: 14
+                    fontSize: 12,
+                    marginLeft: 10 
                   }
                 }}
                 onDateChange={(date) => {
@@ -182,17 +191,18 @@ export default function EditProfile ({navigation,route}) {
                             marginLeft: 0,
                           },
                           dateInput: {
-                            borderColor : "gray",
+                            borderColor : "#ccc",
                             alignItems: "flex-start",
                             borderWidth: 0,
                             borderBottomWidth: 1,
                           },
                           placeholderText: {
-                            fontSize: 17,
+                            fontSize: 12,
                             color: "gray"
                           },
                           dateText: {
-                            fontSize: 17,
+                            fontSize: 12,
+                            marginLeft: 10
                           }
                         }}
                         onDateChange={(date) => {
@@ -218,20 +228,20 @@ export default function EditProfile ({navigation,route}) {
                             position: 'absolute',
                             right: -5,
                             top: 4,
-                            marginLeft: 0,
                           },
                           dateInput: {
-                            borderColor : "gray",
+                            borderColor : "#ccc",
                             alignItems: "flex-start",
                             borderWidth: 0,
                             borderBottomWidth: 1,
                           },
                           placeholderText: {
-                            fontSize: 17,
+                            fontSize: 12,
                             color: "gray"
                           },
                           dateText: {
-                            fontSize: 17,
+                            fontSize: 12,
+                            marginLeft: 10
                           }
                         }}
                         onDateChange={(date) => {
@@ -280,6 +290,11 @@ const styles = StyleSheet.create({
       textAlign: 'left',
       width: 230,
       fontSize: 12,
-      color : "#ccc"
+      color : "#ccc" ,
+      marginLeft:12
+    },
+    textBg : {
+      backgroundColor:'#fff' ,
+      fontSize : 12
     }
 })

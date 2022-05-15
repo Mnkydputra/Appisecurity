@@ -65,7 +65,7 @@ export default function ApproveSakit({navigation, route}) {
                                 "id_token" : route.params.id_akun,
                                 "area"     : route.params.area_kerja ,
                                 "wilayah"  : route.params.wilayah ,
-                                "accept"   : 1 
+                                "accept"   : 0 
                            })
                    })
                    .then((response) => response.json())
@@ -255,6 +255,12 @@ export default function ApproveSakit({navigation, route}) {
           } ,
           colorText : {
               color :'#fff'
-          }
+          },
+          img: {
+            alignItems:'center',
+            margin:200,
+            width:250,
+            height:250,
+          },
 
   });

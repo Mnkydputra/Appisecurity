@@ -7,7 +7,8 @@ import Background from "../src/component/Background";
 import Logo from "../src/component/Logo";
 import Header from "../src/component/Header";
 import Button from "../src/component/Button";
-import TextInput from "../src/component/TextInput";
+// import TextInput from "../src/component/TextInput";
+import { TextInput , Headline, Card} from "react-native-paper";
 import BackButton from "../src/component/BackButton";
 import { theme } from "../src/core/theme";
 
@@ -150,11 +151,13 @@ export default function FormEditIMT({navigation,route}) {
 
 
     return (
-      <View style={styles.container }>
+      <ScrollView  style={styles.container}>
+      <View  style={styles.container2}>
           <View style={styles.marginTextInput}>
           <TextInput label="Berat Badan" 
             value={berat_badan}
             maxLength={3}
+            style={styles.textBg}
             keyboardType="phone-pad"
             onChangeText={text => setBB(text) }
             placeholder="Berat Badan" placeholderColor="#c4c3cb" >
@@ -166,6 +169,7 @@ export default function FormEditIMT({navigation,route}) {
             value={tinggi_badan}
             keyboardType="phone-pad"
             maxLength={3}
+            style={styles.textBg}
             onChangeText={ text => setTB(text) }
             onChange = {hitungIMT}
             placeholder="Tinggi  Badan" placeholderColor="#c4c3cb" >
@@ -175,6 +179,7 @@ export default function FormEditIMT({navigation,route}) {
           <TextInput label="IMT" 
             value={`${imt}`}
             editable={false}
+            style={styles.textBg}
             placeholder="IMT" placeholderColor="#c4c3cb" >
             </TextInput>
           </View>
@@ -183,6 +188,7 @@ export default function FormEditIMT({navigation,route}) {
           <TextInput label="Keterangan" 
             editable={false}
             value={keterangan}
+            style={styles.textBg}
             placeholder="IMT" placeholderColor="#c4c3cb" >
             </TextInput>
           </View>
@@ -196,6 +202,7 @@ export default function FormEditIMT({navigation,route}) {
           }
           </Button>
       </View>
+      </ScrollView>
     );
   }
 
@@ -203,10 +210,17 @@ export default function FormEditIMT({navigation,route}) {
   const styles = StyleSheet.create({
     container : {
         flex :1 ,  
-        backgroundColor:'#fff' ,
-        margin:2
+        // backgroundColor:'#fff' ,
+        backgroundColor:'#50C4DE' ,
     } ,
-    marginTextInput : {
-        marginBottom:-17
+    container2 : {
+      backgroundColor:'#fff',
+      margin: 10,
+      padding:10,
+      borderRadius: 10, 
+    },
+    textBg : {
+      backgroundColor:'#fff' ,
+      fontSize : 12
     }
 })
