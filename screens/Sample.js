@@ -2,122 +2,55 @@ import React, { Component, useState, useEffect } from "react";
 import { View, Text, StyleSheet, BackHandler, FlatList, ActivityIndicator, Dimensions , ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DataTable } from "react-native-paper";
+import { ImageSlider } from "react-native-image-slider-banner";
+import Slideshow from 'react-native-image-slider-show';
+import { SliderBox } from "react-native-image-slider-box";
+import Icon from 'react-native-vector-icons/FontAwesome';
 const { width, height } = Dimensions.get("window");
+const dataSource = [
+  {
+    title: 'Title 1',
+    caption: 'Caption 1',
+    url: 'http://placeimg.com/640/480/any',
+  }, {
+    title: 'Title 2',
+    caption: 'Caption 2',
+    url: 'http://placeimg.com/640/480/any',
+  }, {
+    title: 'Title 3',
+    caption: 'Caption 3',
+    url: 'http://placeimg.com/640/480/any',
+  },
+];
 
+const images=  [
+  "https://source.unsplash.com/1024x768/?nature",
+  "https://source.unsplash.com/1024x768/?water",
+  "https://source.unsplash.com/1024x768/?girl",
+  "https://source.unsplash.com/1024x768/?tree",        // Local image
+];
 const windowHeight = Dimensions.get("window").height;
-export default function ViewAbsen({ navigation, route }) {
-  const [dataAbsen, setDataAbsen] = useState("");
-  const [loading, setLoading] = useState(true);
+export default function Sample({ navigation, route }) {
+const [interval, settingInterval] = useState(null);
+const [position , setPosition ] = useState(1) ;
 
-  //
-  let controller = new AbortController();
-  const bulan = route.params.bulan;
-  var url = "https://isecuritydaihatsu.com/api/ambil_absen?bulan=" + bulan + "&npk=" + route.params.npk + "&wilayah=" + route.params.wilayah;
-  // var url = "https://isecuritydaihatsu.com/api/ambil_absen?bulan=04&npk=229529&wilayah=WIL2";
-  //ambil data absensi anggota
-  const getDataAbsensi = async () => {
-    const npk = await AsyncStorage.getItem("token");
-    try {
-      fetch(url, {
-        headers: {
-          "keys-isecurity": "isecurity",
-        },
-        signal: controller.signal,
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          // if(!unmounted)
-          if (json.status === "success") {
-            console.log(json.result);
-            setDataAbsen(json.result);
-          } else {
-            setDataAbsen(json.status);
-            console.log(json.status);
-          }
-        });
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-  // end`
 
-  //
-  useEffect(() => {
-    getDataAbsensi();
-    // end of ambil data absensi
-    const handleBackPress = () => {
-      navigation.goBack();
-      return true;
-    };
+const setWaktu = () => {
+   settingInterval(setInterval(() => {
+      setPosition (position === dataSource.length ? 0 : position + 1)
+  }, 2000));
+  clearInterval(interval);
+}
 
-    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
-    return () => BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
-  }, []);
 
-  //fungsi loading
-  const showLoad = () => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  };
-  showLoad();
-  //
 
-  //fungsi untuk menampilkan data absen karyawan
-  const showData = () => {
-    return (
-      <FlatList
-        data={dataAbsen}
-        renderItem={({ item }) => (
-          <View>
-            <DataTable.Row style={styles.row}>
-              <DataTable.Cell style={{width:90}} >
-                {item.time}
-              </DataTable.Cell>
-              <DataTable.Cell style={{width:90}}>
-                {item.ket === "CUTI" || item.ket === "SAKIT" ? "-" : item.in_time}
-              </DataTable.Cell>
-              <DataTable.Cell style={{width:90}} >
-                {item.ket === "CUTI" || item.ket === "SAKIT" ? "-" : item.out_time}
-                </DataTable.Cell>
-              <DataTable.Cell style={{width:90}}>
-                {item.ket === "CUTI" || item.ket === "SAKIT" || item.over_time_start == null ? "-" : item.over_time_start}
-              </DataTable.Cell>
-              <DataTable.Cell style={{width:90}}>
-                {item.ket === "CUTI" || item.ket === "SAKIT" || item.over_time_end == null ? "-" : item.over_time_end}
-              </DataTable.Cell>
-              <DataTable.Cell style={{width:90}}>
-                {item.ket}
-              </DataTable.Cell>
-            </DataTable.Row>
-          </View>
-        )}
-        keyExtractor={(item, index) => index.toString()}
-      />
-    );
-  };
+useEffect(() => {
+  setWaktu();
+})
 
   return (
     <View style={styles.container}>
-      {loading ? (
-        <View style={{ flex: 1, justifyContent: "center" }}>
-          <ActivityIndicator style={{ flex: 1, justifyContent: "center", alignItems: "center", alignContent: "center" }} size="large" color="red"></ActivityIndicator>
-        </View>
-      ) : (
-        <ScrollView horizontal={true} style={styles.container2}>
-          <DataTable style={{ height: windowHeight }}>
-            <DataTable.Row style={styles.row}>
-              <DataTable.Cell>TANGGAL</DataTable.Cell>
-              <DataTable.Cell>IN</DataTable.Cell>
-              <DataTable.Cell>OUT</DataTable.Cell>
-              <DataTable.Cell>START OT</DataTable.Cell>
-              <DataTable.Cell>END OT</DataTable.Cell>
-              <DataTable.Cell>KET</DataTable.Cell>
-            </DataTable.Row>
-            {showData()}
-          </DataTable>
-        </ScrollView>
-      )}
+      <SliderBox images={images} />
     </View>
   );
 }
@@ -125,37 +58,11 @@ export default function ViewAbsen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: 100,
-    width: "100%",
-    backgroundColor: "#50C4DE",
+    justifyContent: 'center',
+    alignItems:'center'
   },
-  row: {
-    margin: 2,
-    padding: 10,
-    backgroundColor: "#ffff",
-    borderRadius: 10, 
-  },
-  container2: {
-    backgroundColor: "#50C4DE",
-    marginTop: 25,
-  },
-  header: {
-    flex: 1,
-    backgroundColor: "#Fff",
-    width: width * 0.9, // 80% of screen's width
-    height: height * 0.05, // 20% of screen's height
-    borderRadius: 10,
-    margin: 10,
-    alignItems: "center",
-  },
-  table: {
-    backgroundColor: "#Fff",
-    width: width * 0.05, // 80% of screen's width
-    height: height * 0.05, // 20% of screen's height
-    borderRadius: 10,
-    // alignItems: "center",
-    // justifyContent: "center",
-    margin: 5,
-    padding: 10,
-  },
+  slider : {
+    padding : 5 ,
+    borderRadius:2
+  }
 });

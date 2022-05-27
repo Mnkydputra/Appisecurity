@@ -110,8 +110,8 @@ export default function ViewAbsen({ navigation, route }) {
               <DataTable.Cell style={{ width:50}}>TANGGAL</DataTable.Cell>
               <DataTable.Cell style={{ width:50}}>IN</DataTable.Cell>
               <DataTable.Cell style={{ width:50}}>OUT</DataTable.Cell>
-              <DataTable.Cell style={{ width:50}}>START OT</DataTable.Cell>
-              <DataTable.Cell style={{ width:50}}>END OT</DataTable.Cell>
+              <DataTable.Cell style={{ width:50}}>IN OT</DataTable.Cell>
+              <DataTable.Cell style={{ width:50}}>OUT OT</DataTable.Cell>
               <DataTable.Cell style={{ width:50}}>KET</DataTable.Cell>
             </DataTable.Row>
             {showData()}

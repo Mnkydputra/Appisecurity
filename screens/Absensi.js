@@ -156,7 +156,7 @@ export default function Absensi({navigation,route}) {
                       );
                       console.log(`Jarak ${distance} Meter`);
                       const jarak =  distance ;
-                      if(jarak > 300){
+                      if(jarak > 200){
                         Alert.alert("Perhatian" ,"jarak dengan  " + user.areaKerja + " sejauh " + jarak + " meter" , [
                           {
                             text : 'OK' ,
@@ -322,9 +322,7 @@ export default function Absensi({navigation,route}) {
           />
         }
       >
-        <View>
-          <ActivityIndicator animating={loading} color="red" size="large"></ActivityIndicator>
-        </View>
+        
         <View style={styles.barcodebox}>
           <BarCodeScanner onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} style={[StyleSheet.absoluteFillObject, styles.container]}>
             <View style={{ width: width / 2, height: width / 2}}>
@@ -344,6 +342,9 @@ export default function Absensi({navigation,route}) {
           </BarCodeScanner>
         </View>
         {scanned && <Button style={{ color: "tomato" }} title={"ULANGI SCAN"} onPress={() => setScanned(false)} />}
+        <View>
+          <ActivityIndicator animating={loading} color="red" size="large"></ActivityIndicator>
+        </View>
 
         <DataTable>
           {user.jabatan == "KORLAP" ? null : (
@@ -353,8 +354,10 @@ export default function Absensi({navigation,route}) {
             </DataTable.Row>
           )}
           <DataTable.Row>
-            <DataTable.Cell>Titik Koordinat</DataTable.Cell>
-            <DataTable.Cell>{lokasi.latiUser + "," + lokasi.longiUser}</DataTable.Cell>
+            {/* <DataTable.Cell>Titik Koordinat</DataTable.Cell>
+            <DataTable.Cell>{lokasi.latiUser + "," + lokasi.longiUser}</DataTable.Cell> */}
+            <DataTable.Cell>Wilayah</DataTable.Cell>
+            <DataTable.Cell>{route.params.wilayah}</DataTable.Cell>
           </DataTable.Row>
         </DataTable>
       </ScrollView>

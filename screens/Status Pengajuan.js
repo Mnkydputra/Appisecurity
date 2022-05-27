@@ -226,7 +226,7 @@ export default function StatusPengajuan({navigation, route}) {
                     <View key={item.id} >
                         <Card style={styles.cardStyle} >
                             <Card.Content>
-                            <Title style={{fontSize:12}}>Pengajuan Overtime</Title>
+                            <Title style={{fontSize:12}}>Pengajuan ( Overtime )</Title>
                             <View style={styles.layout}>
                             <View style={{width:'60%'}}>
                                 <Text style={styles.textT}>{item.alasan_lembur} </Text>
@@ -257,11 +257,11 @@ export default function StatusPengajuan({navigation, route}) {
                     <View key={item.id} >
                         <Card style={styles.cardStyle} >
                             <Card.Content>
-                            <Title style={{fontSize:12}}>Pengajuan SKTA</Title>
+                            <Title style={{fontSize:12}}>Pengajuan ( SKTA )</Title>
                             <View style={styles.layout}>
                             <View style={{width:'60%'}}>
-                                <Text style={styles.textT}>{item.date_in} </Text>
-                                <Text style={styles.textT}>{item.in_time}-{item.out_time}</Text>
+                                <Text style={styles.textT}>{item.keterangan}</Text>
+                                <Text style={styles.textT}>{item.date_in}  {item.in_time}-{item.out_time}</Text>
                             </View>
                             <View>
                             {
@@ -289,7 +289,7 @@ export default function StatusPengajuan({navigation, route}) {
                     <View key={item.id} >
                         <Card style={styles.cardStyle} >
                             <Card.Content>
-                            <Title style={{fontSize:12}}>Pengajuan Cuti</Title>
+                            <Title style={{fontSize:12}}>Perijinan ( Cuti )</Title>
                             <View style={styles.layout}>
                             <View style={{width:'60%'}}>
                                 <Text style={styles.textT}>{item.alasan_cuti} </Text>

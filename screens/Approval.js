@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
       },
     
       name:{
-        fontSize:18,
+        fontSize:16,
         flex:1,
         alignSelf:'center',
         color:"#000",

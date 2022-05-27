@@ -180,7 +180,7 @@ showLoad();
                 >
                   <View style={styles.linkAbsen}>
                     <Image style={styles.scanIMG} source={require("../src/img/scan.png")}></Image>
-                    <Text style={{ fontSize: 20, color: "#fff" }}> scan QR code</Text>
+                    <Text style={{ fontSize: 20, color: "#fff" }}> Absen</Text>
                   </View>
                   <View style={{
                     flex:1 ,

@@ -1,5 +1,5 @@
 import React, { Component , useState , useEffect } from 'react';
-import { View, Text, StyleSheet  , BackHandler ,  ActivityIndicator , Alert, Dimensions , ScrollView} from 'react-native';
+import { View, Text, StyleSheet  , BackHandler ,  ActivityIndicator , Alert, Dimensions , ScrollView , Picker} from 'react-native';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import Background from "../src/component/Background";
 import Logo from "../src/component/Logo";
@@ -23,6 +23,7 @@ export default function FormEditBiodata({navigation,route}) {
     const [no_hp , setNoHP] = useState('');
     const [no_emergency , setNoEmergency] = useState('');
     const [wait , setWaiting ] = useState(false)
+    const [selectedLanguage, setSelectedLanguage] = useState();
     useEffect(() => {
           try {
             const getBiodata = async () => {
@@ -144,6 +145,7 @@ export default function FormEditBiodata({navigation,route}) {
     }
 
 
+
     return (
       <>
         {
@@ -202,13 +204,25 @@ export default function FormEditBiodata({navigation,route}) {
                       />
                 </View>
                 <View style={styles.marginTextInput}>
-                <TextInput label="Golongan Darah" 
+                {/* <TextInput label="Golongan Darah" 
                   value={gol_darah}
                   style={styles.textBg}
                   keyboardType="text"
                   onChangeText={text => setGolDarah(text)}
                   placeholder="Golongan Darah" placeholderColor="#c4c3cb">
-                  </TextInput>
+                  </TextInput> */}
+               <Text style={[styles.textBg,{marginLeft:10 , color:'#8c8685'}]}>Golongan Darah</Text>
+                  <Picker
+                    style={{ height: 50 }}
+                    selectedValue={gol_darah}
+                    onValueChange={(itemValue, itemIndex) =>
+                      setGolDarah(itemValue)
+                    }>
+                    <Picker.Item label="A" value="A" />
+                    <Picker.Item label="B" value="B" />
+                    <Picker.Item label="AB" value="AB" />
+                    <Picker.Item label="O" value="O" />
+                  </Picker>
                 </View>
                 <View style={styles.marginTextInput}>
                 <TextInput label="NO KTP" 

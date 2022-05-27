@@ -135,7 +135,7 @@ export default function ApproveSakit({navigation, route}) {
 
         if(data === '' || data == null){
             return(
-               <Image style={{width:350 ,height:350}} source={ require('../src/img/notfound.png')}></Image>
+               <Image style={styles.img} source={ require('../src/img/notfound.png')}></Image>
             )
         }else {
            return data.map((item)=> {

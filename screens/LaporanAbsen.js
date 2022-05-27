@@ -114,7 +114,7 @@ export default function Profile({navigation , route }) {
     nameTxt: {
       fontWeight: 'bold',
       alignItems: "center",
-      padding:15,
+      padding:10,
       color: '#222',
       fontSize: 18,
     },
@@ -122,7 +122,7 @@ export default function Profile({navigation , route }) {
       fontWeight: '200',
       color: '#777',
       fontSize: 13,
-      padding : 4 ,
+      padding : 5 ,
       marginLeft : 90
     },
     msgContainer: {

@@ -5599,6 +5599,25 @@
   "resolved" "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-4.7.3.tgz"
   "version" "4.7.3"
 
+"react-native-image-slider-banner@^1.0.2":
+  "integrity" "sha512-ritikYPrS9Kt+VIW3nDJ8OkdaKAEDL6l3eQOsWjnNudQ8BmMY3aWAzHBJxFV7/6YPHsd+o0w1O9Fcq2UeSlSdw=="
+  "resolved" "https://registry.npmjs.org/react-native-image-slider-banner/-/react-native-image-slider-banner-1.0.2.tgz"
+  "version" "1.0.2"
+  dependencies:
+    "react-native-vector-icons" "^8.1.0"
+
+"react-native-image-slider-box@^1.1.23":
+  "integrity" "sha512-+hca7DojXOTzh2LO/eHBhjzqp1wxxfjm4yc+wL4xrYc/g3R4m8DkN7HL8LrGqEewz0kmtSZDAJLg9EuUWzEuzg=="
+  "resolved" "https://registry.npmjs.org/react-native-image-slider-box/-/react-native-image-slider-box-1.1.23.tgz"
+  "version" "1.1.23"
+  dependencies:
+    "react-native-snap-carousel" "latest"
+
+"react-native-image-slider-show@^1.0.3":
+  "integrity" "sha512-9Tysqt4Q1I2OIYN1hJ+291Axy9JwsKFpr1a4uxu9uDMLGgkYsOLhbsMdgj7qVBmtLWZDQ9Kr45r+LNIRmmSvGg=="
+  "resolved" "https://registry.npmjs.org/react-native-image-slider-show/-/react-native-image-slider-show-1.0.3.tgz"
+  "version" "1.0.3"
+
 "react-native-image-viewing@^0.2.2":
   "integrity" "sha512-osWieG+p/d2NPbAyonOMubttajtYEYiRGQaJA54slFxZ69j1V4/dCmcrVQry47ktVKy8/qpFwCpW1eT6MH5T2Q=="
   "resolved" "https://registry.npmjs.org/react-native-image-viewing/-/react-native-image-viewing-0.2.2.tgz"
@@ -5709,7 +5728,7 @@
   "resolved" "https://registry.npmjs.org/react-native-size-matters/-/react-native-size-matters-0.3.1.tgz"
   "version" "0.3.1"
 
-"react-native-snap-carousel@^3.9.1":
+"react-native-snap-carousel@^3.9.1", "react-native-snap-carousel@latest":
   "integrity" "sha512-xWEGusacIgK1YaDXLi7Gao2+ISLoGPVEBR8fcMf4tOOJQufutlNwkoLu0l6B8Qgsrre0nTxoVZikRgGRDWlLaQ=="
   "resolved" "https://registry.npmjs.org/react-native-snap-carousel/-/react-native-snap-carousel-3.9.1.tgz"
   "version" "3.9.1"
