@@ -1,4 +1,4 @@
-import React, { Component, useState , useEffect } from 'react';
+import React, { Component, useState , useEffect  } from 'react';
 import { StyleSheet,
     Text,
     View,
@@ -45,7 +45,7 @@ export default function Absen ({navigation,route}) {
       }
     }
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <TouchableOpacity style={styles.card}>
               <Image style={styles.image} source={ require('../src/img/article.png')}/>
               <View style={styles.cardContent}>
@@ -128,7 +128,7 @@ export default function Absen ({navigation,route}) {
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
-      </View>
+      </ScrollView>
     );
   }
 
@@ -163,7 +163,7 @@ export default function Absen ({navigation,route}) {
     
         marginLeft: 20,
         marginRight: 20,
-        marginTop:20,
+        marginTop:10,
         backgroundColor:"white",
         padding: 10,
         flexDirection:'row',

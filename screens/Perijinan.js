@@ -30,7 +30,7 @@ export default function Perijinan({navigation,route}) {
                         area_kerja: route.params.area_kerja,
                         jabatan: route.params.jabatan,
                     })}>
-                    <Text style={styles.followButtonText}>AJUKAN</Text>  
+                    <Text style={styles.followButtonText}>INPUT</Text>  
                     </TouchableOpacity>
                 </View>
             </TouchableOpacity>
@@ -46,7 +46,7 @@ export default function Perijinan({navigation,route}) {
                     area_kerja: route.params.area_kerja,
                     jabatan: route.params.jabatan,
                 })}>
-                  <Text style={styles.followButtonText}>Input</Text>  
+                  <Text style={styles.followButtonText}>INPUT</Text>  
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>

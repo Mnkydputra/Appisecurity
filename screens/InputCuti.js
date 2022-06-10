@@ -40,10 +40,10 @@ export default function InputOT ({navigation , route}){
 
     // get token korlap for send notification approval
       const listKorlap = async () => {
-        //   let wil = route.params.wilayah 
+          let wil = route.params.wilayah 
           try {
-            var urlAksi = 'https://isecuritydaihatsu.com/api/DaftarKorlap?wilayah=WIL2';
-            // var urlAksi = 'https://isecuritydaihatsu.com/api/DaftarKorlap?wilayah=' + wil;
+            // var urlAksi = 'https://isecuritydaihatsu.com/api/DaftarKorlap?wilayah=WIL2';
+            var urlAksi = 'https://isecuritydaihatsu.com/api/DaftarKorlap?wilayah=' + wil;
             fetch(urlAksi,{
                 headers : {
                     'keys-isecurity' : 'isecurity' ,
@@ -61,10 +61,11 @@ export default function InputOT ({navigation , route}){
 
       // daftar anggota pengganti bs / cuti
       const listAnggota = async () => {
-        //   let wil = route.params.wilayah 
+          let area = route.params.area_kerja ;
+          console.log(area)
           try {
-            var urlAksi = 'https://isecuritydaihatsu.com/api/DaftarAnggota?area=VLC';
-            // var urlAksi = 'https://isecuritydaihatsu.com/api/DaftarAnggota?area=' + wil;
+            // var urlAksi = 'https://isecuritydaihatsu.com/api/DaftarAnggota?area=VLC';
+            var urlAksi = 'https://isecuritydaihatsu.com/api/DaftarAnggota?area='+area;
             fetch(urlAksi,{
                 headers : {
                     'keys-isecurity' : 'isecurity' ,
@@ -80,6 +81,7 @@ export default function InputOT ({navigation , route}){
             alert(error.message)
           }
       }
+    
     useEffect(() => {
       // 
         listKorlap();
@@ -141,7 +143,7 @@ export default function InputOT ({navigation , route}){
                     npk: route.params.npk,
                     id_akun: route.params.id_absen,
                     wilayah: route.params.wilayah,
-                    area_kerja: route.params.areaKerja,
+                    area_kerja: route.params.area_kerja,
                     jabatan: route.params.jabatan,
                     }
                   )},
