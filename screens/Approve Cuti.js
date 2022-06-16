@@ -31,7 +31,7 @@ export default function ApproveCuti({navigation, route}) {
 
     const daftarCuti = () => {
         var urlAksi = 'https://isecuritydaihatsu.com/api/daftarCuti?wilayah=' + route.params.wilayah
-        // var urlAksi = 'https://isecuritydaihatsu.com/api/daftarCuti?wilayah=wil2'
+        // var urlAksi = 'http://192.168.8.170/isecurity_ea/api/daftarCuti?wilayah=wil2'
         fetch(urlAksi,{
             headers : {
                 'keys-isecurity' : 'isecurity' ,
@@ -140,7 +140,7 @@ export default function ApproveCuti({navigation, route}) {
                             <View>
                                 <Text style={styles.colorText}>Tanggal Cuti : {item.tanggal_cuti}</Text>
                                 <Text style={styles.colorText}>Alasan Cuti : {item.alasan_cuti}</Text>
-                                <Text style={styles.colorText}>Pengganti  : {item.pengganti_cuti}</Text>
+                                {/* <Text style={styles.colorText}>Pengganti  : {item.pengganti_cuti}</Text> */}
                             </View>
                             <View style={{ 
                                 flexDirection: "row",

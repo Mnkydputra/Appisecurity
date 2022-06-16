@@ -31,7 +31,7 @@ export default function Approve({navigation, route}) {
 
     const daftarLembur = () => {
         var urlAksi = 'https://isecuritydaihatsu.com/api/daftarLembur?wilayah=' + route.params.wilayah
-        // var urlAksi = 'https://isecuritydaihatsu.com/api/daftarLembur?wilayah=wil2'
+        // var urlAksi = 'http://192.168.8.170/isecurity_ea/api/daftarLembur?wilayah=wil2'
         fetch(urlAksi,{
             headers : {
                 'keys-isecurity' : 'isecurity' ,

@@ -3,7 +3,7 @@
     "name": "isecurity",
     "slug": "isecurity",
     "version": "1.0.0",
-    "icon" : "src/img/Login.png" ,
+    "icon": "src/img/Login.png",
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -17,11 +17,14 @@
       ]
     ],
     "android": {
-      "package": "com.dasep12.isecurity" ,
+      "package": "com.dasep12.isecurity",
       "adaptiveIcon": {
         "foregroundImage": "src/img/Login.png",
         "backgroundColor": "#50dbb6"
       }
+    },
+    "ios": {
+      "bundleIdentifier": "com.dasep12.isecurity"
     }
   },
   "name": "isecurity"

@@ -262,9 +262,9 @@ export default function InputOT ({navigation , route}){
             onChangeText={text =>  setAlasan(text)}
           />
 
-
+{/* 
           <Text style={[styles.text, {marginTop:10}]}>Pilih Pengganti Selama Cuti</Text>
-          {showAnggota()}
+          {showAnggota()} */}
 
           <Text style={[styles.text, {marginTop:10}]}>Pilih Korlap</Text>
           {showKorlap()}
