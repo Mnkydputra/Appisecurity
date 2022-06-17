@@ -17,7 +17,6 @@
       ]
     ],
     "android": {
-      "package": "com.dasep12.isecurity",
       "adaptiveIcon": {
         "foregroundImage": "src/img/Login.png",
         "backgroundColor": "#50dbb6"

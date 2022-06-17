@@ -78,5 +78,8 @@
         "react-native-paper": "^4.11.2",
         "react-native-vector-icons": "^9.1.0"
     },
+    "engines": {
+        "node": ">=16.0.0"
+      },
     "private": true
 }

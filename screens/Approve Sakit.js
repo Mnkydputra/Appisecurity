@@ -28,8 +28,8 @@ export default function ApproveSakit({navigation, route}) {
     showLoad();
 
     const daftarSakit = () => {
-        var urlAksi = 'https://isecuritydaihatsu.com/api/daftarSakit?wilayah=' + route.params.wilayah
-        // var urlAksi = 'http://192.168.8.170/isecurity_ea/api/daftarSakit?wilayah=WIL2'
+        var urlAksi = 'https://isecuritydaihatsu.com/api/daftarSakit?wilayah='+route.params.wilayah+'&jabatan='+route.params.jabatan
+        // var urlAksi = 'http://192.168.8.170/isecurity_ea/api/daftarSakit?wilayah=WIL2&jabatan=KORLAP'
         fetch(urlAksi,{
             headers : {
                 'keys-isecurity' : 'isecurity' ,

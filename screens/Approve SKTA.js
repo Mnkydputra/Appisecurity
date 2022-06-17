@@ -30,8 +30,8 @@ export default function ApproveSKTA({navigation,route}) {
     showLoad();
 
     const daftarSKTA = () => {
-        var urlAksi = 'https://isecuritydaihatsu.com/api/daftarSKTA?wilayah=' + route.params.wilayah
-        // var urlAksi = 'http://192.168.8.170/isecurity_ea/api/daftarSKTA?wilayah=wil2'
+        var urlAksi = 'https://isecuritydaihatsu.com/api/daftarSKTA?wilayah='+route.params.wilayah+'&jabatan=' + route.params.jabatan
+        // var urlAksi = 'http://192.168.8.170/isecurity_ea/api/daftarSKTA?wilayah=wil2&jabatan=PIC'
         fetch(urlAksi,{
             headers : {
                 'keys-isecurity' : 'isecurity' ,
@@ -133,7 +133,7 @@ export default function ApproveSKTA({navigation,route}) {
                             <Card.Content>
                             <Paragraph style={styles.colorText} >{item.nama} - {item.npk}</Paragraph>
                             <View>
-                                <Text style={styles.colorText}>Tanggal : {item.date_in}</Text>
+                                <Text style={styles.colorText}>Tanggal  : {item.date_in}</Text>
                                 <Text style={styles.colorText}>Jam Masuk : {item.in_time}</Text>
                                 <Text style={styles.colorText}>Jam Pulang : {item.out_time}</Text>
                                 <Text style={styles.colorText}>Keterangan  : {item.keterangan}</Text>

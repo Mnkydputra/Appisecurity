@@ -101,24 +101,24 @@ export default function  Home ({navigation,route}) {
 
 
   //patrol link 
-  const patrol = async() => {
-     const status =  await AsyncStorage.getItem('patrol');
-     const npk    =  await AsyncStorage.getItem('token');
-     const token_patrol    =  await AsyncStorage.getItem('token_patrol');
+  // const patrol = async() => {
+  //    const status =  await AsyncStorage.getItem('patrol');
+  //    const npk    =  await AsyncStorage.getItem('token');
+  //    const token_patrol    =  await AsyncStorage.getItem('token_patrol');
      
-     if(status === 'Y'){
-     Alert.alert('Perhatian' , 'Lanjut Patroli', [
-      {
-        text: "Batal",
-        onPress: () => console.log(token_patrol),
-        style: "cancel"
-      },
-      { text: "Iya", onPress: () => Linking.openURL('https://isecuritydaihatsu.com/Ipatrol/Login_?id=' + npk + '&pwd=' + token_patrol ) }
-    ]);
-    }else {
-      Alert.alert('Perhatian' , 'Patrol Hanya untuk danru');
-    }
-  }
+  //    if(status === 'Y'){
+  //    Alert.alert('Perhatian' , 'Lanjut Patroli', [
+  //     {
+  //       text: "Batal",
+  //       onPress: () => console.log(token_patrol),
+  //       style: "cancel"
+  //     },
+  //     { text: "Iya", onPress: () => Linking.openURL('https://isecuritydaihatsu.com/Ipatrol/Login_?id=' + npk + '&pwd=' + token_patrol ) }
+  //   ]);
+  //   }else {
+  //     Alert.alert('Perhatian' , 'Patrol Hanya untuk danru');
+  //   }
+  // }
   //
 
 
@@ -126,7 +126,83 @@ export default function  Home ({navigation,route}) {
   const informasi = async() => {
     alert('Oops , sistem masih pengembangan');
   }
-  //
+  
+
+  // link menuju kamera absensi
+  const goToAbsen = () => {
+    if(user.jabatan === 'PIC'){
+      Alert.alert('Perhatian' , 'Hanya bisa di akses Korlap dan Anggota');
+    }else {
+      navigation.navigate("Absensi", {
+        nama: user.nama,
+        npk: user.npk,
+        id_akun: user.id_absen,
+        wilayah: user.wilayah,
+        area_kerja: user.areaKerja,
+        jabatan: user.jabatan,
+      })
+    }
+  }
+
+
+  // link menuju profile
+  const goToProfile = () => {
+    if(user.jabatan === 'PIC'){
+      Alert.alert('Perhatian' , 'Hanya bisa di akses Korlap dan Anggota');
+    }else {
+      navigation.navigate("Profile", {
+        nama: user.nama,
+        npk: user.npk,
+        id_akun: user.id_absen,
+        wilayah: user.wilayah,
+        area_kerja: user.areaKerja,
+        jabatan: user.jabatan,
+      })
+    }
+  }
+
+
+  // link menuju patroli
+  const goToPatroli = async () => {
+    if(user.jabatan === 'PIC'){
+      Alert.alert('Perhatian' , 'Hanya bisa di akses Korlap dan Anggota');
+    }else {
+      const status =  await AsyncStorage.getItem('patrol');
+      const npk    =  await AsyncStorage.getItem('token');
+      const token_patrol    =  await AsyncStorage.getItem('token_patrol');
+     
+      if(status === 'Y'){
+      Alert.alert('Perhatian' , 'Lanjut Patroli', [
+        {
+          text: "Batal",
+          onPress: () => console.log(token_patrol),
+          style: "cancel"
+        },
+        { text: "Iya", onPress: () => Linking.openURL('https://isecuritydaihatsu.com/Ipatrol/Login_?id=' + npk + '&pwd=' + token_patrol ) }
+      ]);
+      }else {
+        Alert.alert('Perhatian' , 'Patrol Hanya untuk danru');
+      }
+    }
+  }
+
+
+  //link menuju akun setting
+  const goToAccount = () => {
+    if(user.jabatan === 'PIC'){
+      Alert.alert('Perhatian' , 'Hanya bisa di akses Korlap dan Anggota');
+    }else {
+      navigation.navigate("Akun", {
+        nama: user.nama,
+        npk: user.npk,
+        id_akun: user.id_absen,
+        wilayah: user.wilayah,
+        area_kerja: user.areaKerja,
+        jabatan: user.jabatan,
+      })
+    }
+  }
+  
 
 //fungsi loading 
 const showLoad = () => {
@@ -136,8 +212,6 @@ const showLoad = () => {
 }
 showLoad();
 //
-
-  
     return (
       <View style={styles.container}>
         {loading ? (
@@ -147,37 +221,22 @@ showLoad();
         ) : (
           <>
             <ScrollView contentContainerStyle={styles.scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+
+
               <View style={styles.headText}>
                 <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("Akun", {
-                      nama: user.nama,
-                      npk: user.npk,
-                      id_akun: user.id_absen,
-                      wilayah: user.wilayah,
-                      area_kerja: user.areaKerja,
-                      jabatan: user.jabatan,
-                    })
-                  }
+                  onPress={goToAccount }
                 >
                   <Text style={{ fontWeight: "bold" }}>
                     <Icon name="user-circle" backgroundColor="#3b5998" style={{ fontSize: 25, marginTop: 2 }}></Icon> <Text style={{ textDecorationLine: "underline" }}>{user.nama}</Text>
                   </Text>
                 </TouchableOpacity>
               </View>
-              <View style={styles.header}>
                 <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("Absensi", {
-                      nama: user.nama,
-                      npk: user.npk,
-                      id_akun: user.id_absen,
-                      wilayah: user.wilayah,
-                      area_kerja: user.areaKerja,
-                      jabatan: user.jabatan,
-                    })
-                  }
+                 style={styles.header}
+                  onPress={ goToAbsen }
                 >
+              <View>
                   <View style={styles.linkAbsen}>
                     <Image style={styles.scanIMG} source={require("../src/img/scan.png")}></Image>
                     <Text style={{ fontSize: 20, color: "#fff" }}> Absen</Text>
@@ -194,22 +253,14 @@ showLoad();
                     }} source={require("../src/img/qr.png")}></Image>
 
                   </View>
-                </TouchableOpacity>
               </View>
-              
+                </TouchableOpacity>
+
+
               <View>
               <View style={styles.row}>
                 <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("Profile", {
-                      nama: user.nama,
-                      npk: user.npk,
-                      id_akun: user.id_absen,
-                      wilayah: user.wilayah,
-                      area_kerja: user.areaKerja,
-                      jabatan: user.jabatan,
-                    })
-                  }
+                  onPress={ goToProfile }
                 >
                   <View style={styles.menuBox}>
                     <Image style={styles.icon} source={require("../src/img/security-man.png")} />
@@ -242,13 +293,6 @@ showLoad();
                   </View>
                 </TouchableOpacity>
 
-                {/* <TouchableOpacity onPress={informasi}>
-                  <View style={styles.menuBox}>
-                    <Image style={styles.icon} source={require("../src/img/permit.png")} />
-                    <Text style={styles.info}>Ijin</Text>
-                  </View>
-                </TouchableOpacity> */}
-
                 <TouchableOpacity onPress={informasi}>
                   <View style={styles.menuBox}>
                     <Image style={styles.icon} source={require("../src/img/online-course.png")} />
@@ -256,7 +300,7 @@ showLoad();
                   </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={patrol}>
+                <TouchableOpacity onPress={goToPatroli}>
                   <View style={styles.menuBox}>
                     <Image style={styles.icon} source={require("../src/img/guard(1).png")} />
                     <Text style={styles.info}>I-Patrol</Text>
@@ -264,6 +308,9 @@ showLoad();
                 </TouchableOpacity>
                 </View>
               </View>
+
+
+              
             </ScrollView>
           </>
         )}

@@ -30,8 +30,8 @@ export default function ApproveCuti({navigation, route}) {
     showLoad();
 
     const daftarCuti = () => {
-        var urlAksi = 'https://isecuritydaihatsu.com/api/daftarCuti?wilayah=' + route.params.wilayah
-        // var urlAksi = 'http://192.168.8.170/isecurity_ea/api/daftarCuti?wilayah=wil2'
+        var urlAksi = 'https://isecuritydaihatsu.com/api/daftarCuti?wilayah=' + route.params.wilayah+'&jabatan=' + route.params.jabatan
+        // var urlAksi = 'http://192.168.8.170/isecurity_ea/api/daftarCuti?wilayah=wil2&jabatan=PIC'
         fetch(urlAksi,{
             headers : {
                 'keys-isecurity' : 'isecurity' ,

@@ -11,7 +11,8 @@ import { StyleSheet,
     BackHandler} from 'react-native';
 
 export default function Absen ({navigation,route}) {
-      //tombol kembali 
+  
+  //tombol kembali 
   function handleBackButtonClick() {
     navigation.goBack();
     return true;
@@ -44,20 +45,83 @@ export default function Absen ({navigation,route}) {
         })
       }
     }
+
+
+  //link menuju pengajuan
+  const goToPengajuan = () => {
+    if(route.params.jabatan === 'PIC'){
+      Alert.alert('Perhatian' , 'Hanya bisa di akses Korlap dan Anggota');
+    }else {
+      navigation.navigate('Pengajuan' , {
+        nama: route.params.nama,
+        npk: route.params.npk,
+        id_akun: route.params.id_akun,
+        wilayah: route.params.wilayah,
+        area_kerja: route.params.area_kerja,
+        jabatan: route.params.jabatan,
+    })
+    }
+  }
+
+
+  //link menuju perijinan
+  const goToPerijinan = () => {
+    if(route.params.jabatan === 'PIC'){
+      Alert.alert('Perhatian' , 'Hanya bisa di akses Korlap dan Anggota');
+    }else {
+      navigation.navigate('Perijinan' , {
+          nama: route.params.nama,
+          npk: route.params.npk,
+          id_akun: route.params.id_akun,
+          wilayah: route.params.wilayah,
+          area_kerja: route.params.area_kerja,
+          jabatan: route.params.jabatan,
+      })
+    }
+  }
+
+  //link menuju histori absensi
+  const goToHistori = () => {
+    if(route.params.jabatan === 'PIC'){
+      Alert.alert('Perhatian' , 'Hanya bisa di akses Korlap dan Anggota');
+    }else {
+      navigation.navigate('Laporan Absen' , {
+        nama: route.params.nama,
+        npk: route.params.npk,
+        id_akun: route.params.id_absen,
+        wilayah: route.params.wilayah,
+        area_kerja: route.params.areaKerja,
+        jabatan: route.params.jabatan,
+      })
+    }
+  }
+
+
+  //link menuju status pengajuan
+  const goToStatusPengajuan = () => {
+    if(route.params.jabatan === 'PIC'){
+      Alert.alert('Perhatian' , 'Hanya bisa di akses Korlap dan Anggota');
+    }else {
+        navigation.navigate('Status Pengajuan' , {
+          nama: route.params.nama,
+          npk: route.params.npk,
+          id_akun: route.params.id_absen,
+          wilayah: route.params.wilayah,
+          area_kerja: route.params.areaKerja,
+          jabatan: route.params.jabatan,
+      })
+    }
+  }
+
+
     return (
         <ScrollView style={styles.container}>
             <TouchableOpacity style={styles.card}>
               <Image style={styles.image} source={ require('../src/img/article.png')}/>
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{'Pengajuan (OT SKTA)'}</Text>
-                <TouchableOpacity style={styles.followButton} onPress={()=> navigation.navigate('Pengajuan' , {
-                    nama: route.params.nama,
-                    npk: route.params.npk,
-                    id_akun: route.params.id_akun,
-                    wilayah: route.params.wilayah,
-                    area_kerja: route.params.area_kerja,
-                    jabatan: route.params.jabatan,
-                })}>
+                <TouchableOpacity style={styles.followButton} 
+                onPress={ goToPengajuan }>
                   <Text style={styles.followButtonText}>View</Text>  
                 </TouchableOpacity>
               </View>
@@ -68,14 +132,8 @@ export default function Absen ({navigation,route}) {
               <Image style={styles.image} source={ require('../src/img/permited.png')}/>
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{'Perijinan (Sakit Cuti)'}</Text>
-                <TouchableOpacity style={styles.followButton} onPress={()=> navigation.navigate('Perijinan' , {
-                    nama: route.params.nama,
-                    npk: route.params.npk,
-                    id_akun: route.params.id_akun,
-                    wilayah: route.params.wilayah,
-                    area_kerja: route.params.area_kerja,
-                    jabatan: route.params.jabatan,
-                })}>
+                <TouchableOpacity style={styles.followButton} 
+                onPress={goToPerijinan }>
                   <Text style={styles.followButtonText}>View</Text>  
                 </TouchableOpacity>
               </View>
@@ -99,14 +157,7 @@ export default function Absen ({navigation,route}) {
               <Image style={styles.image} source={ require('../src/img/absen2.png')}/>
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{'History Absensi'}</Text>
-                <TouchableOpacity style={styles.followButton} onPress={ () => navigation.navigate('Laporan Absen' , {
-                    nama: route.params.nama,
-                    npk: route.params.npk,
-                    id_akun: route.params.id_absen,
-                    wilayah: route.params.wilayah,
-                    area_kerja: route.params.areaKerja,
-                    jabatan: route.params.jabatan,
-                })}>
+                <TouchableOpacity style={styles.followButton} onPress={ goToHistori  }>
                   <Text style={styles.followButtonText}>View</Text>  
                 </TouchableOpacity>
               </View>
@@ -116,14 +167,7 @@ export default function Absen ({navigation,route}) {
               <Image style={styles.image} source={ require('../src/img/clipboard.png')}/>
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{'Status Pengajuan'}</Text>
-                <TouchableOpacity style={styles.followButton} onPress={ () => navigation.navigate('Status Pengajuan' , {
-                    nama: route.params.nama,
-                    npk: route.params.npk,
-                    id_akun: route.params.id_absen,
-                    wilayah: route.params.wilayah,
-                    area_kerja: route.params.areaKerja,
-                    jabatan: route.params.jabatan,
-                })}>
+                <TouchableOpacity style={styles.followButton} onPress={ goToStatusPengajuan }>
                   <Text style={styles.followButtonText}>View</Text>  
                 </TouchableOpacity>
               </View>
